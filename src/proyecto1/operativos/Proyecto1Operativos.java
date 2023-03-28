@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tarea1.operativos;
+package proyecto1.operativos;
 
 import View.MiniPC;
 
@@ -11,7 +11,7 @@ import View.MiniPC;
  *
  * @author aleja
  */
-public class Tarea1Operativos {
+public class Proyecto1Operativos {
 
     /**
      * @param args the command line arguments
