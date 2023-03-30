@@ -35,7 +35,7 @@ public class Interrupt {
             this.interrupt09H(this.getCpu());
             break;
         case 21:
-            this.interupt21H();
+            this.interupt21H(this.getCpu());
             break;
         default:
             JOptionPane.showMessageDialog (null, "El interrupt dado no se puede ejecutar.", "Error: Interrupt inválido", JOptionPane.ERROR_MESSAGE);
@@ -79,7 +79,27 @@ public class Interrupt {
         
     }
     
-    public void interupt21H(){
+    public void interupt21H(CPU cpu){
+        
+        int ahValue = cpu.getDataRegisters().get(1-1).getHighByteValue();
+        
+        switch(ahValue) {
+         case 60 :
+            System.out.println("Excellent!"); 
+            break;
+         case 61 :
+             
+         case 77 :
+            System.out.println("Well done");
+            break;
+         case 64 :
+            System.out.println("You passed");
+         case 65 :
+            System.out.println("Better try again");
+            break;
+         default :
+            System.out.println("Invalid grade");
+      }
         
     }
 

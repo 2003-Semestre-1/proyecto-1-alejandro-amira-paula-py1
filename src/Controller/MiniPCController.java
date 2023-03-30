@@ -82,15 +82,45 @@ public class MiniPCController {
         // Este método realiza la operación MOV para mover un valor entero a un registro
         // Recibe el registro destino donde se desea mover un valor, y el valor
         // Se mueve el valor dado al registro solicitado
-        this.getCpu().getDataRegisters().get(destinationRegister-1).setValue(value);
+        if (destinationRegister == 5){
+            this.getCpu().getDataRegisters().get(0).setLowByteValue(value);
+        }
+        else if (destinationRegister == 6){
+            this.getCpu().getDataRegisters().get(0).setHighByteValue(value);
+        }
+        else{
+            this.getCpu().getDataRegisters().get(destinationRegister-1).setValue(value);
+        }
+        
+        System.out.println(destinationRegister);
     }
     
     public void movInstructionRegister(int destinationRegister, int sourceRegister){
         // Este método realiza la operación MOV para mover el valor guardado en un registro a otro registro
         // Recibe el registro destino donde se desea mover un valor, y el registro fuente
         // Se mueve el valor dado al registro solicitado
-        int valueSourceRegister = this.getCpu().getDataRegisters().get(sourceRegister-1).getValue();
-        this.getCpu().getDataRegisters().get(destinationRegister-1).setValue(valueSourceRegister);
+        int valueSourceRegister = 0;
+        
+        if (sourceRegister == 5){
+            valueSourceRegister = this.getCpu().getDataRegisters().get(0).getLowByteValue();
+        }
+        else if (sourceRegister == 6){
+            valueSourceRegister = this.getCpu().getDataRegisters().get(0).getHighByteValue();
+        }
+        else{
+            valueSourceRegister = this.getCpu().getDataRegisters().get(sourceRegister-1).getValue();
+        }
+        
+        if (destinationRegister == 5){
+            this.getCpu().getDataRegisters().get(0).setLowByteValue(valueSourceRegister);
+        }
+        else if (destinationRegister == 6){
+            this.getCpu().getDataRegisters().get(0).setHighByteValue(valueSourceRegister);
+        }
+        else{
+            this.getCpu().getDataRegisters().get(destinationRegister-1).setValue(valueSourceRegister);
+        }
+
     }
     
     public void subInstruction(int destinationRegister){

@@ -61,6 +61,10 @@ public class MiniPC extends javax.swing.JFrame {
         lblNumberDX = new javax.swing.JLabel();
         lblIR = new javax.swing.JLabel();
         lblNumberIR = new javax.swing.JLabel();
+        lblAL = new javax.swing.JLabel();
+        lblNumberAL = new javax.swing.JLabel();
+        lblAH = new javax.swing.JLabel();
+        lblNumberAH = new javax.swing.JLabel();
         Pnl_Memoria = new javax.swing.JScrollPane();
         tblCode = new javax.swing.JTable();
         Pnl_Menu = new javax.swing.JPanel();
@@ -128,43 +132,67 @@ public class MiniPC extends javax.swing.JFrame {
 
         lblNumberIR.setText(" ");
 
+        lblAL.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblAL.setText("AL:");
+
+        lblNumberAL.setText("0");
+
+        lblAH.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblAH.setText("AH:");
+
+        lblNumberAH.setText("0");
+
         javax.swing.GroupLayout Pnl_RegistrosLayout = new javax.swing.GroupLayout(Pnl_Registros);
         Pnl_Registros.setLayout(Pnl_RegistrosLayout);
         Pnl_RegistrosLayout.setHorizontalGroup(
             Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Pnl_RegistrosLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblAX)
-                    .addComponent(lblPC))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblNumberAX, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblNumberPC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(55, 55, 55)
-                .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblAC)
-                    .addComponent(lblBX))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNumberBX)
-                    .addComponent(lblNumberAC))
-                .addGap(35, 35, 35)
                 .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Pnl_RegistrosLayout.createSequentialGroup()
-                        .addComponent(lblIR)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblNumberIR, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(Pnl_RegistrosLayout.createSequentialGroup()
-                        .addComponent(lblCX)
+                        .addComponent(lblAL)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblNumberCX)
-                        .addGap(32, 32, 32)
-                        .addComponent(lblDX)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblNumberDX)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(lblNumberAL, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(Pnl_RegistrosLayout.createSequentialGroup()
+                        .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblAX)
+                            .addComponent(lblPC))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblNumberAX, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblNumberPC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(55, 55, 55)
+                        .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(Pnl_RegistrosLayout.createSequentialGroup()
+                                .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblAC)
+                                    .addComponent(lblBX))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblNumberBX)
+                                    .addComponent(lblNumberAC))
+                                .addGap(35, 35, 35)
+                                .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(Pnl_RegistrosLayout.createSequentialGroup()
+                                        .addComponent(lblIR)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lblNumberIR, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(Pnl_RegistrosLayout.createSequentialGroup()
+                                        .addComponent(lblCX)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(lblNumberCX)
+                                        .addGap(32, 32, 32)
+                                        .addComponent(lblDX)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lblNumberDX)
+                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addGroup(Pnl_RegistrosLayout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(lblAH)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblNumberAH, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         Pnl_RegistrosLayout.setVerticalGroup(
             Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,7 +215,14 @@ public class MiniPC extends javax.swing.JFrame {
                     .addComponent(lblNumberAC)
                     .addComponent(lblIR)
                     .addComponent(lblNumberIR))
-                .addGap(29, 29, 29))
+                .addGap(7, 7, 7)
+                .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAL)
+                    .addComponent(lblNumberAL)
+                    .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblAH)
+                        .addComponent(lblNumberAH)))
+                .addContainerGap())
         );
 
         Pnl_Memoria.setBackground(new java.awt.Color(204, 204, 255));
@@ -370,17 +405,13 @@ public class MiniPC extends javax.swing.JFrame {
             .addGroup(Pnl_MenuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(Pnl_MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pnl_MenuLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
-                    .addGroup(Pnl_MenuLayout.createSequentialGroup()
-                        .addGroup(Pnl_MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(exitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tecladoTxtField)
-                            .addComponent(cleanTableBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(nextInstructionBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(loadFileBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
-                        .addContainerGap())))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(exitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tecladoTxtField)
+                    .addComponent(cleanTableBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nextInstructionBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(loadFileBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
+                .addContainerGap())
         );
         Pnl_MenuLayout.setVerticalGroup(
             Pnl_MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -512,6 +543,11 @@ public class MiniPC extends javax.swing.JFrame {
         this.getLblNumberBX().setText(this.getController().getCpu().getDataRegisters().get(1).getValue()+"");
         this.getLblNumberCX().setText(this.getController().getCpu().getDataRegisters().get(2).getValue()+"");
         this.getLblNumberDX().setText(this.getController().getCpu().getDataRegisters().get(3).getValue()+"");
+        this.getLblNumberAL().setText(this.getController().getCpu().getDataRegisters().get(1).getLowByteValue()+"");
+        this.getLblNumberAH().setText(this.getController().getCpu().getDataRegisters().get(1).getHighByteValue()+"");
+        
+        if (this.getController().getCpu().getDataRegisters().get(0).getHighByteValue() == 0x3c)
+            System.out.println("xddddddddddddddddddd");
         
         this.getLblNumberAC().setText(this.getController().getCpu().getAccumulator()+"");
         if (this.getFileManager().getInstructions().size() > this.getRowCount()+1){
@@ -525,6 +561,24 @@ public class MiniPC extends javax.swing.JFrame {
         this.setRowCount(this.getRowCount()+1);
         this.setCurrentAddress(this.getCurrentAddress()+1);
     } 
+
+    public JLabel getLblNumberAH() {
+        return lblNumberAH;
+    }
+
+    public void setLblNumberAH(JLabel lblNumberAH) {
+        this.lblNumberAH = lblNumberAH;
+    }
+
+    public JLabel getLblNumberAL() {
+        return lblNumberAL;
+    }
+
+    public void setLblNumberAL(JLabel lblNumberAL) {
+        this.lblNumberAL = lblNumberAL;
+    }
+    
+    
 
     public MiniPCController getController() {
         return controller;
@@ -749,12 +803,16 @@ public class MiniPC extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JLabel lblAC;
+    private javax.swing.JLabel lblAH;
+    private javax.swing.JLabel lblAL;
     private javax.swing.JLabel lblAX;
     private javax.swing.JLabel lblBX;
     private javax.swing.JLabel lblCX;
     private javax.swing.JLabel lblDX;
     private javax.swing.JLabel lblIR;
     private javax.swing.JLabel lblNumberAC;
+    private javax.swing.JLabel lblNumberAH;
+    private javax.swing.JLabel lblNumberAL;
     private javax.swing.JLabel lblNumberAX;
     private javax.swing.JLabel lblNumberBX;
     private javax.swing.JLabel lblNumberCX;

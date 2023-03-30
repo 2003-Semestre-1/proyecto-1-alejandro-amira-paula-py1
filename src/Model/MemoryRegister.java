@@ -84,4 +84,16 @@ public class MemoryRegister extends Register {
         return binaryString;
     }
     
+    public String decimalToHex() {
+    int decimal = this.getValue();
+    String hex = Integer.toHexString(decimal).toUpperCase();
+    int numZeros = 16 - hex.length();
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < numZeros; i++) {
+        sb.append("0");
+    }
+    sb.append(hex);
+    return sb.toString();
+    }
+    
 }

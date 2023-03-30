@@ -112,6 +112,7 @@ public class FileManager {
         // Recibe como parámetro una string con la instrucción que se desea procesar
         
         MemoryRegister memoryRegisterInstruction = null;
+        
         try{
             // Se realiza parsing del texto de la instrucción por medio de splits
             // Se divide la string de la instrucción en varias partes para sacar el operador y el registro por separado
@@ -124,15 +125,30 @@ public class FileManager {
         
         if(split1.length == 2){
             // Si la instrución contiene un valor entero (como en instrucciones con MOV por ejemplo), se separa también el valor
-            value = Integer.parseInt(split1[1].trim().toLowerCase());
+            String str = split1[1].trim().toLowerCase();
+            
+            if (str.endsWith("h")) {
+            value = Integer.parseInt(str.substring(0, str.length() - 1), 16);
+            } else {
+            value = Integer.parseInt(str);
+            }
+            
+            System.out.println("value es "+value);
+            
         }
         
         // Se utilizan los hashMaps que fueron creados para obtener el valor entero del operador y del registro dependiendo de cuál se escribió en la instrucción
         int opValue = this.operations.get(operator);
         int registerValue = this.dataRegisters.get(register);
+        String registerType = "";
+        if (registerValue == 1 || registerValue == 2 || registerValue == 3 || registerValue == 4)
+            registerType = "16-bit";
+        else
+            registerType = "8-bit";
+        
         
         // Se crea la instrucción que será cargada en memoria, se guarda el string de ensamblador para poder desplegarla en la GUI
-        memoryRegisterInstruction = new MemoryRegister(opValue, registerValue, value, "Data");
+        memoryRegisterInstruction = new MemoryRegister(opValue, registerValue, value, registerType);
         System.out.println("Operador: "+memoryRegisterInstruction.getOp());
         System.out.println("Registro: "+memoryRegisterInstruction.getRegister());
         System.out.println("Valor: "+memoryRegisterInstruction.getValue());
@@ -168,17 +184,24 @@ public class FileManager {
         this.dataRegisters.put("bx", 2);
         this.dataRegisters.put("cx", 3);
         this.dataRegisters.put("dx", 4);
+        this.dataRegisters.put("al", 5);
+        this.dataRegisters.put("ah", 6);
     }
     
     public void loadOperations() {
         // Este método crea un hashmap donde se cargan los valores enteros de cada operador, para que se puedan sacar dependiendo del operador escrito en la instrucción
         // No recibe parámetros
         
+        this.operations = new HashMap<>();
         this.operations.put("load", 1);
         this.operations.put("store", 2);
         this.operations.put("mov", 3);
         this.operations.put("sub", 4);
         this.operations.put("add", 5);
+        this.operations.put("inc", 6);
+        this.operations.put("dec", 7);
+        this.operations.put("swap", 8);
+        this.operations.put("int", 9);
         
     }
     
