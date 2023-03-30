@@ -85,8 +85,12 @@ public class FileManager {
             }
             
             for (int i = 0; i < instructions.size(); i++) {
-                String currentInstruction = instructions.get(i).convertToBinary();
-                System.out.println("Instruccion #"+i+": "+currentInstruction);
+                String currentInstruction = "";
+                if (!instructions.get(i).getOp().equals("int")){
+                    currentInstruction = instructions.get(i).convertToBinary();
+                    System.out.println("Instruccion #"+i+": "+currentInstruction);
+                }
+                    
             }
             
             
@@ -118,19 +122,28 @@ public class FileManager {
             // Se divide la string de la instrucción en varias partes para sacar el operador y el registro por separado
             String[] split1 = instruction.split(",");
             String[] split2 = split1[0].split(" ");
+            
+            System.out.println("AAAAAAAAAAAAAAAAAAA");
         
             String operator = split2[0].toLowerCase();
             String register = split2[1].toLowerCase();
-            int value = 0;  
+            System.out.println(operator);
+            System.out.println(register);
+            int value = 0;
+            String valueString = "";
+            System.out.println("XDDD");
         
         if(split1.length == 2){
             // Si la instrución contiene un valor entero (como en instrucciones con MOV por ejemplo), se separa también el valor
             String str = split1[1].trim().toLowerCase();
             
-            if (str.endsWith("h")) {
-            value = Integer.parseInt(str.substring(0, str.length() - 1), 16);
-            } else {
-            value = Integer.parseInt(str);
+            if (register.equalsIgnoreCase("dx") && !str.matches("-?\\d+(\\.\\d+)?")){
+                valueString = str;
+            }
+            else if (str.endsWith("h")) {
+                value = Integer.parseInt(str.substring(0, str.length() - 1), 16);
+            }else if (str.matches("-?\\d+(\\.\\d+)?")) {
+                value = Integer.parseInt(str);
             }
             
             System.out.println("value es "+value);
@@ -138,20 +151,29 @@ public class FileManager {
         }
         
         // Se utilizan los hashMaps que fueron creados para obtener el valor entero del operador y del registro dependiendo de cuál se escribió en la instrucción
-        int opValue = this.operations.get(operator);
-        int registerValue = this.dataRegisters.get(register);
+        System.out.println("XDDDDDDDDDDDD");
+        int opValue = 0;
+        int registerValue = 0;
+        
+        opValue = this.operations.get(operator);
+        if (!operator.equalsIgnoreCase("int"))
+            registerValue = this.dataRegisters.get(register);
+        else
+            value = Integer.parseInt(register.substring(0, register.length() - 1), 16);
+        System.out.println("XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
         String registerType = "";
         if (registerValue == 1 || registerValue == 2 || registerValue == 3 || registerValue == 4)
             registerType = "16-bit";
-        else
+        else if (registerValue == 5 || registerValue == 6)
             registerType = "8-bit";
         
         
         // Se crea la instrucción que será cargada en memoria, se guarda el string de ensamblador para poder desplegarla en la GUI
-        memoryRegisterInstruction = new MemoryRegister(opValue, registerValue, value, registerType);
+        memoryRegisterInstruction = new MemoryRegister(opValue, registerValue, value, valueString, registerType);
         System.out.println("Operador: "+memoryRegisterInstruction.getOp());
         System.out.println("Registro: "+memoryRegisterInstruction.getRegister());
         System.out.println("Valor: "+memoryRegisterInstruction.getValue());
+        System.out.println("Valor: "+memoryRegisterInstruction.getStringValue());
         System.out.println("Tipo de registro: "+memoryRegisterInstruction.getRegisterType());
         memoryRegisterInstruction.setAsmInstructionString(instruction);
         }

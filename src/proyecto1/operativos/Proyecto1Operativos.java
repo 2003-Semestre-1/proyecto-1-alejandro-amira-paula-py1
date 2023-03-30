@@ -18,12 +18,6 @@ public class Proyecto1Operativos {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        DataRegister ax = new DataRegister(0,"16-bit");
-        ax.setLowByteValue(5);
-        ax.setHighByteValue(4);
-        System.out.println(ax.getValue());
-        System.out.println(ax.getLowByteValue());
-        System.out.println(ax.getHighByteValue());
         MiniPC miniPC = new MiniPC();
         miniPC.setVisible(true);
     }

@@ -17,8 +17,8 @@ public class MemoryRegister extends Register {
     public Integer address;
     public Integer register;
     
-    public MemoryRegister(Integer op, Integer register, Integer value, String registerType) {
-        super(value, registerType);
+    public MemoryRegister(Integer op, Integer register, Integer value, String valueString, String registerType) {
+        super(value, valueString, registerType);
         this.op = op;
         this.register = register;
     }

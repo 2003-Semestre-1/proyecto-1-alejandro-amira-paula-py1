@@ -5,6 +5,9 @@
  */
 package Model;
 
+import Controller.MiniPCController;
+import View.MiniPC;
+import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -22,19 +25,19 @@ public class Interrupt {
         this.cpu = cpu;
     }
     
-    public void executeInterrupt(){
-        
+    public void executeInterrupt(MiniPC miniPC){
+        System.out.println(codigo);
         switch(this.codigo) {
         case 20:
             this.interrupt20H(this.getCpu().getMemory().getBcpList());
             break;
         case 10:
-            this.interrupt10H(this.getCpu());
+            this.interrupt10H(this.getCpu(), miniPC);
             break;
         case 9:
             this.interrupt09H(this.getCpu());
             break;
-        case 21:
+        case 33:
             this.interupt21H(this.getCpu());
             break;
         default:
@@ -51,10 +54,12 @@ public class Interrupt {
         
     }
     
-    public void interrupt10H(CPU cpu){
+    public void interrupt10H(CPU cpu, MiniPC miniPC){
         
         int valorRegistroDX = cpu.getDataRegisters().get(4-1).getValue();
-        // desplegar el valor en la pantalla del CPU
+        String currentText = miniPC.getPantalla().getText();
+        currentText = currentText + "\n" + valorRegistroDX;
+        miniPC.getPantalla().setText(currentText);
         
     }
     
@@ -82,13 +87,18 @@ public class Interrupt {
     public void interupt21H(CPU cpu){
         
         int ahValue = cpu.getDataRegisters().get(1-1).getHighByteValue();
+        String fileName = cpu.getDataRegisters().get(4-1).getStringValue();
+        System.out.println(fileName);
         
         switch(ahValue) {
          case 60 :
-            System.out.println("Excellent!"); 
+            String filePath = "src\\Files\\"+fileName;
+            System.out.println(filePath);
+            File file = new File(filePath);
             break;
          case 61 :
-             
+             System.out.println("XD");
+            break;
          case 77 :
             System.out.println("Well done");
             break;

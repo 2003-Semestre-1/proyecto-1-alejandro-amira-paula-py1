@@ -10,6 +10,7 @@ import Model.DataRegister;
 import Model.Interrupt;
 import Model.Memory;
 import Model.MemoryRegister;
+import View.MiniPC;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -32,7 +33,7 @@ public class MiniPCController {
         
     }
     
-    public void executeInstruction(int op, int register, int value){
+    public void executeInstruction(int op, int register, int value, MiniPC miniPC){
         // Este método ejecuta la instrucción dependiendo del operador utilizado en la instrucción
         // Recibe un operador, un registro y un valor
         // Se utiliza un switch para realizar una diferente operación dependiendo del operador dado como parámetro
@@ -56,11 +57,29 @@ public class MiniPCController {
         case 6:
             this.addInstruction(register);
             break;
+        case 7:
+            this.incInstruction();
+            break;
+        case 8:
+            this.incRegisterInstruction(register);
+        case -9:
+            this.decInstruction();
+            break;
+        case 10:
+            this.decRegisterInstruction(register);
+            break;
+        case 11:
+            this.swapInstruction(register, value);
+            break;
+        case 9:
+            this.interruptInstruction(value,miniPC);
+            break;
         default:
             JOptionPane.showMessageDialog (null, "La instrucción dada no se puede ejecutar.", "Error: Instrucción inválida", JOptionPane.ERROR_MESSAGE);
         }
         
     }
+    
     
     public void loadInstruction(int destinationRegister){
         // Este método realiza la operación LOAD
@@ -88,8 +107,23 @@ public class MiniPCController {
         else if (destinationRegister == 6){
             this.getCpu().getDataRegisters().get(0).setHighByteValue(value);
         }
+        else if (destinationRegister == 4){
+            this.getCpu().getDataRegisters().get(4-1).setHighByteValue(value);
+        }
         else{
             this.getCpu().getDataRegisters().get(destinationRegister-1).setValue(value);
+        }
+        
+        System.out.println(destinationRegister);
+    }
+    
+    public void movInstructionValue(int destinationRegister, String value){
+        // Este método realiza la operación MOV para mover un valor entero a un registro
+        // Recibe el registro destino donde se desea mover un valor, y el valor
+        // Se mueve el valor dado al registro solicitado
+        
+        if (destinationRegister == 4){
+            this.getCpu().getDataRegisters().get(4-1).setStringValue(value);
         }
         
         System.out.println(destinationRegister);
@@ -179,16 +213,20 @@ public class MiniPCController {
         // Cambia los valores guardados en ambos registros entre sí
         int firstRegisterValue = this.getCpu().getDataRegisters().get(firstRegister-1).getValue();
         int secondRegisterValue = this.getCpu().getDataRegisters().get(secondRegister-1).getValue();
+        
+        
+        
         this.getCpu().getDataRegisters().get(firstRegister-1).setValue(secondRegisterValue);
         this.getCpu().getDataRegisters().get(secondRegister-1).setValue(firstRegisterValue);
     }
     
-    public void interruptInstruction(int codigo){
+    public void interruptInstruction(int codigo, MiniPC miniPC){
         // Este método ejecuta un interrupt dependinedo del codigo de interrupt dado
         // Recibe el codigo del interrupt
         // Ejecuta el interrupt dependiendo de su codigo
+        System.out.println("BBBBBBBBBBBBBBBBBBBBBBB");
         Interrupt interrupt = new Interrupt(codigo,this.getCpu());
-        interrupt.executeInterrupt();
+        interrupt.executeInterrupt(miniPC);
         
     }
 

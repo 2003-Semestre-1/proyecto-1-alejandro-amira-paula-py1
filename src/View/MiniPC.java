@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
 
 /**
  *
@@ -76,7 +78,7 @@ public class MiniPC extends javax.swing.JFrame {
         tecladoTxtField = new javax.swing.JTextField();
         lblPantalla = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        pantalla = new javax.swing.JTextPane();
         Lbl_memoria = new javax.swing.JLabel();
         Lbl_registros = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -388,7 +390,7 @@ public class MiniPC extends javax.swing.JFrame {
         lblPantalla.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         lblPantalla.setText("Pantalla");
 
-        jScrollPane1.setViewportView(jTextPane1);
+        jScrollPane1.setViewportView(pantalla);
 
         javax.swing.GroupLayout Pnl_MenuLayout = new javax.swing.GroupLayout(Pnl_Menu);
         Pnl_Menu.setLayout(Pnl_MenuLayout);
@@ -546,9 +548,6 @@ public class MiniPC extends javax.swing.JFrame {
         this.getLblNumberAL().setText(this.getController().getCpu().getDataRegisters().get(1).getLowByteValue()+"");
         this.getLblNumberAH().setText(this.getController().getCpu().getDataRegisters().get(1).getHighByteValue()+"");
         
-        if (this.getController().getCpu().getDataRegisters().get(0).getHighByteValue() == 0x3c)
-            System.out.println("xddddddddddddddddddd");
-        
         this.getLblNumberAC().setText(this.getController().getCpu().getAccumulator()+"");
         if (this.getFileManager().getInstructions().size() > this.getRowCount()+1){
             this.getLblNumberPC().setText(""+(this.getCurrentAddress()+1));
@@ -561,6 +560,24 @@ public class MiniPC extends javax.swing.JFrame {
         this.setRowCount(this.getRowCount()+1);
         this.setCurrentAddress(this.getCurrentAddress()+1);
     } 
+
+    public JTextPane getPantalla() {
+        return pantalla;
+    }
+
+    public void setPantalla(JTextPane pantalla) {
+        this.pantalla = pantalla;
+    }
+
+    public JTextField getTecladoTxtField() {
+        return tecladoTxtField;
+    }
+
+    public void setTecladoTxtField(JTextField tecladoTxtField) {
+        this.tecladoTxtField = tecladoTxtField;
+    }
+    
+    
 
     public JLabel getLblNumberAH() {
         return lblNumberAH;
@@ -712,7 +729,7 @@ public class MiniPC extends javax.swing.JFrame {
                 this.getController().getCpu().setInstructionRegister(currentInstruction.getAsmInstructionString());
                 this.getController().getCpu().setProgramCounter(this.currentAddress);
 
-                this.getController().executeInstruction(currentInstruction.getOp(),currentInstruction.getRegister(),currentInstruction.getValue());
+                this.getController().executeInstruction(currentInstruction.getOp(),currentInstruction.getRegister(),currentInstruction.getValue(),this);
                 this.updateTable(this.fileManager.getInstructions(),this.getRowCount());
             }
 
@@ -742,7 +759,9 @@ public class MiniPC extends javax.swing.JFrame {
         else{
             MemoryRegister currentInstruction = this.getFileManager().getInstructions().get(this.getRowCount());
             this.getController().getCpu().setInstructionRegister(currentInstruction.getAsmInstructionString());
-            this.getController().executeInstruction(currentInstruction.getOp(),currentInstruction.getRegister(),currentInstruction.getValue());
+            System.out.println("test1");
+            this.getController().executeInstruction(currentInstruction.getOp(),currentInstruction.getRegister(),currentInstruction.getValue(),this);
+            System.out.println("test2");
             this.updateTable(this.fileManager.getInstructions(), this.getRowCount());
             this.getController().getCpu().setProgramCounter(this.getRowCount());
         }
@@ -801,7 +820,6 @@ public class MiniPC extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextPane jTextPane1;
     private javax.swing.JLabel lblAC;
     private javax.swing.JLabel lblAH;
     private javax.swing.JLabel lblAL;
@@ -825,6 +843,7 @@ public class MiniPC extends javax.swing.JFrame {
     private javax.swing.JButton loadFileBtn;
     private javax.swing.JButton nextInstructionBtn;
     private javax.swing.JButton nextInstructionBtn1;
+    private javax.swing.JTextPane pantalla;
     private javax.swing.JTable tblCode;
     private javax.swing.JTextField tecladoTxtField;
     // End of variables declaration//GEN-END:variables

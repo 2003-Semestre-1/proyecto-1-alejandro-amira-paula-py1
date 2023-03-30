@@ -13,8 +13,8 @@ public class DataRegister extends Register{
     // Esta clase representa un registro de datos, por ejemplo AB, BX, CX o DX
     // Hereda sus atributos y métodos de la clase abstracta Register
     
-    public DataRegister(Integer value, String registerType) {
-        super(value, registerType);
+    public DataRegister(Integer value, String valueString, String registerType) {
+        super(value, valueString, registerType);
     }
     
     @Override

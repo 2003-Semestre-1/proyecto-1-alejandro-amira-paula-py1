@@ -16,17 +16,27 @@ public abstract class Register {
     // Además contiene un método abstracto para convertir a binario lo almacenado en el registro
     
     public Integer value;
+    public String stringValue = "";
     public String registerType;
     public String asmInstructionString;
 
-    public Register(Integer value, String registerType) {
+    public Register(Integer value, String valueString, String registerType) {
         this.value = value;
         this.registerType = registerType;
+        this.stringValue = valueString;
     }
     
     // Este método abstracto deberá ser implementado por todas las clases que hereden de Register y convierten lo almacenado en el registro a binario
     public abstract String convertToBinary();
 
+    public String getStringValue() {
+        return stringValue;
+    }
+
+    public void setStringValue(String stringValue) {
+        this.stringValue = stringValue;
+    }
+    
     public Integer getValue() {
         return value;
     }
