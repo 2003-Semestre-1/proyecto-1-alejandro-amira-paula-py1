@@ -71,11 +71,14 @@ public class MiniPCController {
                     case "ah":
                         otherRegister = 6;
                         break;
+                    default:
+                        JOptionPane.showMessageDialog (null, "La instrucción dada no se puede ejecutar porque el registro no es válido.", "Error: Registro inválido", JOptionPane.ERROR_MESSAGE);
                }
                 
                this.movInstructionRegister(register, otherRegister);
             }
             else if (!valueString.equalsIgnoreCase("")){
+                
                 this.movInstructionValue(register, valueString);
             }
             else if (valueString.equalsIgnoreCase("")){
@@ -101,7 +104,7 @@ public class MiniPCController {
                 this.decInstruction();
             break;
         case 8:
-            this.swapInstruction(register, value);
+            this.swapInstruction(register, valueString);
             break;
         case 9:
             this.interruptInstruction(value,miniPC);
@@ -244,14 +247,36 @@ public class MiniPCController {
         this.getCpu().getDataRegisters().get(destinationRegister-1).setValue(currentRegisterValue-1);
     }
     
-    public void swapInstruction(int firstRegister, int secondRegister){
+    public void swapInstruction(int firstRegister, String secondRegisterString){
         // Este método realiza la operación SWAP
         // Recibe dos valores enteros de los dos registros cuyos valores se desean intercambiar
         // Cambia los valores guardados en ambos registros entre sí
+        int secondRegister = 0;
+        switch(secondRegisterString){
+            case "ax":
+                secondRegister=1;
+                break;
+            case "bx":
+                secondRegister=2;
+                break;
+            case "cx":
+                secondRegister=3;
+                break;
+            case "dx":
+                secondRegister=4;
+                break;
+            case "al":
+                secondRegister=5;
+                break;
+            case "ah":
+                secondRegister=6;
+                break;
+            default:
+                JOptionPane.showMessageDialog (null, "La instrucción dada no se puede ejecutar.", "Error: Instrucción inválida", JOptionPane.ERROR_MESSAGE);
+        }
+        
         int firstRegisterValue = this.getCpu().getDataRegisters().get(firstRegister-1).getValue();
         int secondRegisterValue = this.getCpu().getDataRegisters().get(secondRegister-1).getValue();
-        
-        
         
         this.getCpu().getDataRegisters().get(firstRegister-1).setValue(secondRegisterValue);
         this.getCpu().getDataRegisters().get(secondRegister-1).setValue(firstRegisterValue);

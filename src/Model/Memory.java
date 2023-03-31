@@ -7,6 +7,7 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.Stack;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,7 +23,8 @@ public class Memory {
     int size = 100;
     int allocatedSize;
     int allocationStartIndex;
-    ArrayList<BCP> bcpList = new ArrayList(); 
+    ArrayList<BCP> bcpList = new ArrayList();
+    Pila stack = new Pila();
 
     public Memory(int allocatedSize) {
         // Este constructor rercibe el tamano del set de instrucciones

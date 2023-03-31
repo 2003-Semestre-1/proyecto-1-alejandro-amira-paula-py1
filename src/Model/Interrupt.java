@@ -8,6 +8,7 @@ package Model;
 import Controller.MiniPCController;
 import View.MiniPC;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -88,21 +89,21 @@ public class Interrupt {
         
         int ahValue = cpu.getDataRegisters().get(1-1).getHighByteValue();
         String fileName = cpu.getDataRegisters().get(4-1).getStringValue();
+        System.out.println(ahValue);
         System.out.println(fileName);
-        System.out.println(cpu.getDataRegisters().get(0).getValue());
-        System.out.println(cpu.getDataRegisters().get(0).getStringValue());
-        System.out.println(cpu.getDataRegisters().get(1).getValue());
-        System.out.println(cpu.getDataRegisters().get(1).getStringValue());
-        System.out.println(cpu.getDataRegisters().get(2).getValue());
-        System.out.println(cpu.getDataRegisters().get(2).getStringValue());
-        System.out.println(cpu.getDataRegisters().get(3).getValue());
-        System.out.println(cpu.getDataRegisters().get(3).getStringValue());
         
         switch(ahValue) {
          case 60 :
             String filePath = "src\\Files\\"+fileName;
             System.out.println(filePath);
             File file = new File(filePath);
+            try{
+                file.createNewFile();
+                System.out.println("File created");
+            }
+            catch(IOException e){
+                JOptionPane.showMessageDialog (null, "El archivo no pudo ser creado.", "Error: Archivo no pudo ser creado con éxito.", JOptionPane.ERROR_MESSAGE);
+            }
             break;
          case 61 :
              System.out.println("XD");
