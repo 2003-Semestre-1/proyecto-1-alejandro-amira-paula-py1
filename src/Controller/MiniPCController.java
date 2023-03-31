@@ -89,20 +89,21 @@ public class MiniPCController {
             this.addInstruction(register);
             break;
         case 6:
-            this.incInstruction();
+            if (register > 0)
+                this.incRegisterInstruction(register);
+            else
+                this.incInstruction();
             break;
         case 7:
-            this.incRegisterInstruction(register);
+            if (register > 0)
+                this.decRegisterInstruction(register);
+            else
+                this.decInstruction();
+            break;
         case 8:
-            this.decInstruction();
-            break;
-        case 9:
-            this.decRegisterInstruction(register);
-            break;
-        case 10:
             this.swapInstruction(register, value);
             break;
-        case 11:
+        case 9:
             this.interruptInstruction(value,miniPC);
             break;
         default:

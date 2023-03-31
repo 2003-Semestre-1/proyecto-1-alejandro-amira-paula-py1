@@ -120,18 +120,35 @@ public class FileManager {
         try{
             // Se realiza parsing del texto de la instrucción por medio de splits
             // Se divide la string de la instrucción en varias partes para sacar el operador y el registro por separado
-            String[] split1 = instruction.split(",");
-            String[] split2 = split1[0].split(" ");
-            
-            System.out.println("AAAAAAAAAAAAAAAAAAA");
-        
-            String operator = split2[0].toLowerCase();
-            String register = split2[1].toLowerCase();
-            System.out.println(operator);
-            System.out.println(register);
+            String[] split1 = new String[0];
+            String[] split2 = new String[0];
             int value = 0;
             String valueString = "";
-            System.out.println("XDDD");
+            String register = "";
+            String operator = "";
+            int opValue = 0;
+            int registerValue = 0;
+            
+            if (instruction.split(" ")[0].equalsIgnoreCase("inc") || instruction.split(" ")[0].equalsIgnoreCase("dec")){
+                operator = instruction.split(" ")[0];
+                
+                if (instruction.split(" ").length>1){
+                    register = instruction.split(" ")[1];
+                    registerValue = this.dataRegisters.get(register);
+                }
+                
+            }
+            else{
+                split1 = instruction.split(",");
+                split2 = split1[0].split(" ");
+            
+        
+                operator = split2[0].toLowerCase();
+                register = split2[1].toLowerCase();
+                System.out.println(operator);
+                System.out.println(register);
+                
+            }
         
         if(split1.length == 2){
             // Si la instrución contiene un valor entero (como en instrucciones con MOV por ejemplo), se separa también el valor
@@ -154,16 +171,12 @@ public class FileManager {
         }
         
         // Se utilizan los hashMaps que fueron creados para obtener el valor entero del operador y del registro dependiendo de cuál se escribió en la instrucción
-        System.out.println("XDDDDDDDDDDDD");
-        int opValue = 0;
-        int registerValue = 0;
         
         opValue = this.operations.get(operator);
-        if (!operator.equalsIgnoreCase("int"))
+        if (!operator.equalsIgnoreCase("int") && !operator.equalsIgnoreCase("inc") && !operator.equalsIgnoreCase("dec"))
             registerValue = this.dataRegisters.get(register);
-        else
+        else if (operator.equalsIgnoreCase("int"))
             value = Integer.parseInt(register.substring(0, register.length() - 1), 16);
-        System.out.println("XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
         String registerType = "";
         if (registerValue == 1 || registerValue == 2 || registerValue == 3 || registerValue == 4)
             registerType = "16-bit";
