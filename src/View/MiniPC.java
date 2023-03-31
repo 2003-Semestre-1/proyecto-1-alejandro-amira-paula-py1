@@ -729,7 +729,7 @@ public class MiniPC extends javax.swing.JFrame {
                 this.getController().getCpu().setInstructionRegister(currentInstruction.getAsmInstructionString());
                 this.getController().getCpu().setProgramCounter(this.currentAddress);
 
-                this.getController().executeInstruction(currentInstruction.getOp(),currentInstruction.getRegister(),currentInstruction.getValue(),this);
+                this.getController().executeInstruction(currentInstruction.getOp(),currentInstruction.getRegister(),currentInstruction.getValue(),currentInstruction.getStringValue(),this);
                 this.updateTable(this.fileManager.getInstructions(),this.getRowCount());
             }
 
@@ -760,7 +760,7 @@ public class MiniPC extends javax.swing.JFrame {
             MemoryRegister currentInstruction = this.getFileManager().getInstructions().get(this.getRowCount());
             this.getController().getCpu().setInstructionRegister(currentInstruction.getAsmInstructionString());
             System.out.println("test1");
-            this.getController().executeInstruction(currentInstruction.getOp(),currentInstruction.getRegister(),currentInstruction.getValue(),this);
+            this.getController().executeInstruction(currentInstruction.getOp(),currentInstruction.getRegister(),currentInstruction.getValue(),currentInstruction.getStringValue(),this);
             System.out.println("test2");
             this.updateTable(this.fileManager.getInstructions(), this.getRowCount());
             this.getController().getCpu().setProgramCounter(this.getRowCount());

@@ -140,6 +140,9 @@ public class FileManager {
             if (register.equalsIgnoreCase("dx") && !str.matches("-?\\d+(\\.\\d+)?")){
                 valueString = str;
             }
+            else if (!str.matches("-?\\d+(\\.\\d+)?")){
+                valueString = str;
+            }
             else if (str.endsWith("h")) {
                 value = Integer.parseInt(str.substring(0, str.length() - 1), 16);
             }else if (str.matches("-?\\d+(\\.\\d+)?")) {

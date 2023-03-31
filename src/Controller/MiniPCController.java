@@ -33,11 +33,14 @@ public class MiniPCController {
         
     }
     
-    public void executeInstruction(int op, int register, int value, MiniPC miniPC){
+    public void executeInstruction(int op, int register, int value, String valueString, MiniPC miniPC){
         // Este método ejecuta la instrucción dependiendo del operador utilizado en la instrucción
         // Recibe un operador, un registro y un valor
         // Se utiliza un switch para realizar una diferente operación dependiendo del operador dado como parámetro
-        
+        System.out.println("op: "+op);
+        System.out.println("register: "+register);
+        System.out.println("value: "+value);
+        System.out.println("valueString: "+valueString);
         switch(op) {
         case 1:
             this.loadInstruction(register);
@@ -46,32 +49,60 @@ public class MiniPCController {
             this.storeInstruction(register);
             break;
         case 3:
-            this.movInstructionValue(register, value);
+            if ( (!valueString.equalsIgnoreCase("")) && (valueString.equalsIgnoreCase("ax") ||  valueString.equalsIgnoreCase("bx") || valueString.equalsIgnoreCase("cx") || valueString.equalsIgnoreCase("dx") || valueString.equalsIgnoreCase("al") || valueString.equalsIgnoreCase("ah")) ){
+                
+               int otherRegister = 0;
+               switch(valueString){
+                    case "ax":
+                        otherRegister = 1;
+                        break;
+                    case "bx":
+                        otherRegister = 2;
+                        break;
+                    case "cx":
+                        otherRegister = 3;
+                        break;
+                    case "dx":
+                        otherRegister = 4;
+                        break;
+                    case "al":
+                        otherRegister = 5;
+                        break;
+                    case "ah":
+                        otherRegister = 6;
+                        break;
+               }
+                
+               this.movInstructionRegister(register, otherRegister);
+            }
+            else if (!valueString.equalsIgnoreCase("")){
+                this.movInstructionValue(register, valueString);
+            }
+            else if (valueString.equalsIgnoreCase("")){
+                this.movInstructionValue(register, value);
+            }
             break;
         case 4:
-            this.movInstructionRegister(register, value);
-            break;
-        case 5:
             this.subInstruction(register);
             break;
-        case 6:
+        case 5:
             this.addInstruction(register);
             break;
-        case 7:
+        case 6:
             this.incInstruction();
             break;
-        case 8:
+        case 7:
             this.incRegisterInstruction(register);
-        case -9:
+        case 8:
             this.decInstruction();
             break;
-        case 10:
+        case 9:
             this.decRegisterInstruction(register);
             break;
-        case 11:
+        case 10:
             this.swapInstruction(register, value);
             break;
-        case 9:
+        case 11:
             this.interruptInstruction(value,miniPC);
             break;
         default:
@@ -121,12 +152,12 @@ public class MiniPCController {
         // Este método realiza la operación MOV para mover un valor entero a un registro
         // Recibe el registro destino donde se desea mover un valor, y el valor
         // Se mueve el valor dado al registro solicitado
-        
         if (destinationRegister == 4){
             this.getCpu().getDataRegisters().get(4-1).setStringValue(value);
         }
         
         System.out.println(destinationRegister);
+        System.out.println("TEST STRING: "+ this.getCpu().getDataRegisters().get(4-1).getStringValue());
     }
     
     public void movInstructionRegister(int destinationRegister, int sourceRegister){
@@ -134,6 +165,9 @@ public class MiniPCController {
         // Recibe el registro destino donde se desea mover un valor, y el registro fuente
         // Se mueve el valor dado al registro solicitado
         int valueSourceRegister = 0;
+        
+        System.out.println(destinationRegister);
+        System.out.println(sourceRegister);
         
         if (sourceRegister == 5){
             valueSourceRegister = this.getCpu().getDataRegisters().get(0).getLowByteValue();
@@ -154,7 +188,9 @@ public class MiniPCController {
         else{
             this.getCpu().getDataRegisters().get(destinationRegister-1).setValue(valueSourceRegister);
         }
-
+        System.out.println( valueSourceRegister);
+        System.out.println(this.getCpu().getDataRegisters().get(destinationRegister-1).getValue());
+        System.out.println( "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     }
     
     public void subInstruction(int destinationRegister){

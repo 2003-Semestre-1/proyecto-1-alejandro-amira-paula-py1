@@ -89,6 +89,14 @@ public class Interrupt {
         int ahValue = cpu.getDataRegisters().get(1-1).getHighByteValue();
         String fileName = cpu.getDataRegisters().get(4-1).getStringValue();
         System.out.println(fileName);
+        System.out.println(cpu.getDataRegisters().get(0).getValue());
+        System.out.println(cpu.getDataRegisters().get(0).getStringValue());
+        System.out.println(cpu.getDataRegisters().get(1).getValue());
+        System.out.println(cpu.getDataRegisters().get(1).getStringValue());
+        System.out.println(cpu.getDataRegisters().get(2).getValue());
+        System.out.println(cpu.getDataRegisters().get(2).getStringValue());
+        System.out.println(cpu.getDataRegisters().get(3).getValue());
+        System.out.println(cpu.getDataRegisters().get(3).getStringValue());
         
         switch(ahValue) {
          case 60 :

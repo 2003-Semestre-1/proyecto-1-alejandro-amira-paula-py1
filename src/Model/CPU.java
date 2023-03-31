@@ -27,12 +27,12 @@ public class CPU {
     // Se crea un ArrayList de registros y se agregan AB,BX,CX y DX a esta arraylist
     public CPU(Memory memory) {
         this.memory = memory;
-        DataRegister ax = new DataRegister(0,"16-bit","");
-        DataRegister bx = new DataRegister(0,"16-bit","");
-        DataRegister cx = new DataRegister(0,"16-bit","");
-        DataRegister dx = new DataRegister(0,"16-bit","");
-        DataRegister al = new DataRegister(0,"8-bit","");
-        DataRegister ah = new DataRegister(0,"8-bit","");
+        DataRegister ax = new DataRegister(0,"","16-bit");
+        DataRegister bx = new DataRegister(0,"","16-bit");
+        DataRegister cx = new DataRegister(0,"","16-bit");
+        DataRegister dx = new DataRegister(0,"","16-bit");
+        DataRegister al = new DataRegister(0,"","8-bit");
+        DataRegister ah = new DataRegister(0,"","8-bit");
         this.dataRegisters.add(ax);
         this.dataRegisters.add(bx);
         this.dataRegisters.add(cx);
