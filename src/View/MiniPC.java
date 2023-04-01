@@ -11,6 +11,8 @@ import Model.FileManager;
 import Model.Memory;
 import Model.MemoryRegister;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -29,6 +31,7 @@ public class MiniPC extends javax.swing.JFrame {
     public FileManager fileManager = new FileManager();
     int rowCount = 0;
     int currentAddress = 0;
+    boolean waitingForInput = false;
     
     /**
      * Creates new form NewJFrame
@@ -381,6 +384,7 @@ public class MiniPC extends javax.swing.JFrame {
             }
         });
 
+        tecladoTxtField.setEditable(false);
         tecladoTxtField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tecladoTxtFieldActionPerformed(evt);
@@ -400,10 +404,6 @@ public class MiniPC extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(lblPantalla)
                 .addGap(38, 38, 38))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pnl_MenuLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblTeclado)
-                .addGap(37, 37, 37))
             .addGroup(Pnl_MenuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(Pnl_MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -414,6 +414,10 @@ public class MiniPC extends javax.swing.JFrame {
                     .addComponent(nextInstructionBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(loadFileBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pnl_MenuLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblTeclado)
+                .addGap(40, 40, 40))
         );
         Pnl_MenuLayout.setVerticalGroup(
             Pnl_MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -421,7 +425,7 @@ public class MiniPC extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblPantalla)
                 .addGap(1, 1, 1)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(loadFileBtn)
                 .addGap(18, 18, 18)
@@ -433,8 +437,8 @@ public class MiniPC extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addComponent(lblTeclado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tecladoTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12))
+                .addComponent(tecladoTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
         );
 
         Lbl_memoria.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -530,6 +534,16 @@ public class MiniPC extends javax.swing.JFrame {
         FileManager newFileManager = new FileManager();
         this.setFileManager(newFileManager);
     }
+
+    public boolean isWaitingForInput() {
+        return waitingForInput;
+    }
+
+    public void setWaitingForInput(boolean waitingForInput) {
+        this.waitingForInput = waitingForInput;
+    }
+    
+    
     
     private void updateTable(ArrayList<MemoryRegister> instructionSet, int row) {   
         // Este método actualiza la tabla visualmente, es decir actualiza la información que está siendo desplegada en la GUI
@@ -706,7 +720,7 @@ public class MiniPC extends javax.swing.JFrame {
     }//GEN-LAST:event_nextInstructionBtn1ActionPerformed
 
     private void loadFileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadFileBtnActionPerformed
-        if (evt.getSource() == loadFileBtn) {
+        if (evt.getSource() == loadFileBtn && !this.isWaitingForInput()) {
             this.cleanTable();
 
             String filePath = fileManager.selectFile(this);
@@ -729,46 +743,87 @@ public class MiniPC extends javax.swing.JFrame {
                 this.getController().getCpu().setInstructionRegister(currentInstruction.getAsmInstructionString());
                 this.getController().getCpu().setProgramCounter(this.currentAddress);
 
-                this.getController().executeInstruction(currentInstruction.getOp(),currentInstruction.getRegister(),currentInstruction.getValue(),currentInstruction.getStringValue(),this);
+                try {
+                    this.getController().executeInstruction(currentInstruction.getOp(),currentInstruction.getRegister(),currentInstruction.getValue(),currentInstruction.getStringValue(),this);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(MiniPC.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 this.updateTable(this.fileManager.getInstructions(),this.getRowCount());
             }
 
         }
+        else if (this.isWaitingForInput())
+            JOptionPane.showMessageDialog (null, "Escriba un valor.", "Error: Debe escribir un valor.", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_loadFileBtnActionPerformed
 
     private void cleanTableBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanTableBtnActionPerformed
         if (this.getTblCode().getValueAt(0, 0) == "" || this.getTblCode().getValueAt(0, 0) == " "){
             JOptionPane.showMessageDialog (null, "No queda nada por limpiar", "Error: Archivo ya fue limpiado", JOptionPane.ERROR_MESSAGE);
         }
-        else
-        this.cleanTable();
+        else{
+            this.setWaitingForInput(false);
+            this.cleanTable();
+        }
+        
     }//GEN-LAST:event_cleanTableBtnActionPerformed
 
     private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
+        this.setWaitingForInput(false);
         System.exit(0);
     }//GEN-LAST:event_exitBtnActionPerformed
 
     private void nextInstructionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextInstructionBtnActionPerformed
-        if (this.getController().getCpu() == null){
-            JOptionPane.showMessageDialog (null, "Por favor cargue un archivo", "Error: Archivo no cargado", JOptionPane.ERROR_MESSAGE);
-        }
+        if (!this.isWaitingForInput()){
+            if (this.getController().getCpu() == null){
+                JOptionPane.showMessageDialog (null, "Por favor cargue un archivo", "Error: Archivo no cargado", JOptionPane.ERROR_MESSAGE);
+            }
         else if (this.getRowCount() >= this.fileManager.getInstructions().size()){
-            JOptionPane.showMessageDialog (null, "No quedan más instrucciones que cargar.", "Error: Final del archivo", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+                JOptionPane.showMessageDialog (null, "No quedan más instrucciones que cargar.", "Error: Final del archivo", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         else{
             MemoryRegister currentInstruction = this.getFileManager().getInstructions().get(this.getRowCount());
             this.getController().getCpu().setInstructionRegister(currentInstruction.getAsmInstructionString());
             System.out.println("test1");
-            this.getController().executeInstruction(currentInstruction.getOp(),currentInstruction.getRegister(),currentInstruction.getValue(),currentInstruction.getStringValue(),this);
+            try {
+                this.getController().executeInstruction(currentInstruction.getOp(),currentInstruction.getRegister(),currentInstruction.getValue(),currentInstruction.getStringValue(),this);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(MiniPC.class.getName()).log(Level.SEVERE, null, ex);
+            }
             System.out.println("test2");
             this.updateTable(this.fileManager.getInstructions(), this.getRowCount());
             this.getController().getCpu().setProgramCounter(this.getRowCount());
+            }
         }
+        else
+            JOptionPane.showMessageDialog (null, "Escriba un valor.", "Error: Debe escribir un valor.", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_nextInstructionBtnActionPerformed
 
     private void tecladoTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tecladoTxtFieldActionPerformed
-        // TODO add your handling code here:
+        System.out.println(this.getTecladoTxtField().getText());
+        String inputTeclado = "";
+        int valorTeclado = -1;
+        inputTeclado = this.getTecladoTxtField().getText();
+        
+        if (inputTeclado.matches("-?\\d+(\\.\\d+)?")){
+            valorTeclado = Integer.parseInt(inputTeclado);
+            
+            if (valorTeclado < 0 || valorTeclado > 255){
+                JOptionPane.showMessageDialog (null, "Escriba un valor entre 0-255", "Error: Valor fuera del rango 0-255.", JOptionPane.ERROR_MESSAGE);
+            }
+            else{
+                this.getController().getCpu().getDataRegisters().get(4-1).setValue(valorTeclado);
+                this.getLblNumberDX().setText(valorTeclado+"");
+                this.getTecladoTxtField().setEditable(false);
+                this.setWaitingForInput(false);
+                this.getTecladoTxtField().setText("");
+            }
+            
+        }
+        else{
+            JOptionPane.showMessageDialog (null, "Escriba un valor entero.", "Error: Debe escribir un valor entero.", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_tecladoTxtFieldActionPerformed
 
     /**

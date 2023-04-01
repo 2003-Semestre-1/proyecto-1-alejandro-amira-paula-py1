@@ -7,9 +7,13 @@ package Model;
 
 import Controller.MiniPCController;
 import View.MiniPC;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,17 +30,17 @@ public class Interrupt {
         this.cpu = cpu;
     }
     
-    public void executeInterrupt(MiniPC miniPC){
+    public void executeInterrupt(MiniPC miniPC) throws InterruptedException{
         System.out.println(codigo);
         switch(this.codigo) {
         case 20:
-            this.interrupt20H(this.getCpu().getMemory().getBcpList());
+            this.interrupt20H(this.getCpu().getMemory().getBcpList(), miniPC);
             break;
         case 10:
             this.interrupt10H(this.getCpu(), miniPC);
             break;
         case 9:
-            this.interrupt09H(this.getCpu());
+            this.interrupt09H(miniPC);
             break;
         case 33:
             this.interupt21H(this.getCpu());
@@ -47,11 +51,14 @@ public class Interrupt {
         
     }
     
-    public void interrupt20H(ArrayList<BCP> bcpList){
+    public void interrupt20H(ArrayList<BCP> bcpList, MiniPC miniPC){
         
         BCP bcp = bcpList.get(0);
         int estadoTerminado = bcp.getEstados().get("finalizado");
         bcp.setEstadoActual(estadoTerminado);
+        String textPantalla = miniPC.getPantalla().getText();
+        textPantalla = textPantalla + "\n" + "Programa terminado.";
+        miniPC.getPantalla().setText(textPantalla);
         
     }
     
@@ -59,30 +66,15 @@ public class Interrupt {
         
         int valorRegistroDX = cpu.getDataRegisters().get(4-1).getValue();
         String currentText = miniPC.getPantalla().getText();
-        currentText = currentText + "\n" + valorRegistroDX;
+        currentText = currentText + "\n" + "Valor: " + valorRegistroDX;
         miniPC.getPantalla().setText(currentText);
         
     }
     
-    public void interrupt09H(CPU cpu){
-        
-        //Se obtiene el input dado por medio del teclado
-        int valorTeclado = 0;
-        try {
-        //valorTeclado = cpu.getTeclado().getInput().parseInt;
-        }
-        catch(Exception e) {
-        //validar que es un valor entero
-        }
-        
-        if (valorTeclado > 255 || valorTeclado < 0){
-            // tirar un error porque el valor no está entre el rango 0-255
-            return;
-        }
-        else{
-            cpu.getDataRegisters().get(4-1).setValue(codigo);
-        }
-        
+    public void interrupt09H(MiniPC miniPC) throws InterruptedException{
+        miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Escriba el valor.");
+        miniPC.setWaitingForInput(true);
+        miniPC.getTecladoTxtField().setEditable(true);
     }
     
     public void interupt21H(CPU cpu){

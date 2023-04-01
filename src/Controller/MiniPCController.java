@@ -33,7 +33,7 @@ public class MiniPCController {
         
     }
     
-    public void executeInstruction(int op, int register, int value, String valueString, MiniPC miniPC){
+    public void executeInstruction(int op, int register, int value, String valueString, MiniPC miniPC) throws InterruptedException{
         // Este método ejecuta la instrucción dependiendo del operador utilizado en la instrucción
         // Recibe un operador, un registro y un valor
         // Se utiliza un switch para realizar una diferente operación dependiendo del operador dado como parámetro
@@ -282,7 +282,7 @@ public class MiniPCController {
         this.getCpu().getDataRegisters().get(secondRegister-1).setValue(firstRegisterValue);
     }
     
-    public void interruptInstruction(int codigo, MiniPC miniPC){
+    public void interruptInstruction(int codigo, MiniPC miniPC) throws InterruptedException{
         // Este método ejecuta un interrupt dependinedo del codigo de interrupt dado
         // Recibe el codigo del interrupt
         // Ejecuta el interrupt dependiendo de su codigo

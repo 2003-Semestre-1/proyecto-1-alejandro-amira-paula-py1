@@ -14,3 +14,4 @@ swap ax,bx
 mov dx, xd.txt
 mov ah, 3ch
 int 21h
+int 09h
