@@ -219,8 +219,14 @@ public class FileManager {
         // Se utilizan los hashMaps que fueron creados para obtener el valor entero del operador y del registro dependiendo de cuál se escribió en la instrucción
         
         opValue = this.operations.get(operator);
-        if (!operator.equalsIgnoreCase("int") && !operator.equalsIgnoreCase("inc") && !operator.equalsIgnoreCase("dec") && !operator.equalsIgnoreCase("jmp") && !operator.equalsIgnoreCase("je") && !operator.equalsIgnoreCase("jne") && !operator.equalsIgnoreCase("param"))
-            registerValue = this.dataRegisters.get(register);
+        if (!operator.equalsIgnoreCase("int") && !operator.equalsIgnoreCase("inc") && !operator.equalsIgnoreCase("dec") && !operator.equalsIgnoreCase("jmp") && !operator.equalsIgnoreCase("je") && !operator.equalsIgnoreCase("jne") && !operator.equalsIgnoreCase("param")){
+            if (operator.equalsIgnoreCase("cmp") && (register.matches("-?\\d+(\\.\\d+)?"))){
+                registerValue = this.dataRegisters.get(valueString);
+            }
+            else
+                registerValue = this.dataRegisters.get(register);
+        }
+            
         else if (operator.equalsIgnoreCase("int"))
             value = Integer.parseInt(register.substring(0, register.length() - 1), 16);
         else if (operator.equalsIgnoreCase("jmp") || operator.equalsIgnoreCase("je") || operator.equalsIgnoreCase("jne"))

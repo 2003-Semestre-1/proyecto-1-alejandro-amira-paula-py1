@@ -6,6 +6,7 @@
 package View;
 
 import Controller.MiniPCController;
+import Model.BCP;
 import Model.CPU;
 import Model.FileManager;
 import Model.Memory;
@@ -785,6 +786,8 @@ public class MiniPC extends javax.swing.JFrame {
             else if (instructionSet != null){
                 Memory memory = new Memory(instructionSet.size());
                 memory.allocateMemory(instructionSet);
+                int processStartIndex = memory.getAllocationStartIndex();
+                //BCP newBCP = new BCP();
                 CPU cpu = new CPU(memory);
                 this.getController().setCpu(cpu);
                 this.setCurrentAddress(this.controller.getCpu().getMemory().getAllocationStartIndex());

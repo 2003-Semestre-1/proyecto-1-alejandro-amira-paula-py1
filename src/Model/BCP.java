@@ -13,6 +13,8 @@ import java.util.HashMap;
  */
 public class BCP {
     
+    int idProcess;
+    String nameProcess;
     HashMap<String,Integer> estados;
     int estadoActual;
     int programCounter;
@@ -24,17 +26,46 @@ public class BCP {
     int tamanoProceso;
     int prioridad;
 
-    public BCP(HashMap<String, Integer> estados, int estadoActual, int programCounter, HashMap<String, Integer> registros, Pila pila, StatsSet informacionContable, int siguienteBPC, int direccionInicio, int tamanoProceso, int prioridad) {
-        this.estados = estados;
+    public BCP(int idProcess, String nameProcess, int estadoActual, int programCounter, HashMap<String, Integer> registros, Pila pila, StatsSet informacionContable, int siguienteBPC, int direccionInicio, int tamanoProceso, int prioridad) {
+        this.idProcess = idProcess;
+        this.nameProcess = nameProcess;
+        
+        this.estados = new HashMap<String, Integer>();
+        this.estados.put("nuevo", 0);
+        this.estados.put("preparado", 1);
+        this.estados.put("ejecución", 2);
+        this.estados.put("en espera", 3);
+        this.estados.put("finalizado", 4);
+        
         this.estadoActual = estadoActual;
         this.programCounter = programCounter;
+        
         this.registros = registros;
+        
         this.pila = pila;
+        
         this.informacionContable = informacionContable;
+        
         this.siguienteBPC = siguienteBPC;
         this.direccionInicio = direccionInicio;
         this.tamanoProceso = tamanoProceso;
         this.prioridad = prioridad;
+    }
+
+    public int getIdProcess() {
+        return idProcess;
+    }
+
+    public void setIdProcess(int idProcess) {
+        this.idProcess = idProcess;
+    }
+
+    public String getNameProcess() {
+        return nameProcess;
+    }
+
+    public void setNameProcess(String nameProcess) {
+        this.nameProcess = nameProcess;
     }
 
     public HashMap<String, Integer> getEstados() {

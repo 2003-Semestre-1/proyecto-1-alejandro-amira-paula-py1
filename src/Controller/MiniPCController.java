@@ -124,7 +124,7 @@ public class MiniPCController {
             miniPC.setTime(miniPC.getTime()+1);
             break;
         case 11:
-            this.cmpInstruction(miniPC,register,valueString);
+            this.cmpInstruction(miniPC,register,value,valueString);
             miniPC.setTime(miniPC.getTime()+1);
             break;
         case 12:
@@ -382,9 +382,15 @@ public class MiniPCController {
         
     }
     
-    public void cmpInstruction(MiniPC miniPC, int register, String secondRegisterString){
+    public void cmpInstruction(MiniPC miniPC, int register, int value, String secondRegisterString){
         int secondRegister = 0;
-        switch(secondRegisterString){
+        int valueSecondRegister = 0;
+        
+        if (secondRegisterString.isEmpty())
+            secondRegister = value;
+        else{
+            
+            switch(secondRegisterString){
             case "ax":
                 secondRegister=1;
                 break;
@@ -405,11 +411,18 @@ public class MiniPCController {
                 break;
             default:
                 JOptionPane.showMessageDialog (null, "La instrucción dada no se puede ejecutar.", "Error: Instrucción inválida", JOptionPane.ERROR_MESSAGE);
+            }
+            
         }
         
         int valueFirstRegister = miniPC.getController().getCpu().getDataRegisters().get(register-1).getValue();
-        int valueSecondRegister = miniPC.getController().getCpu().getDataRegisters().get(secondRegister-1).getValue();
+        if (!secondRegisterString.isEmpty())
+            valueSecondRegister = miniPC.getController().getCpu().getDataRegisters().get(secondRegister-1).getValue();
+        else
+            valueSecondRegister=secondRegister;
+
         int result = valueFirstRegister-valueSecondRegister;
+        System.out.println("Result: "+result);
         
         if (result == 0)
             miniPC.getController().getCpu().setZeroFlag(true);
