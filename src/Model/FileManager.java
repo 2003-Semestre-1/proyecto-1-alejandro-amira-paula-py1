@@ -130,9 +130,51 @@ public class FileManager {
             String operator = "";
             int opValue = 0;
             int registerValue = 0;
+            System.out.println("Split1: "+split1);
+            System.out.println("Split2: "+split2);
             
-            if (instruction.split(" ")[0].equalsIgnoreCase("inc") || instruction.split(" ")[0].equalsIgnoreCase("dec")){
+            if (instruction.split(" ")[0].equalsIgnoreCase("param")){
                 operator = instruction.split(" ")[0];
+                System.out.println(instruction.split(" ")[0]);
+                System.out.println(instruction.split("\\D+").length);
+                
+                if (instruction.split("\\D+").length==2){
+                    System.out.println(instruction.split("\\D+")[1]);
+                    register = instruction.split("\\D+")[1];
+                    register = register.trim();
+                    registerValue = Integer.parseInt(register);
+                }
+                else if (instruction.split("\\D+").length==3){
+                    register = instruction.split("\\D+")[1];
+                    register = register.trim();
+                    registerValue = Integer.parseInt(register);
+                    
+                    valueString = instruction.split("\\D+")[2];
+                    valueString = valueString.trim();
+                    value = Integer.parseInt(valueString);
+                    valueString = "";
+                }
+                else if (instruction.split("\\D+").length==4){
+                    register = instruction.split("\\D+")[1];
+                    register = register.trim();
+                    registerValue = Integer.parseInt(register);
+                    
+                    valueString = instruction.split("\\D+")[2];
+                    valueString = valueString.trim();
+                    value = Integer.parseInt(valueString);
+                    
+                    valueString = instruction.split("\\D+")[3];
+                    valueString = valueString.trim();
+                }
+
+                System.out.println("Value1: "+registerValue);
+                System.out.println("Value2: "+value);
+                System.out.println("Value3: "+valueString);
+                System.out.println("Value4: "+operator);
+            }
+            else if (instruction.split(" ")[0].equalsIgnoreCase("inc") || instruction.split(" ")[0].equalsIgnoreCase("dec")){
+                operator = instruction.split(" ")[0];
+                System.out.println(instruction.split(" "));
                 
                 if (instruction.split(" ").length>1){
                     register = instruction.split(" ")[1];
@@ -177,7 +219,7 @@ public class FileManager {
         // Se utilizan los hashMaps que fueron creados para obtener el valor entero del operador y del registro dependiendo de cuál se escribió en la instrucción
         
         opValue = this.operations.get(operator);
-        if (!operator.equalsIgnoreCase("int") && !operator.equalsIgnoreCase("inc") && !operator.equalsIgnoreCase("dec") && !operator.equalsIgnoreCase("jmp") && !operator.equalsIgnoreCase("je") && !operator.equalsIgnoreCase("jne"))
+        if (!operator.equalsIgnoreCase("int") && !operator.equalsIgnoreCase("inc") && !operator.equalsIgnoreCase("dec") && !operator.equalsIgnoreCase("jmp") && !operator.equalsIgnoreCase("je") && !operator.equalsIgnoreCase("jne") && !operator.equalsIgnoreCase("param"))
             registerValue = this.dataRegisters.get(register);
         else if (operator.equalsIgnoreCase("int"))
             value = Integer.parseInt(register.substring(0, register.length() - 1), 16);

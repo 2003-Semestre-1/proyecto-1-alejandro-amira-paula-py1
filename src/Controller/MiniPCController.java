@@ -136,7 +136,7 @@ public class MiniPCController {
             miniPC.setTime(miniPC.getTime()+1);
             break;
         case 14:
-            this.paramInstruction(miniPC);
+            this.paramInstruction(miniPC,register,value,valueString);
             miniPC.setTime(miniPC.getTime()+1);
             break;
         case 15:
@@ -535,9 +535,26 @@ public class MiniPCController {
             
         }
     }
-
-    public void paramInstruction(MiniPC miniPC){
+    
+    public void paramInstruction(MiniPC miniPC, int value1, int value2, String value3){
+        miniPC.getController().getCpu().getMemory().getStack().push(value1);
+        miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Parámetro "+value1+" agregado al stack.");
         
+        if (value2 > 0){
+            miniPC.getController().getCpu().getMemory().getStack().push(value2);
+            miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Parámetro "+value2+" agregado al stack.");
+        }
+        
+        if (!value3.isEmpty()){
+            try{
+                miniPC.getController().getCpu().getMemory().getStack().push(Integer.parseInt(value3));
+                miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Parámetro "+value3+" agregado al stack.");
+            }
+            catch(Exception e){
+                miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Parámetro 3 debe ser entero");
+            }
+        }
+            
     }
     
     public void pushInstruction(MiniPC miniPC, int register){
