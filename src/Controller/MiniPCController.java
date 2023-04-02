@@ -140,11 +140,11 @@ public class MiniPCController {
             miniPC.setTime(miniPC.getTime()+1);
             break;
         case 15:
-            this.pushInstruction(miniPC);
+            this.pushInstruction(miniPC,register);
             miniPC.setTime(miniPC.getTime()+1);
             break;
         case 16:
-            this.popInstruction(miniPC);
+            this.popInstruction(miniPC,register);
             miniPC.setTime(miniPC.getTime()+1);
             break;
         default:
@@ -542,14 +542,15 @@ public class MiniPCController {
     
     public void pushInstruction(MiniPC miniPC, int register){
         int registerValue = miniPC.getController().getCpu().getDataRegisters().get(register-1).getValue();
+        System.out.println(registerValue);
         miniPC.getController().getCpu().getMemory().getStack().push(registerValue);
-        
+        System.out.println("Pushed: "+miniPC.getController().getCpu().getMemory().getStack().peek());
     }
     
     public void popInstruction(MiniPC miniPC, int register){
         int registerValue = miniPC.getController().getCpu().getMemory().getStack().pop();
+        System.out.println(registerValue);
         miniPC.getController().getCpu().getDataRegisters().get(register-1).setValue(registerValue);
-        
     }
     
     public CPU getCpu() {
