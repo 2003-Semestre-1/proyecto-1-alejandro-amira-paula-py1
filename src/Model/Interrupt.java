@@ -10,7 +10,11 @@ import View.MiniPC;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,7 +47,7 @@ public class Interrupt {
             this.interrupt09H(miniPC);
             break;
         case 33:
-            this.interupt21H(this.getCpu());
+            this.interupt21H(miniPC,this.getCpu());
             break;
         default:
             JOptionPane.showMessageDialog (null, "El interrupt dado no se puede ejecutar.", "Error: Interrupt inválido", JOptionPane.ERROR_MESSAGE);
@@ -72,12 +76,12 @@ public class Interrupt {
     }
     
     public void interrupt09H(MiniPC miniPC) throws InterruptedException{
-        miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Escriba el valor.");
+        miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Escriba un valor entre 0-255.");
         miniPC.setWaitingForInput(true);
         miniPC.getTecladoTxtField().setEditable(true);
     }
     
-    public void interupt21H(CPU cpu){
+    public void interupt21H(MiniPC miniPC, CPU cpu){
         
         int ahValue = cpu.getDataRegisters().get(1-1).getHighByteValue();
         String fileName = cpu.getDataRegisters().get(4-1).getStringValue();
@@ -98,18 +102,82 @@ public class Interrupt {
             }
             break;
          case 61 :
-             System.out.println("XD");
+            filePath = "src\\Files\\"+fileName;
+            System.out.println(filePath);
+            file = new File(filePath);
+
+            if (file.exists()) {
+                miniPC.setArchivoAbierto(true);
+                miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Archivo "+fileName+" abierto");
+            } else {
+                miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: el archivo no existe");
+            }
+            
             break;
          case 77 :
-            System.out.println("Well done");
+            filePath = "src\\Files\\"+fileName;
+            System.out.println(filePath);
+            file = new File(filePath);
+            Path path = Paths.get(filePath);
+            
+            if (miniPC.isArchivoAbierto()){
+                try {
+                    String contents = new String(Files.readAllBytes(path));
+                    System.out.println(contents);
+                    miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Archivo "+fileName+" leído");
+                    miniPC.getController().getCpu().getDataRegisters().get(5-1).setStringValue(contents);
+                } catch (IOException e) {
+                    miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Archivo no pudo ser leído");
+                }
+            }
+            else{
+                miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Debe abrir el archivo primero.");
+            }
+            
             break;
          case 64 :
-            System.out.println("You passed");
+            if (miniPC.isArchivoAbierto()){
+                try {
+                    filePath = "src\\Files\\"+fileName;
+                    System.out.println(filePath);
+                    file = new File(filePath);
+                
+                    String content = miniPC.getController().getCpu().getDataRegisters().get(5-1).getStringValue();
+                
+                    FileWriter writer = new FileWriter(filePath);
+                    writer.write(content);
+                    writer.close();
+                
+                    System.out.println(content);
+                    miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Se escribió al archivo con éxito");
+                } catch (IOException e) {
+                    miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"No se pudo escribir al archivo");
+                }
+            }
+            else{
+                miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Debe abrir el archivo primero.");
+            }
+            
+            break;
          case 65 :
-            System.out.println("Better try again");
+            if (miniPC.isArchivoAbierto()){
+                filePath = "src\\Files\\"+fileName;
+                System.out.println(filePath);
+                file = new File(filePath);
+            
+                if (file.delete()) {
+                    miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Archivo "+fileName+" eliminado");
+                } else {
+                    miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Archivo no pudo ser eliminado");
+                }
+            }
+            else{
+                miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Debe abrir el archivo primero.");
+            }
+             
             break;
          default :
-            System.out.println("Invalid grade");
+            miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error al realizar interrupt 21h");
       }
         
     }

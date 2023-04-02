@@ -32,6 +32,7 @@ public class MiniPC extends javax.swing.JFrame {
     int rowCount = 0;
     int currentAddress = 0;
     boolean waitingForInput = false;
+    boolean archivoAbierto = false;
     
     /**
      * Creates new form NewJFrame
@@ -542,6 +543,14 @@ public class MiniPC extends javax.swing.JFrame {
     public void setWaitingForInput(boolean waitingForInput) {
         this.waitingForInput = waitingForInput;
     }
+
+    public boolean isArchivoAbierto() {
+        return archivoAbierto;
+    }
+
+    public void setArchivoAbierto(boolean archivoAbierto) {
+        this.archivoAbierto = archivoAbierto;
+    }
     
     
     
@@ -763,6 +772,7 @@ public class MiniPC extends javax.swing.JFrame {
         else{
             this.setWaitingForInput(false);
             this.cleanTable();
+            this.getPantalla().setText("");
         }
         
     }//GEN-LAST:event_cleanTableBtnActionPerformed

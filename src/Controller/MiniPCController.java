@@ -156,12 +156,10 @@ public class MiniPCController {
         // Este método realiza la operación MOV para mover un valor entero a un registro
         // Recibe el registro destino donde se desea mover un valor, y el valor
         // Se mueve el valor dado al registro solicitado
-        if (destinationRegister == 4){
-            this.getCpu().getDataRegisters().get(4-1).setStringValue(value);
-        }
+        this.getCpu().getDataRegisters().get(destinationRegister-1).setStringValue(value);
         
         System.out.println(destinationRegister);
-        System.out.println("TEST STRING: "+ this.getCpu().getDataRegisters().get(4-1).getStringValue());
+        System.out.println("TEST STRING: "+ this.getCpu().getDataRegisters().get(destinationRegister-1).getStringValue());
     }
     
     public void movInstructionRegister(int destinationRegister, int sourceRegister){

@@ -75,8 +75,10 @@ public class FileManager {
             
             while(instruction != null) {
                 
-                this.instructions.add(this.processInstruction(instruction)); // Se procesa la instrucción para agergarla a memoria, luego se procede a la siguiente línea
-                System.out.println("Instruccion es: " + instruction);
+                if (!instruction.isEmpty()){
+                    this.instructions.add(this.processInstruction(instruction)); // Se procesa la instrucción para agergarla a memoria, luego se procede a la siguiente línea
+                    System.out.println("Instruccion es: " + instruction);
+                }
                 
                 instructionPos++;
                 lineAmount++;
@@ -154,7 +156,7 @@ public class FileManager {
             // Si la instrución contiene un valor entero (como en instrucciones con MOV por ejemplo), se separa también el valor
             String str = split1[1].trim().toLowerCase();
             
-            if (register.equalsIgnoreCase("dx") && !str.matches("-?\\d+(\\.\\d+)?")){
+            if ( (register.equalsIgnoreCase("dx") || register.equalsIgnoreCase("al")) && !str.matches("-?\\d+(\\.\\d+)?")){
                 valueString = str;
             }
             else if (str.endsWith("h")) {

@@ -37,6 +37,8 @@ public class CPU {
         this.dataRegisters.add(bx);
         this.dataRegisters.add(cx);
         this.dataRegisters.add(dx);
+        this.dataRegisters.add(al);
+        this.dataRegisters.add(ah);
         
     }
 
