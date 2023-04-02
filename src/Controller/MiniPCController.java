@@ -41,12 +41,15 @@ public class MiniPCController {
         System.out.println("register: "+register);
         System.out.println("value: "+value);
         System.out.println("valueString: "+valueString);
+        miniPC.setNumberExecutedInstructions(miniPC.getNumberExecutedInstructions()+1);
         switch(op) {
         case 1:
             this.loadInstruction(register);
+            miniPC.setTime(miniPC.getTime()+1);
             break;
         case 2:
             this.storeInstruction(register);
+            miniPC.setTime(miniPC.getTime()+1);
             break;
         case 3:
             if ( (!valueString.equalsIgnoreCase("")) && (valueString.equalsIgnoreCase("ax") ||  valueString.equalsIgnoreCase("bx") || valueString.equalsIgnoreCase("cx") || valueString.equalsIgnoreCase("dx") || valueString.equalsIgnoreCase("al") || valueString.equalsIgnoreCase("ah")) ){
@@ -84,30 +87,65 @@ public class MiniPCController {
             else if (valueString.equalsIgnoreCase("")){
                 this.movInstructionValue(register, value);
             }
+            miniPC.setTime(miniPC.getTime()+1);
             break;
         case 4:
             this.subInstruction(register);
+            miniPC.setTime(miniPC.getTime()+1);
             break;
         case 5:
             this.addInstruction(register);
+            miniPC.setTime(miniPC.getTime()+1);
             break;
         case 6:
             if (register > 0)
                 this.incRegisterInstruction(register);
             else
                 this.incInstruction();
+            miniPC.setTime(miniPC.getTime()+1);
             break;
         case 7:
             if (register > 0)
                 this.decRegisterInstruction(register);
             else
                 this.decInstruction();
+            miniPC.setTime(miniPC.getTime()+1);
             break;
         case 8:
             this.swapInstruction(register, valueString);
+            miniPC.setTime(miniPC.getTime()+1);
             break;
         case 9:
             this.interruptInstruction(value,miniPC);
+            miniPC.setTime(miniPC.getTime()+1);
+            break;
+        case 10:
+            this.jmpInstruction(miniPC,value);
+            miniPC.setTime(miniPC.getTime()+1);
+            break;
+        case 11:
+            this.cmpInstruction(miniPC,register,valueString);
+            miniPC.setTime(miniPC.getTime()+1);
+            break;
+        case 12:
+            this.jeInstruction(miniPC,value);
+            miniPC.setTime(miniPC.getTime()+1);
+            break;
+        case 13:
+            this.jneInstruction(miniPC,value);
+            miniPC.setTime(miniPC.getTime()+1);
+            break;
+        case 14:
+            this.paramInstruction(miniPC);
+            miniPC.setTime(miniPC.getTime()+1);
+            break;
+        case 15:
+            this.pushInstruction(miniPC);
+            miniPC.setTime(miniPC.getTime()+1);
+            break;
+        case 16:
+            this.popInstruction(miniPC);
+            miniPC.setTime(miniPC.getTime()+1);
             break;
         default:
             JOptionPane.showMessageDialog (null, "La instrucción dada no se puede ejecutar.", "Error: Instrucción inválida", JOptionPane.ERROR_MESSAGE);
@@ -141,9 +179,6 @@ public class MiniPCController {
         }
         else if (destinationRegister == 6){
             this.getCpu().getDataRegisters().get(0).setHighByteValue(value);
-        }
-        else if (destinationRegister == 4){
-            this.getCpu().getDataRegisters().get(4-1).setHighByteValue(value);
         }
         else{
             this.getCpu().getDataRegisters().get(destinationRegister-1).setValue(value);
@@ -289,7 +324,234 @@ public class MiniPCController {
         interrupt.executeInterrupt(miniPC);
         
     }
+    
+    public void jmpInstruction(MiniPC miniPC, int offset){
+        int instructionsSize = miniPC.getFileManager().getInstructions().size();
+        System.out.println("Current address: "+miniPC.getCurrentAddress());
+        System.out.println("1: "+instructionsSize);
+        instructionsSize = instructionsSize - miniPC.getNumberExecutedInstructions();
+        System.out.println("2: "+instructionsSize);
+        System.out.println("3: "+offset);
+        
+        int newAddress = miniPC.getCurrentAddress() + offset;
+        
+        if (offset > 0){
+            int maxMemoryLimit = -1; // initialize index to -1
+            for (int i = 0; i < miniPC.getController().getCpu().getMemory().getMemoryRegisters().size(); i++) {
+                if (miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i).isPresent()) {
+                    maxMemoryLimit = i; // update index when a non-null element is found
+                }
+                System.out.println(miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i));
+                System.out.println(miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i).getClass());
+                System.out.println("i: "+i);
+            }
+            System.out.println("Index: "+maxMemoryLimit);
+            System.out.println("Current Address: "+miniPC.getCurrentAddress());
+            System.out.println("New Address: "+newAddress);
+            
+            if (newAddress < maxMemoryLimit){
+                miniPC.setJumpFlag(true);
+                miniPC.setJumpToAddress(offset);
+            }
+            else{
+                miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Desbordamiento causado por jump positivo.");
+            }
+        }
+        else if (offset < 0){
+            
+            int firstMemoryIndex = -1; // initialize index to -1
+            for (int i = 0; i < miniPC.getController().getCpu().getMemory().getMemoryRegisters().size(); i++) {
+                if (miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i).isPresent()) {
+                    firstMemoryIndex = i; // update index when a non-null element is found
+                    break; // exit the loop once the first non-null element is found
+                }
+                System.out.println("i: "+i);
+            }
+            System.out.println("Index: "+firstMemoryIndex);
+            System.out.println("Current Address: "+miniPC.getCurrentAddress());
+            System.out.println("New Address: "+newAddress);
+            
+            if (newAddress > firstMemoryIndex){
+                miniPC.setJumpFlag(true);
+                miniPC.setJumpToAddress(offset);
+            }
+            else{
+                miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Desbordamiento causado por jump negativo.");
+            }
+        }
+        
+    }
+    
+    public void cmpInstruction(MiniPC miniPC, int register, String secondRegisterString){
+        int secondRegister = 0;
+        switch(secondRegisterString){
+            case "ax":
+                secondRegister=1;
+                break;
+            case "bx":
+                secondRegister=2;
+                break;
+            case "cx":
+                secondRegister=3;
+                break;
+            case "dx":
+                secondRegister=4;
+                break;
+            case "al":
+                secondRegister=5;
+                break;
+            case "ah":
+                secondRegister=6;
+                break;
+            default:
+                JOptionPane.showMessageDialog (null, "La instrucción dada no se puede ejecutar.", "Error: Instrucción inválida", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        int valueFirstRegister = miniPC.getController().getCpu().getDataRegisters().get(register-1).getValue();
+        int valueSecondRegister = miniPC.getController().getCpu().getDataRegisters().get(secondRegister-1).getValue();
+        int result = valueFirstRegister-valueSecondRegister;
+        
+        if (result == 0)
+            miniPC.getController().getCpu().setZeroFlag(true);
+        
+    }
+    
+    public void jeInstruction(MiniPC miniPC, int offset){
+        if (miniPC.getController().getCpu().isZeroFlag()){
+            
+            int instructionsSize = miniPC.getFileManager().getInstructions().size();
+            System.out.println("Current address: "+miniPC.getCurrentAddress());
+            System.out.println("1: "+instructionsSize);
+            instructionsSize = instructionsSize - miniPC.getNumberExecutedInstructions();
+            System.out.println("2: "+instructionsSize);
+            System.out.println("3: "+offset);
+        
+            int newAddress = miniPC.getCurrentAddress() + offset;
+        
+            if (offset > 0){
+                int maxMemoryLimit = -1; // initialize index to -1
+                for (int i = 0; i < miniPC.getController().getCpu().getMemory().getMemoryRegisters().size(); i++) {
+                    if (miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i).isPresent()) {
+                        maxMemoryLimit = i; // update index when a non-null element is found
+                    }
+                    System.out.println(miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i));
+                    System.out.println(miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i).getClass());
+                    System.out.println("i: "+i);
+                }
+                System.out.println("Index: "+maxMemoryLimit);
+                System.out.println("Current Address: "+miniPC.getCurrentAddress());
+                System.out.println("New Address: "+newAddress);
+            
+                if (newAddress < maxMemoryLimit){
+                    miniPC.setJumpFlag(true);
+                    miniPC.setJumpToAddress(offset);
+                }
+                else{
+                    miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Desbordamiento causado por jump positivo.");
+                }
+            }
+            else if (offset < 0){
+            
+                int firstMemoryIndex = -1; // initialize index to -1
+                for (int i = 0; i < miniPC.getController().getCpu().getMemory().getMemoryRegisters().size(); i++) {
+                    if (miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i).isPresent()) {
+                        firstMemoryIndex = i; // update index when a non-null element is found
+                        break; // exit the loop once the first non-null element is found
+                    }
+                    System.out.println("i: "+i);
+                }
+                System.out.println("Index: "+firstMemoryIndex);
+                System.out.println("Current Address: "+miniPC.getCurrentAddress());
+                System.out.println("New Address: "+newAddress);
+            
+                if (newAddress > firstMemoryIndex){
+                    miniPC.setJumpFlag(true);
+                    miniPC.setJumpToAddress(offset);
+                }
+                else{
+                    miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Desbordamiento causado por jump negativo.");
+                }
+            }
+            
+        }
+    }
+    
+    public void jneInstruction(MiniPC miniPC, int offset){
+        if (!miniPC.getController().getCpu().isZeroFlag()){
+            
+            int instructionsSize = miniPC.getFileManager().getInstructions().size();
+            System.out.println("Current address: "+miniPC.getCurrentAddress());
+            System.out.println("1: "+instructionsSize);
+            instructionsSize = instructionsSize - miniPC.getNumberExecutedInstructions();
+            System.out.println("2: "+instructionsSize);
+            System.out.println("3: "+offset);
+        
+            int newAddress = miniPC.getCurrentAddress() + offset;
+        
+            if (offset > 0){
+                int maxMemoryLimit = -1; // initialize index to -1
+                for (int i = 0; i < miniPC.getController().getCpu().getMemory().getMemoryRegisters().size(); i++) {
+                    if (miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i).isPresent()) {
+                        maxMemoryLimit = i; // update index when a non-null element is found
+                    }
+                    System.out.println(miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i));
+                    System.out.println(miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i).getClass());
+                    System.out.println("i: "+i);
+                }
+                System.out.println("Index: "+maxMemoryLimit);
+                System.out.println("Current Address: "+miniPC.getCurrentAddress());
+                System.out.println("New Address: "+newAddress);
+            
+                if (newAddress < maxMemoryLimit){
+                    miniPC.setJumpFlag(true);
+                    miniPC.setJumpToAddress(offset);
+                }
+                else{
+                    miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Desbordamiento causado por jump positivo.");
+                }
+            }
+            else if (offset < 0){
+            
+                int firstMemoryIndex = -1; // initialize index to -1
+                for (int i = 0; i < miniPC.getController().getCpu().getMemory().getMemoryRegisters().size(); i++) {
+                    if (miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i).isPresent()) {
+                        firstMemoryIndex = i; // update index when a non-null element is found
+                        break; // exit the loop once the first non-null element is found
+                    }
+                    System.out.println("i: "+i);
+                }
+                System.out.println("Index: "+firstMemoryIndex);
+                System.out.println("Current Address: "+miniPC.getCurrentAddress());
+                System.out.println("New Address: "+newAddress);
+            
+                if (newAddress > firstMemoryIndex){
+                    miniPC.setJumpFlag(true);
+                    miniPC.setJumpToAddress(offset);
+                }
+                else{
+                    miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Desbordamiento causado por jump negativo.");
+                }
+            }
+            
+        }
+    }
 
+    public void paramInstruction(MiniPC miniPC){
+        
+    }
+    
+    public void pushInstruction(MiniPC miniPC, int register){
+        int registerValue = miniPC.getController().getCpu().getDataRegisters().get(register-1).getValue();
+        miniPC.getController().getCpu().getMemory().getStack().push(registerValue);
+        
+    }
+    
+    public void popInstruction(MiniPC miniPC, int register){
+        int registerValue = miniPC.getController().getCpu().getMemory().getStack().pop();
+        miniPC.getController().getCpu().getDataRegisters().get(register-1).setValue(registerValue);
+        
+    }
+    
     public CPU getCpu() {
         return cpu;
     }

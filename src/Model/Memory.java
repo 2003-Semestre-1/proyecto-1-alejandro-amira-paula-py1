@@ -77,6 +77,16 @@ public class Memory {
         System.out.println(this.memoryRegisters.size());
     }
 
+    public Pila getStack() {
+        return stack;
+    }
+
+    public void setStack(Pila stack) {
+        this.stack = stack;
+    }
+    
+    
+
     public int getAllocationStartIndex() {
         return allocationStartIndex;
     }

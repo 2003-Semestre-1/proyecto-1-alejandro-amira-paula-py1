@@ -22,6 +22,7 @@ public class CPU {
     String instructionRegister = "";
     int accumulator = 0;
     ArrayList<DataRegister> dataRegisters = new ArrayList<DataRegister>();
+    boolean zeroFlag = false;
     
     // En el constructor se toma solamente la memoria como parámetro
     // Se crea un ArrayList de registros y se agregan AB,BX,CX y DX a esta arraylist
@@ -40,6 +41,14 @@ public class CPU {
         this.dataRegisters.add(al);
         this.dataRegisters.add(ah);
         
+    }
+
+    public boolean isZeroFlag() {
+        return zeroFlag;
+    }
+
+    public void setZeroFlag(boolean zeroFlag) {
+        this.zeroFlag = zeroFlag;
     }
 
     public int getProgramCounter() {

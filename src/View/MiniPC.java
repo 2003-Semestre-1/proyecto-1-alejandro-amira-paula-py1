@@ -30,9 +30,13 @@ public class MiniPC extends javax.swing.JFrame {
     public MiniPCController controller = new MiniPCController();
     public FileManager fileManager = new FileManager();
     int rowCount = 0;
+    int numberExecutedInstructions = -1;
     int currentAddress = 0;
+    int time = 0;
     boolean waitingForInput = false;
     boolean archivoAbierto = false;
+    boolean jumpFlag = false;
+    int jumpToAddress = 0;
     
     /**
      * Creates new form NewJFrame
@@ -333,7 +337,7 @@ public class MiniPC extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Código ASM", "Código binario", "Address", "Instruction #"
+                "Código ASM", "Código binario", "Address", "Tiempo"
             }
         ));
         tblCode.setRowHeight(30);
@@ -530,10 +534,37 @@ public class MiniPC extends javax.swing.JFrame {
         this.getLblNumberCX().setText("0");
         this.getLblNumberDX().setText("0");
         this.setRowCount(0);
+        this.setNumberExecutedInstructions(-1);
         this.setCurrentAddress(0);
         this.getController().setCpu(null);
         FileManager newFileManager = new FileManager();
         this.setFileManager(newFileManager);
+    }
+
+    public boolean isJumpFlag() {
+        return jumpFlag;
+    }
+
+    public void setJumpFlag(boolean jumpFlag) {
+        this.jumpFlag = jumpFlag;
+    }
+
+    public int getJumpToAddress() {
+        return jumpToAddress;
+    }
+
+    public void setJumpToAddress(int jumpToAddress) {
+        this.jumpToAddress = jumpToAddress;
+    }
+    
+    
+
+    public int getNumberExecutedInstructions() {
+        return numberExecutedInstructions;
+    }
+
+    public void setNumberExecutedInstructions(int numberExecutedInstructions) {
+        this.numberExecutedInstructions = numberExecutedInstructions;
     }
 
     public boolean isWaitingForInput() {
@@ -554,15 +585,15 @@ public class MiniPC extends javax.swing.JFrame {
     
     
     
-    private void updateTable(ArrayList<MemoryRegister> instructionSet, int row) {   
+    public void updateTable(ArrayList<MemoryRegister> instructionSet, int row) {
         // Este método actualiza la tabla visualmente, es decir actualiza la información que está siendo desplegada en la GUI
         // Va mostrando paso a paso las instrucciones cargadas en memoria y toda la información relevante a estas
         // Recibe como parámetros el set de instrucciones y el valor entero de la fila donde se desplegará la instrucción
         
-        this.getTblCode().setValueAt(instructionSet.get(row).getAsmInstructionString(), row, 0);
-        this.getTblCode().setValueAt(instructionSet.get(row).convertToBinary(), row, 1);
-        this.getTblCode().setValueAt(this.getCurrentAddress(), row, 2);
-        this.getTblCode().setValueAt(this.getRowCount()+1, row, 3);
+        this.getTblCode().setValueAt(instructionSet.get(row).getAsmInstructionString(), this.getNumberExecutedInstructions(), 0);
+        this.getTblCode().setValueAt(instructionSet.get(row).convertToBinary(), this.getNumberExecutedInstructions(), 1);
+        this.getTblCode().setValueAt(this.getCurrentAddress(), this.getNumberExecutedInstructions(), 2);
+        this.getTblCode().setValueAt(this.getTime(), this.getNumberExecutedInstructions(), 3);
         
         this.getLblNumberAX().setText(this.getController().getCpu().getDataRegisters().get(0).getValue()+"");
         this.getLblNumberBX().setText(this.getController().getCpu().getDataRegisters().get(1).getValue()+"");
@@ -574,7 +605,7 @@ public class MiniPC extends javax.swing.JFrame {
         this.getLblNumberAC().setText(this.getController().getCpu().getAccumulator()+"");
         if (this.getFileManager().getInstructions().size() > this.getRowCount()+1){
             this.getLblNumberPC().setText(""+(this.getCurrentAddress()+1));
-            this.getLblNumberIR().setText(this.getFileManager().getInstructions().get(this.getRowCount()+1).getAsmInstructionString());
+            this.getLblNumberIR().setText(this.getFileManager().getInstructions().get(this.getRowCount()).getAsmInstructionString());
         }
         else{
             this.getController().getCpu().setProgramCounter(Integer.parseInt(this.getLblNumberPC().getText()));
@@ -583,6 +614,16 @@ public class MiniPC extends javax.swing.JFrame {
         this.setRowCount(this.getRowCount()+1);
         this.setCurrentAddress(this.getCurrentAddress()+1);
     } 
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+    
+    
 
     public JTextPane getPantalla() {
         return pantalla;
@@ -802,7 +843,20 @@ public class MiniPC extends javax.swing.JFrame {
             }
             System.out.println("test2");
             this.updateTable(this.fileManager.getInstructions(), this.getRowCount());
-            this.getController().getCpu().setProgramCounter(this.getRowCount());
+            this.getController().getCpu().setProgramCounter(this.getCurrentAddress());
+            
+            if (this.isJumpFlag()){
+                int nextInstructionAddress = this.getController().getCpu().getProgramCounter();
+                System.out.println("Vieja: "+nextInstructionAddress);
+                nextInstructionAddress = nextInstructionAddress+this.getJumpToAddress();
+                System.out.println("Nueva: "+nextInstructionAddress);
+                this.setCurrentAddress(nextInstructionAddress);
+        
+                this.getController().getCpu().setProgramCounter(nextInstructionAddress);
+                this.getLblNumberPC().setText(nextInstructionAddress+"");
+                this.setRowCount(this.getRowCount()+this.getJumpToAddress());
+                this.setJumpFlag(false);
+                }
             }
         }
         else

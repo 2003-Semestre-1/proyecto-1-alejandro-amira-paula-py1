@@ -1,8 +1,8 @@
-mov dx, xd.txt
-mov ah, 3dh
-int 21h
-
-mov al, prueba de write
-
-mov ah, 40h
-int 21h
+inc
+mov ax,5
+mov bx,5
+cmp ax,bx
+jmp 2
+swap bx,ax
+mov cx,2
+mov dx,8
