@@ -5,6 +5,7 @@
  */
 package Model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -15,10 +16,10 @@ public class BCP {
     
     int idProcess;
     String nameProcess;
-    HashMap<String,Integer> estados;
-    int estadoActual;
+    String estadoActual;
     int programCounter;
-    HashMap<String, Integer> registros;
+    ArrayList<DataRegister> dataRegisters = new ArrayList<DataRegister>();
+    int ac = 0;
     Pila pila;
     StatsSet informacionContable;
     int siguienteBPC;
@@ -26,26 +27,27 @@ public class BCP {
     int tamanoProceso;
     int prioridad;
 
-    public BCP(int idProcess, String nameProcess, int estadoActual, int programCounter, HashMap<String, Integer> registros, Pila pila, StatsSet informacionContable, int siguienteBPC, int direccionInicio, int tamanoProceso, int prioridad) {
+    public BCP(int idProcess, String nameProcess, String estadoActual, int programCounter, Pila pila, StatsSet informacionContable, int direccionInicio, int tamanoProceso, int prioridad) {
         this.idProcess = idProcess;
         this.nameProcess = nameProcess;
-        
-        this.estados = new HashMap<String, Integer>();
-        this.estados.put("nuevo", 0);
-        this.estados.put("preparado", 1);
-        this.estados.put("ejecución", 2);
-        this.estados.put("en espera", 3);
-        this.estados.put("finalizado", 4);
-        
         this.estadoActual = estadoActual;
         this.programCounter = programCounter;
         
-        this.registros = registros;
+        DataRegister ax = new DataRegister(0,"","16-bit");
+        DataRegister bx = new DataRegister(0,"","16-bit");
+        DataRegister cx = new DataRegister(0,"","16-bit");
+        DataRegister dx = new DataRegister(0,"","16-bit");
+        DataRegister al = new DataRegister(0,"","8-bit");
+        DataRegister ah = new DataRegister(0,"","8-bit");
+        dataRegisters.add(ax);
+        dataRegisters.add(bx);
+        dataRegisters.add(cx);
+        dataRegisters.add(dx);
+        dataRegisters.add(al);
+        dataRegisters.add(ah);
         
         this.pila = pila;
-        
         this.informacionContable = informacionContable;
-        
         this.siguienteBPC = siguienteBPC;
         this.direccionInicio = direccionInicio;
         this.tamanoProceso = tamanoProceso;
@@ -68,19 +70,11 @@ public class BCP {
         this.nameProcess = nameProcess;
     }
 
-    public HashMap<String, Integer> getEstados() {
-        return estados;
-    }
-
-    public void setEstados(HashMap<String, Integer> estados) {
-        this.estados = estados;
-    }
-
-    public int getEstadoActual() {
+    public String getEstadoActual() {
         return estadoActual;
     }
 
-    public void setEstadoActual(int estadoActual) {
+    public void setEstadoActual(String estadoActual) {
         this.estadoActual = estadoActual;
     }
     
@@ -94,14 +88,24 @@ public class BCP {
         this.programCounter = programCounter;
     }
 
-    public HashMap<String, Integer> getRegistros() {
-        return registros;
+    public ArrayList<DataRegister> getDataRegisters() {
+        return dataRegisters;
     }
 
-    public void setRegistros(HashMap<String, Integer> registros) {
-        this.registros = registros;
+    public void setDataRegisters(ArrayList<DataRegister> dataRegisters) {
+        this.dataRegisters = dataRegisters;
     }
 
+    public int getAc() {
+        return ac;
+    }
+
+    public void setAc(int ac) {
+        this.ac = ac;
+    }
+    
+    
+    
     public Pila getPila() {
         return pila;
     }

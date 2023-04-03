@@ -18,15 +18,18 @@ public class CPU {
     // y el registro de instrucción almacena la instrucción actual
     
     Memory memory;
+    String cpuName;
     int programCounter = 0;
     String instructionRegister = "";
     int accumulator = 0;
     ArrayList<DataRegister> dataRegisters = new ArrayList<DataRegister>();
     boolean zeroFlag = false;
+    int currentTime = 0;
     
     // En el constructor se toma solamente la memoria como parámetro
     // Se crea un ArrayList de registros y se agregan AB,BX,CX y DX a esta arraylist
-    public CPU(Memory memory) {
+    public CPU(Memory memory, String cpuName) {
+        this.cpuName = cpuName;
         this.memory = memory;
         DataRegister ax = new DataRegister(0,"","16-bit");
         DataRegister bx = new DataRegister(0,"","16-bit");
@@ -41,6 +44,39 @@ public class CPU {
         this.dataRegisters.add(al);
         this.dataRegisters.add(ah);
         
+    }
+    
+    public CPU(String cpuName) {
+        this.cpuName = cpuName;
+        DataRegister ax = new DataRegister(0,"","16-bit");
+        DataRegister bx = new DataRegister(0,"","16-bit");
+        DataRegister cx = new DataRegister(0,"","16-bit");
+        DataRegister dx = new DataRegister(0,"","16-bit");
+        DataRegister al = new DataRegister(0,"","8-bit");
+        DataRegister ah = new DataRegister(0,"","8-bit");
+        this.dataRegisters.add(ax);
+        this.dataRegisters.add(bx);
+        this.dataRegisters.add(cx);
+        this.dataRegisters.add(dx);
+        this.dataRegisters.add(al);
+        this.dataRegisters.add(ah);
+        
+    }
+
+    public int getCurrentTime() {
+        return currentTime;
+    }
+
+    public void setCurrentTime(int currentTime) {
+        this.currentTime = currentTime;
+    }
+
+    public String getCpuName() {
+        return cpuName;
+    }
+
+    public void setCpuName(String cpuName) {
+        this.cpuName = cpuName;
     }
 
     public boolean isZeroFlag() {

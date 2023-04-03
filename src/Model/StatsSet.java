@@ -13,49 +13,45 @@ import java.time.format.DateTimeFormatter;
  */
 public class StatsSet {
     
-    String cpu;
-    String startTime;
-    String endTime;
-    String processName;
-    double durationTime;
+    CPU cpu;
+    int startTime;
+    int endTime;
+    int durationTime = 0;
 
-    public String getCpu() {
-        return cpu;
-    }
-
-    public void setCpu(String cpu) {
+    public StatsSet(CPU cpu, int startTime) {
         this.cpu = cpu;
-    }
-
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public CPU getCpu() {
+        return cpu;
+    }
+
+    public void setCpu(CPU cpu) {
+        this.cpu = cpu;
+    }
+
+    public int getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(int startTime) {
+        this.startTime = startTime;
+    }
+
+    public int getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(int endTime) {
         this.endTime = endTime;
     }
 
-    public String getProcessName() {
-        return processName;
-    }
-
-    public void setProcessName(String processName) {
-        this.processName = processName;
-    }
-
-    public double getDurationTime() {
+    public int getDurationTime() {
         return durationTime;
     }
 
-    public void setDurationTime(double durationTime) {
+    public void setDurationTime(int durationTime) {
         this.durationTime = durationTime;
     }
     

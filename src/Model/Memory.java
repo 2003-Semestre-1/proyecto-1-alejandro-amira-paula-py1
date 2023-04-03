@@ -6,7 +6,9 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Optional;
+import java.util.Queue;
 import java.util.Stack;
 import javax.swing.JOptionPane;
 
@@ -24,7 +26,14 @@ public class Memory {
     int allocatedSize;
     int allocationStartIndex;
     ArrayList<BCP> bcpList = new ArrayList();
+    Queue<BCP> jobQueue = new LinkedList<>();
     Pila stack = new Pila();
+    
+    public Memory() {
+        for(int i = 0 ; i < size ; i ++){
+            memoryRegisters.add(Optional.empty());                 
+        }
+    }
 
     public Memory(int allocatedSize) {
         // Este constructor rercibe el tamano del set de instrucciones

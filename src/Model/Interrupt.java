@@ -58,8 +58,7 @@ public class Interrupt {
     public void interrupt20H(ArrayList<BCP> bcpList, MiniPC miniPC){
         
         BCP bcp = bcpList.get(0);
-        int estadoTerminado = bcp.getEstados().get("finalizado");
-        bcp.setEstadoActual(estadoTerminado);
+        bcp.setEstadoActual("finalizado");
         String textPantalla = miniPC.getPantalla().getText();
         textPantalla = textPantalla + "\n" + "Programa terminado.";
         miniPC.getPantalla().setText(textPantalla);
