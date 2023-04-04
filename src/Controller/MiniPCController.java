@@ -24,6 +24,7 @@ public class MiniPCController {
     // Su único atributo es el CPU
     
     public CPU cpu;
+    public int rowCount;
 
     public MiniPCController(CPU cpu) {
         this.cpu = cpu;
@@ -41,15 +42,17 @@ public class MiniPCController {
         System.out.println("register: "+register);
         System.out.println("value: "+value);
         System.out.println("valueString: "+valueString);
-        miniPC.setNumberExecutedInstructions(miniPC.getNumberExecutedInstructions()+1);
+         
+        this.getCpu().getMemory().getBcpList().get(0).setEstadoActual("Ejecución");
+        
         switch(op) {
         case 1:
             this.loadInstruction(register);
-            miniPC.setTime(miniPC.getTime()+1);
+            this.getCpu().setCurrentTime(this.getCpu().getCurrentTime()+2);
             break;
         case 2:
             this.storeInstruction(register);
-            miniPC.setTime(miniPC.getTime()+1);
+            this.getCpu().setCurrentTime(this.getCpu().getCurrentTime()+2);
             break;
         case 3:
             if ( (!valueString.equalsIgnoreCase("")) && (valueString.equalsIgnoreCase("ax") ||  valueString.equalsIgnoreCase("bx") || valueString.equalsIgnoreCase("cx") || valueString.equalsIgnoreCase("dx") || valueString.equalsIgnoreCase("al") || valueString.equalsIgnoreCase("ah")) ){
@@ -87,65 +90,65 @@ public class MiniPCController {
             else if (valueString.equalsIgnoreCase("")){
                 this.movInstructionValue(register, value);
             }
-            miniPC.setTime(miniPC.getTime()+1);
+            this.getCpu().setCurrentTime(this.getCpu().getCurrentTime()+1);
             break;
         case 4:
             this.subInstruction(register);
-            miniPC.setTime(miniPC.getTime()+1);
+            this.getCpu().setCurrentTime(this.getCpu().getCurrentTime()+3);
             break;
         case 5:
             this.addInstruction(register);
-            miniPC.setTime(miniPC.getTime()+1);
+            this.getCpu().setCurrentTime(this.getCpu().getCurrentTime()+3);
             break;
         case 6:
             if (register > 0)
                 this.incRegisterInstruction(register);
             else
                 this.incInstruction();
-            miniPC.setTime(miniPC.getTime()+1);
+            this.getCpu().setCurrentTime(this.getCpu().getCurrentTime()+1);
             break;
         case 7:
             if (register > 0)
                 this.decRegisterInstruction(register);
             else
                 this.decInstruction();
-            miniPC.setTime(miniPC.getTime()+1);
+            this.getCpu().setCurrentTime(this.getCpu().getCurrentTime()+1);
             break;
         case 8:
             this.swapInstruction(register, valueString);
-            miniPC.setTime(miniPC.getTime()+1);
+            this.getCpu().setCurrentTime(this.getCpu().getCurrentTime()+1);
             break;
         case 9:
             this.interruptInstruction(value,miniPC);
-            miniPC.setTime(miniPC.getTime()+1);
+            this.getCpu().setCurrentTime(this.getCpu().getCurrentTime()+0);
             break;
         case 10:
             this.jmpInstruction(miniPC,value);
-            miniPC.setTime(miniPC.getTime()+1);
+            this.getCpu().setCurrentTime(this.getCpu().getCurrentTime()+2);
             break;
         case 11:
             this.cmpInstruction(miniPC,register,value,valueString);
-            miniPC.setTime(miniPC.getTime()+1);
+            this.getCpu().setCurrentTime(this.getCpu().getCurrentTime()+2);
             break;
         case 12:
             this.jeInstruction(miniPC,value);
-            miniPC.setTime(miniPC.getTime()+1);
+            this.getCpu().setCurrentTime(this.getCpu().getCurrentTime()+2);
             break;
         case 13:
             this.jneInstruction(miniPC,value);
-            miniPC.setTime(miniPC.getTime()+1);
+            this.getCpu().setCurrentTime(this.getCpu().getCurrentTime()+2);
             break;
         case 14:
             this.paramInstruction(miniPC,register,value,valueString);
-            miniPC.setTime(miniPC.getTime()+1);
+            this.getCpu().setCurrentTime(this.getCpu().getCurrentTime()+3);
             break;
         case 15:
             this.pushInstruction(miniPC,register);
-            miniPC.setTime(miniPC.getTime()+1);
+            this.getCpu().setCurrentTime(this.getCpu().getCurrentTime()+1);
             break;
         case 16:
             this.popInstruction(miniPC,register);
-            miniPC.setTime(miniPC.getTime()+1);
+            this.getCpu().setCurrentTime(this.getCpu().getCurrentTime()+1);
             break;
         default:
             JOptionPane.showMessageDialog (null, "La instrucción dada no se puede ejecutar.", "Error: Instrucción inválida", JOptionPane.ERROR_MESSAGE);
@@ -327,13 +330,13 @@ public class MiniPCController {
     
     public void jmpInstruction(MiniPC miniPC, int offset){
         int instructionsSize = miniPC.getFileManager().getInstructions().size();
-        System.out.println("Current address: "+miniPC.getCurrentAddress());
+        System.out.println("Current address: "+this.getCpu().getCurrentAddress());
         System.out.println("1: "+instructionsSize);
-        instructionsSize = instructionsSize - miniPC.getNumberExecutedInstructions();
+        instructionsSize = instructionsSize - this.getCpu().getNumberExecutedInstructions();
         System.out.println("2: "+instructionsSize);
         System.out.println("3: "+offset);
         
-        int newAddress = miniPC.getCurrentAddress() + offset;
+        int newAddress = this.getCpu().getCurrentAddress() + offset;
         
         if (offset > 0){
             int maxMemoryLimit = -1; // initialize index to -1
@@ -346,7 +349,7 @@ public class MiniPCController {
                 System.out.println("i: "+i);
             }
             System.out.println("Index: "+maxMemoryLimit);
-            System.out.println("Current Address: "+miniPC.getCurrentAddress());
+            System.out.println("Current Address: "+this.getCpu().getCurrentAddress());
             System.out.println("New Address: "+newAddress);
             
             if (newAddress < maxMemoryLimit){
@@ -368,7 +371,7 @@ public class MiniPCController {
                 System.out.println("i: "+i);
             }
             System.out.println("Index: "+firstMemoryIndex);
-            System.out.println("Current Address: "+miniPC.getCurrentAddress());
+            System.out.println("Current Address: "+this.getCpu().getCurrentAddress());
             System.out.println("New Address: "+newAddress);
             
             if (newAddress > firstMemoryIndex){
@@ -433,13 +436,13 @@ public class MiniPCController {
         if (miniPC.getController().getCpu().isZeroFlag()){
             
             int instructionsSize = miniPC.getFileManager().getInstructions().size();
-            System.out.println("Current address: "+miniPC.getCurrentAddress());
+            System.out.println("Current address: "+this.getCpu().getCurrentAddress());
             System.out.println("1: "+instructionsSize);
-            instructionsSize = instructionsSize - miniPC.getNumberExecutedInstructions();
+            instructionsSize = instructionsSize - this.getCpu().getNumberExecutedInstructions();
             System.out.println("2: "+instructionsSize);
             System.out.println("3: "+offset);
         
-            int newAddress = miniPC.getCurrentAddress() + offset;
+            int newAddress = this.getCpu().getCurrentAddress() + offset;
         
             if (offset > 0){
                 int maxMemoryLimit = -1; // initialize index to -1
@@ -452,7 +455,7 @@ public class MiniPCController {
                     System.out.println("i: "+i);
                 }
                 System.out.println("Index: "+maxMemoryLimit);
-                System.out.println("Current Address: "+miniPC.getCurrentAddress());
+                System.out.println("Current Address: "+this.getCpu().getCurrentAddress());
                 System.out.println("New Address: "+newAddress);
             
                 if (newAddress < maxMemoryLimit){
@@ -474,7 +477,7 @@ public class MiniPCController {
                     System.out.println("i: "+i);
                 }
                 System.out.println("Index: "+firstMemoryIndex);
-                System.out.println("Current Address: "+miniPC.getCurrentAddress());
+                System.out.println("Current Address: "+this.getCpu().getCurrentAddress());
                 System.out.println("New Address: "+newAddress);
             
                 if (newAddress > firstMemoryIndex){
@@ -493,13 +496,13 @@ public class MiniPCController {
         if (!miniPC.getController().getCpu().isZeroFlag()){
             
             int instructionsSize = miniPC.getFileManager().getInstructions().size();
-            System.out.println("Current address: "+miniPC.getCurrentAddress());
+            System.out.println("Current address: "+this.getCpu().getCurrentAddress());
             System.out.println("1: "+instructionsSize);
-            instructionsSize = instructionsSize - miniPC.getNumberExecutedInstructions();
+            instructionsSize = instructionsSize - this.getCpu().getNumberExecutedInstructions();
             System.out.println("2: "+instructionsSize);
             System.out.println("3: "+offset);
         
-            int newAddress = miniPC.getCurrentAddress() + offset;
+            int newAddress = this.getCpu().getCurrentAddress() + offset;
         
             if (offset > 0){
                 int maxMemoryLimit = -1; // initialize index to -1
@@ -512,7 +515,7 @@ public class MiniPCController {
                     System.out.println("i: "+i);
                 }
                 System.out.println("Index: "+maxMemoryLimit);
-                System.out.println("Current Address: "+miniPC.getCurrentAddress());
+                System.out.println("Current Address: "+this.getCpu().getCurrentAddress());
                 System.out.println("New Address: "+newAddress);
             
                 if (newAddress < maxMemoryLimit){
@@ -534,7 +537,7 @@ public class MiniPCController {
                     System.out.println("i: "+i);
                 }
                 System.out.println("Index: "+firstMemoryIndex);
-                System.out.println("Current Address: "+miniPC.getCurrentAddress());
+                System.out.println("Current Address: "+this.getCpu().getCurrentAddress());
                 System.out.println("New Address: "+newAddress);
             
                 if (newAddress > firstMemoryIndex){
@@ -589,6 +592,14 @@ public class MiniPCController {
 
     public void setCpu(CPU cpu) {
         this.cpu = cpu;
+    }
+
+    public int getRowCount() {
+        return rowCount;
+    }
+
+    public void setRowCount(int rowCount) {
+        this.rowCount = rowCount;
     }
     
     

@@ -31,6 +31,7 @@ public class FileManager {
     
     BufferedReader fileReader;
     ArrayList<MemoryRegister> instructions = new ArrayList<MemoryRegister>();
+    ArrayList<MemoryRegister> instructions2 = new ArrayList<MemoryRegister>();
     HashMap<String,Integer> operations;
     HashMap<String,Integer> dataRegisters;
     int lineAmount = 0;
@@ -303,6 +304,24 @@ public class FileManager {
         this.operations.put("pop", 16);
         
     }
+
+    public ArrayList<MemoryRegister> getInstructions2() {
+        return instructions2;
+    }
+
+    public void setInstructions2(ArrayList<MemoryRegister> instructions2) {
+        this.instructions2 = instructions2;
+    }
+
+    public int getLineAmount() {
+        return lineAmount;
+    }
+
+    public void setLineAmount(int lineAmount) {
+        this.lineAmount = lineAmount;
+    }
+    
+    
     
     public BufferedReader getFileReader() {
         return fileReader;

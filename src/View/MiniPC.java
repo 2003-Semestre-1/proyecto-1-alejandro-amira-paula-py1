@@ -33,13 +33,10 @@ public class MiniPC extends javax.swing.JFrame {
     public MiniPCController controller = new MiniPCController();
     public MiniPCController controller2 = new MiniPCController();
     public FileManager fileManager = new FileManager();
-    int rowCount = 0;
-    int numberExecutedInstructions = -1;
-    int currentAddress = 0;
-    int time = 0;
     boolean waitingForInput = false;
     boolean archivoAbierto = false;
     boolean jumpFlag = false;
+    boolean isAutomatic = false;
     int jumpToAddress = 0;
     
     /**
@@ -101,6 +98,7 @@ public class MiniPC extends javax.swing.JFrame {
         lblPantalla = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         pantalla = new javax.swing.JTextPane();
+        automaticBtn = new javax.swing.JButton();
         Lbl_memoria = new javax.swing.JLabel();
         Lbl_registros = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -240,12 +238,13 @@ public class MiniPC extends javax.swing.JFrame {
                     .addComponent(lblIR)
                     .addComponent(lblNumberIR))
                 .addGap(7, 7, 7)
-                .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblAL)
-                    .addComponent(lblNumberAL)
+                .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblAH)
-                        .addComponent(lblNumberAH)))
+                        .addComponent(lblNumberAH))
+                    .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblAL)
+                        .addComponent(lblNumberAL)))
                 .addContainerGap())
         );
 
@@ -415,6 +414,16 @@ public class MiniPC extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(pantalla);
 
+        automaticBtn.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        automaticBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/siguiente.png"))); // NOI18N
+        automaticBtn.setText("Automático");
+        automaticBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        automaticBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                automaticBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout Pnl_MenuLayout = new javax.swing.GroupLayout(Pnl_Menu);
         Pnl_Menu.setLayout(Pnl_MenuLayout);
         Pnl_MenuLayout.setHorizontalGroup(
@@ -423,6 +432,10 @@ public class MiniPC extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(lblPantalla)
                 .addGap(38, 38, 38))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pnl_MenuLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblTeclado)
+                .addGap(40, 40, 40))
             .addGroup(Pnl_MenuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(Pnl_MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -431,12 +444,9 @@ public class MiniPC extends javax.swing.JFrame {
                     .addComponent(tecladoTxtField)
                     .addComponent(cleanTableBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(nextInstructionBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(loadFileBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
+                    .addComponent(loadFileBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                    .addComponent(automaticBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pnl_MenuLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblTeclado)
-                .addGap(40, 40, 40))
         );
         Pnl_MenuLayout.setVerticalGroup(
             Pnl_MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -449,11 +459,13 @@ public class MiniPC extends javax.swing.JFrame {
                 .addComponent(loadFileBtn)
                 .addGap(18, 18, 18)
                 .addComponent(nextInstructionBtn)
-                .addGap(18, 18, 18)
+                .addGap(11, 11, 11)
+                .addComponent(automaticBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cleanTableBtn)
                 .addGap(18, 18, 18)
                 .addComponent(exitBtn)
-                .addGap(29, 29, 29)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTeclado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tecladoTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -547,10 +559,8 @@ public class MiniPC extends javax.swing.JFrame {
         this.getLblNumberBX().setText("0");
         this.getLblNumberCX().setText("0");
         this.getLblNumberDX().setText("0");
-        this.setRowCount(0);
-        this.setNumberExecutedInstructions(-1);
-        this.setCurrentAddress(0);
         this.getController().setCpu(null);
+        this.getController2().setCpu(null);
         FileManager newFileManager = new FileManager();
         this.setFileManager(newFileManager);
     }
@@ -571,15 +581,6 @@ public class MiniPC extends javax.swing.JFrame {
         this.jumpToAddress = jumpToAddress;
     }
     
-    
-
-    public int getNumberExecutedInstructions() {
-        return numberExecutedInstructions;
-    }
-
-    public void setNumberExecutedInstructions(int numberExecutedInstructions) {
-        this.numberExecutedInstructions = numberExecutedInstructions;
-    }
 
     public boolean isWaitingForInput() {
         return waitingForInput;
@@ -607,15 +608,19 @@ public class MiniPC extends javax.swing.JFrame {
     
     
     
-    public void updateTable(ArrayList<MemoryRegister> instructionSet, int row) {
+    public void updateTable(ArrayList<MemoryRegister> instructionSet,ArrayList<MemoryRegister> instructionSet2, int row) {
         // Este método actualiza la tabla visualmente, es decir actualiza la información que está siendo desplegada en la GUI
         // Va mostrando paso a paso las instrucciones cargadas en memoria y toda la información relevante a estas
         // Recibe como parámetros el set de instrucciones y el valor entero de la fila donde se desplegará la instrucción
-        
-        this.getTblCode().setValueAt(instructionSet.get(row).getAsmInstructionString(), this.getNumberExecutedInstructions(), 0);
-        this.getTblCode().setValueAt(instructionSet.get(row).convertToBinary(), this.getNumberExecutedInstructions(), 1);
-        this.getTblCode().setValueAt(this.getCurrentAddress(), this.getNumberExecutedInstructions(), 2);
-        this.getTblCode().setValueAt(this.getTime(), this.getNumberExecutedInstructions(), 3);
+        System.out.println(this.getController().getCpu().getCurrentAddress());
+        System.out.println(this.getController().getCpu().getProgramCounter());
+        System.out.println(this.getController2().getCpu().getCurrentAddress());
+        System.out.println(this.getController2().getCpu().getProgramCounter());
+        //cpu 1
+        this.getTblCode().setValueAt(instructionSet.get(row).getAsmInstructionString(), this.getController().getCpu().getNumberExecutedInstructions(), 0);
+        this.getTblCode().setValueAt(instructionSet.get(row).convertToBinary(), this.getController().getCpu().getNumberExecutedInstructions(), 1);
+        this.getTblCode().setValueAt(this.getController().getCpu().getCurrentAddress(), this.getController().getCpu().getNumberExecutedInstructions(), 2);
+        this.getTblCode().setValueAt(this.getController().getCpu().getCurrentTime(), this.getController().getCpu().getNumberExecutedInstructions(), 3);
         
         this.getLblNumberAX().setText(this.getController().getCpu().getDataRegisters().get(0).getValue()+"");
         this.getLblNumberBX().setText(this.getController().getCpu().getDataRegisters().get(1).getValue()+"");
@@ -625,27 +630,22 @@ public class MiniPC extends javax.swing.JFrame {
         this.getLblNumberAH().setText(this.getController().getCpu().getDataRegisters().get(1).getHighByteValue()+"");
         
         this.getLblNumberAC().setText(this.getController().getCpu().getAccumulator()+"");
-        if (this.getFileManager().getInstructions().size() > this.getRowCount()+1){
-            this.getLblNumberPC().setText(""+(this.getCurrentAddress()+1));
-            this.getLblNumberIR().setText(this.getFileManager().getInstructions().get(this.getRowCount()).getAsmInstructionString());
+        if (this.getFileManager().getInstructions().size() > this.getController().getRowCount()+1){
+            this.getLblNumberPC().setText(""+(this.getController().getCpu().getProgramCounter()+1));
+            this.getLblNumberIR().setText(this.getFileManager().getInstructions().get(this.getController().getRowCount()).getAsmInstructionString());
         }
         else{
             this.getController().getCpu().setProgramCounter(Integer.parseInt(this.getLblNumberPC().getText()));
         }
+        //
         
-        this.setRowCount(this.getRowCount()+1);
-        this.setCurrentAddress(this.getCurrentAddress()+1);
+        //cpu 2
+        
+        //
+        this.getController().setRowCount(this.getController().getRowCount()+1);
+        this.getController().getCpu().setNumberExecutedInstructions(this.getController().getCpu().getNumberExecutedInstructions()+1);
+        this.getController().getCpu().setCurrentAddress(this.getController().getCpu().getCurrentAddress()+1);
     } 
-
-    public int getTime() {
-        return time;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
-    }
-    
-    
 
     public JTextPane getPantalla() {
         return pantalla;
@@ -690,25 +690,6 @@ public class MiniPC extends javax.swing.JFrame {
     public void setController(MiniPCController controller) {
         this.controller = controller;
     }
-
-    public int getCurrentAddress() {
-        return currentAddress;
-    }
-
-    public void setCurrentAddress(int currentAddress) {
-        this.currentAddress = currentAddress;
-    }
-
-    
-    
-    public int getRowCount() {
-        return rowCount;
-    }
-
-    public void setRowCount(int rowCount) {
-        this.rowCount = rowCount;
-    }
-    
     
     
     public JTable getTblCode() {
@@ -806,7 +787,7 @@ public class MiniPC extends javax.swing.JFrame {
             }
             else if (instructionSet != null){
                 Random rand = new Random();
-                int cpuEscogido = rand.nextInt(1 - 0 + 1) + 0;
+                int cpuEscogido = 0;
                 System.out.println("CPU escogido: #"+cpuEscogido);
                 MiniPCController controller = null;
                 
@@ -826,6 +807,7 @@ public class MiniPC extends javax.swing.JFrame {
                 
                 StatsSet estadisticas = new StatsSet(cpu,cpu.getCurrentTime());
                 BCP newBCP = new BCP(cpu.getMemory().getBcpList().size(),filePath,"Nuevo",processStartIndex+1,cpu.getMemory().getStack(),estadisticas,processStartIndex,instructionSet.size(),1);
+                cpu.getMemory().getBcpList().add(newBCP);
                 
                 System.out.println("------------------------------------");
                 System.out.println(newBCP.getAc());
@@ -840,19 +822,21 @@ public class MiniPC extends javax.swing.JFrame {
                 System.out.println(newBCP.getProgramCounter());
                 System.out.println(newBCP.getTamanoProceso());
                 System.out.println("------------------------------------");
-                
-                this.setCurrentAddress(controller.getCpu().getMemory().getAllocationStartIndex());
 
-                MemoryRegister currentInstruction = this.getFileManager().getInstructions().get(this.getRowCount());
+                MemoryRegister currentInstruction = this.getFileManager().getInstructions().get(this.getController().getRowCount());
                 controller.getCpu().setInstructionRegister(currentInstruction.getAsmInstructionString());
-                controller.getCpu().setProgramCounter(this.currentAddress);
+                controller.getCpu().setProgramCounter(controller.getCpu().getMemory().getAllocationStartIndex()+1);
+                controller.getCpu().setCurrentAddress(controller.getCpu().getMemory().getAllocationStartIndex());
+                newBCP.setEstadoActual("Preparado");
+                System.out.println("PC: "+controller.getCpu().getProgramCounter());
+                System.out.println("CA: "+controller.getCpu().getCurrentAddress());
 
-                try {
-                    controller.executeInstruction(currentInstruction.getOp(),currentInstruction.getRegister(),currentInstruction.getValue(),currentInstruction.getStringValue(),this);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(MiniPC.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                this.updateTable(this.fileManager.getInstructions(),this.getRowCount());
+                //try {
+                //    controller.executeInstruction(currentInstruction.getOp(),currentInstruction.getRegister(),currentInstruction.getValue(),currentInstruction.getStringValue(),this);
+                //} catch (InterruptedException ex) {
+                //    Logger.getLogger(MiniPC.class.getName()).log(Level.SEVERE, null, ex);
+               // }
+                this.updateTable(this.fileManager.getInstructions(),this.fileManager.getInstructions2(),this.getController().getRowCount());
             }
 
         }
@@ -879,15 +863,15 @@ public class MiniPC extends javax.swing.JFrame {
 
     private void nextInstructionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextInstructionBtnActionPerformed
         if (!this.isWaitingForInput()){
-            if (this.getController().getCpu() == null && this.getController2().getCpu() == null){
+            if (this.getController().getCpu().getMemory().getBcpList().size() == 0 && this.getController2().getCpu().getMemory().getBcpList().size() == 0){
                 JOptionPane.showMessageDialog (null, "Por favor cargue un archivo", "Error: Archivo no cargado", JOptionPane.ERROR_MESSAGE);
             }
-            else if (this.getRowCount() >= this.fileManager.getInstructions().size()){
+            else if (this.getController().getCpu().getMemory().getBcpList().get(0).getEstadoActual().equalsIgnoreCase("Finalizado")){
                 JOptionPane.showMessageDialog (null, "No quedan más instrucciones que cargar.", "Error: Final del archivo", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             else{
-                MemoryRegister currentInstruction = this.getFileManager().getInstructions().get(this.getRowCount());
+                MemoryRegister currentInstruction = this.getFileManager().getInstructions().get(this.getController().getRowCount());
                 this.getController().getCpu().setInstructionRegister(currentInstruction.getAsmInstructionString());
                 System.out.println("test1");
                 try {
@@ -896,21 +880,32 @@ public class MiniPC extends javax.swing.JFrame {
                     Logger.getLogger(MiniPC.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 System.out.println("test2");
-                this.updateTable(this.fileManager.getInstructions(), this.getRowCount());
-                this.getController().getCpu().setProgramCounter(this.getCurrentAddress());
+                this.updateTable(this.fileManager.getInstructions(), this.fileManager.getInstructions2(),this.getController().getRowCount());
+                this.getController().getCpu().setProgramCounter(this.getController().getCpu().getProgramCounter()+1);
             
                 if (this.isJumpFlag()){
                     int nextInstructionAddress = this.getController().getCpu().getProgramCounter();
                     System.out.println("Vieja: "+nextInstructionAddress);
                     nextInstructionAddress = nextInstructionAddress+this.getJumpToAddress();
                     System.out.println("Nueva: "+nextInstructionAddress);
-                    this.setCurrentAddress(nextInstructionAddress);
+                    this.getController().getCpu().setCurrentAddress(nextInstructionAddress);
         
                     this.getController().getCpu().setProgramCounter(nextInstructionAddress);
                     this.getLblNumberPC().setText(nextInstructionAddress+"");
-                    this.setRowCount(this.getRowCount()+this.getJumpToAddress());
+                    this.getController().setRowCount(this.getController().getRowCount()+this.getJumpToAddress());
                     this.setJumpFlag(false);
                 }
+            }
+            
+            if (this.getController().getRowCount() >= this.fileManager.getInstructions().size()){
+                this.getController().getCpu().getMemory().getBcpList().get(0).setEstadoActual("Finalizado");
+                this.getController().getCpu().getMemory().getBcpList().get(0).getInformacionContable().setEndTime(this.getController().getCpu().getCurrentTime());
+                int startTime = this.getController().getCpu().getMemory().getBcpList().get(0).getInformacionContable().getStartTime();
+                int endTime = this.getController().getCpu().getMemory().getBcpList().get(0).getInformacionContable().getEndTime();
+                this.getController().getCpu().getMemory().getBcpList().get(0).getInformacionContable().setDurationTime(endTime-startTime);
+                System.out.println("Start: "+startTime);
+                System.out.println("End: "+endTime);
+                System.out.println("Duration: "+this.getController().getCpu().getMemory().getBcpList().get(0).getInformacionContable().getDurationTime());
             }
         }
         else
@@ -943,6 +938,10 @@ public class MiniPC extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_tecladoTxtFieldActionPerformed
+
+    private void automaticBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_automaticBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_automaticBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -988,6 +987,7 @@ public class MiniPC extends javax.swing.JFrame {
     private javax.swing.JScrollPane Pnl_Memoria;
     private javax.swing.JPanel Pnl_Menu;
     private javax.swing.JPanel Pnl_Registros;
+    private javax.swing.JButton automaticBtn;
     private javax.swing.JButton cleanTableBtn;
     private javax.swing.JButton exitBtn;
     private javax.swing.JLabel jLabel4;

@@ -76,6 +76,7 @@ public class Interrupt {
     
     public void interrupt09H(MiniPC miniPC) throws InterruptedException{
         miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Escriba un valor entre 0-255.");
+        this.getCpu().getMemory().getBcpList().get(0).setEstadoActual("En espera");
         miniPC.setWaitingForInput(true);
         miniPC.getTecladoTxtField().setEditable(true);
     }

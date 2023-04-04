@@ -19,12 +19,14 @@ public class CPU {
     
     Memory memory;
     String cpuName;
+    int currentAddress = 0;
     int programCounter = 0;
     String instructionRegister = "";
     int accumulator = 0;
     ArrayList<DataRegister> dataRegisters = new ArrayList<DataRegister>();
     boolean zeroFlag = false;
     int currentTime = 0;
+    int numberExecutedInstructions = 0;
     
     // En el constructor se toma solamente la memoria como parámetro
     // Se crea un ArrayList de registros y se agregan AB,BX,CX y DX a esta arraylist
@@ -83,6 +85,14 @@ public class CPU {
         return zeroFlag;
     }
 
+    public int getNumberExecutedInstructions() {
+        return numberExecutedInstructions;
+    }
+
+    public void setNumberExecutedInstructions(int numberExecutedInstructions) {
+        this.numberExecutedInstructions = numberExecutedInstructions;
+    }
+
     public void setZeroFlag(boolean zeroFlag) {
         this.zeroFlag = zeroFlag;
     }
@@ -91,6 +101,16 @@ public class CPU {
         return programCounter;
     }
 
+    public int getCurrentAddress() {
+        return currentAddress;
+    }
+
+    public void setCurrentAddress(int currentAddress) {
+        this.currentAddress = currentAddress;
+    }
+
+    
+    
     public void setProgramCounter(int programCounter) {
         this.programCounter = programCounter;
     }
