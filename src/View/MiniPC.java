@@ -1606,10 +1606,11 @@ public class MiniPC extends javax.swing.JFrame {
             if (this.getController().getCpu().getMemory().getBcpList().size() == 0 && this.getController2().getCpu().getMemory().getBcpList().size() == 0){
                 JOptionPane.showMessageDialog (null, "Por favor cargue un archivo", "Error: Archivo no cargado", JOptionPane.ERROR_MESSAGE);
             }
-            //else if (this.getController().getCpu().getMemory().getBcpList().get(0).getEstadoActual().equalsIgnoreCase("Finalizado")){
-            //    JOptionPane.showMessageDialog (null, "No quedan más instrucciones que cargar.", "Error: Final del archivo", JOptionPane.ERROR_MESSAGE);
-            //    return;
-           // }
+            else if ((this.getController2().getCpu().getMemory().getBcpList().size()>0 && this.getController2().getCpu().getMemory().getBcpList().get(0).getEstadoActual().equalsIgnoreCase("Finalizado"))
+                    || (this.getController().getCpu().getMemory().getBcpList().size()>0 && this.getController().getCpu().getMemory().getBcpList().get(0).getEstadoActual().equalsIgnoreCase("Finalizado"))){
+                JOptionPane.showMessageDialog (null, "No quedan más instrucciones que cargar.", "Error: Final del archivo", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             else{
                 MemoryRegister currentInstruction = null;
                 if (this.getFileManager().getInstructions().size()>0){
