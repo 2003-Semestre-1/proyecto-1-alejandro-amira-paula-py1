@@ -85,7 +85,7 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="147" max="-2" attributes="0"/>
-                                  <Component id="Lbl_memoria2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblListaProcesos" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -101,7 +101,7 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="144" max="-2" attributes="0"/>
-                              <Component id="Lbl_memoria1" min="-2" max="-2" attributes="0"/>
+                              <Component id="Lbl_memoria2" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Component id="Pnl_Memoria3" alignment="0" min="-2" pref="371" max="-2" attributes="0"/>
@@ -131,13 +131,13 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="Pnl_Registros1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="Lbl_memoria1" min="-2" max="-2" attributes="0"/>
+                          <Component id="Lbl_memoria2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                           <Component id="Pnl_Memoria1" min="-2" pref="198" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="Lbl_memoria2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblListaProcesos" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="Pnl_Memoria" min="-2" pref="198" max="-2" attributes="0"/>
                               </Group>
@@ -226,20 +226,20 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Component id="lblDX" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lblIR" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
                                       <Component id="lblNumberDX" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="lblNumberIR" min="-2" pref="270" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="lblCX" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="lblNumberCX" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="lblIR" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="lblNumberIR" min="-2" pref="146" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                               </Group>
@@ -268,7 +268,6 @@
                           <Component id="lblNumberAC" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblIR" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblNumberIR" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNumberDX" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -276,6 +275,7 @@
                               <Component id="lblAH" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblNumberAH" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblDX" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblNumberDX" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="lblAL" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -429,7 +429,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="tblCode">
+            <Component class="javax.swing.JTable" name="tblProcesses">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="cc" red="cc" type="rgb"/>
@@ -496,8 +496,8 @@
                           <Component id="automaticBtn" alignment="0" max="32767" attributes="0"/>
                           <Component id="tecladoTxtField" alignment="0" max="32767" attributes="0"/>
                           <Component id="cleanTableBtn" alignment="0" max="32767" attributes="0"/>
-                          <Component id="cleanTableBtn1" alignment="0" max="32767" attributes="0"/>
-                          <Component id="cleanTableBtn2" alignment="1" pref="144" max="32767" attributes="0"/>
+                          <Component id="estadisticasBtn" alignment="0" max="32767" attributes="0"/>
+                          <Component id="configurarMemoriaBtn" alignment="1" pref="144" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -528,9 +528,9 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="cleanTableBtn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="cleanTableBtn2" min="-2" pref="26" max="-2" attributes="0"/>
+                      <Component id="configurarMemoriaBtn" min="-2" pref="26" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="cleanTableBtn1" min="-2" pref="24" max="-2" attributes="0"/>
+                      <Component id="estadisticasBtn" min="-2" pref="24" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="exitBtn" min="-2" pref="20" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -669,7 +669,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="automaticBtnActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="cleanTableBtn1">
+            <Component class="javax.swing.JButton" name="estadisticasBtn">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Times New Roman" size="12" style="1"/>
@@ -685,10 +685,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cleanTableBtn1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="estadisticasBtnActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="cleanTableBtn2">
+            <Component class="javax.swing.JButton" name="configurarMemoriaBtn">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Times New Roman" size="12" style="1"/>
@@ -704,7 +704,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cleanTableBtn2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="configurarMemoriaBtnActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -778,7 +778,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lblAL1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="lblNumberAL1" min="-2" pref="42" max="-2" attributes="0"/>
+                              <Component id="lblNumberAL2" min="-2" pref="42" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -786,12 +786,12 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="lblAX1" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="lblNumberAX1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblNumberAX2" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="lblPC1" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="lblNumberPC1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblNumberPC2" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
@@ -803,8 +803,8 @@
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lblNumberBX1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lblNumberAC1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblNumberBX2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblNumberAC2" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                                   </Group>
@@ -812,27 +812,27 @@
                                       <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                                       <Component id="lblAH1" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="lblNumberAH1" max="32767" attributes="0"/>
+                                      <Component id="lblNumberAH2" max="32767" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="lblDX1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="lblNumberDX2" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lblIR1" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="lblNumberDX1" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="lblNumberIR1" min="-2" pref="270" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="lblCX1" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="lblNumberCX1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblNumberCX2" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="lblIR1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="lblNumberIR2" min="-2" pref="146" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                               </Group>
@@ -847,32 +847,32 @@
                       <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblAX1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNumberAX1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblNumberAX2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblBX1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNumberBX1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblNumberBX2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblCX1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNumberCX1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblNumberCX2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblPC1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNumberPC1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblNumberPC2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblAC1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNumberAC1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblNumberAC2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblIR1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNumberIR1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNumberDX1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblNumberIR2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="lblAH1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblNumberAH1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblNumberAH2" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblDX1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblNumberDX2" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="lblAL1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblNumberAL1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblNumberAL2" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -889,7 +889,7 @@
                 <Property name="text" type="java.lang.String" value="AX:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblNumberAX1">
+            <Component class="javax.swing.JLabel" name="lblNumberAX2">
               <Properties>
                 <Property name="text" type="java.lang.String" value="0"/>
               </Properties>
@@ -902,7 +902,7 @@
                 <Property name="text" type="java.lang.String" value="PC: "/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblNumberPC1">
+            <Component class="javax.swing.JLabel" name="lblNumberPC2">
               <Properties>
                 <Property name="text" type="java.lang.String" value="0"/>
               </Properties>
@@ -915,7 +915,7 @@
                 <Property name="text" type="java.lang.String" value="BX:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblNumberBX1">
+            <Component class="javax.swing.JLabel" name="lblNumberBX2">
               <Properties>
                 <Property name="text" type="java.lang.String" value="0"/>
               </Properties>
@@ -928,7 +928,7 @@
                 <Property name="text" type="java.lang.String" value="AC:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblNumberAC1">
+            <Component class="javax.swing.JLabel" name="lblNumberAC2">
               <Properties>
                 <Property name="text" type="java.lang.String" value="0"/>
               </Properties>
@@ -941,7 +941,7 @@
                 <Property name="text" type="java.lang.String" value="CX:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblNumberCX1">
+            <Component class="javax.swing.JLabel" name="lblNumberCX2">
               <Properties>
                 <Property name="text" type="java.lang.String" value="0"/>
               </Properties>
@@ -954,7 +954,7 @@
                 <Property name="text" type="java.lang.String" value="DX: "/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblNumberDX1">
+            <Component class="javax.swing.JLabel" name="lblNumberDX2">
               <Properties>
                 <Property name="text" type="java.lang.String" value="0"/>
               </Properties>
@@ -967,7 +967,7 @@
                 <Property name="text" type="java.lang.String" value="IR:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblNumberIR1">
+            <Component class="javax.swing.JLabel" name="lblNumberIR2">
               <Properties>
                 <Property name="text" type="java.lang.String" value=" "/>
               </Properties>
@@ -980,7 +980,7 @@
                 <Property name="text" type="java.lang.String" value="AL:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblNumberAL1">
+            <Component class="javax.swing.JLabel" name="lblNumberAL2">
               <Properties>
                 <Property name="text" type="java.lang.String" value="0"/>
               </Properties>
@@ -993,14 +993,14 @@
                 <Property name="text" type="java.lang.String" value="AH:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblNumberAH1">
+            <Component class="javax.swing.JLabel" name="lblNumberAH2">
               <Properties>
                 <Property name="text" type="java.lang.String" value="0"/>
               </Properties>
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JLabel" name="Lbl_memoria1">
+        <Component class="javax.swing.JLabel" name="Lbl_memoria2">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Times New Roman" size="14" style="1"/>
@@ -1035,7 +1035,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="tblCode1">
+            <Component class="javax.swing.JTable" name="tblMemory2">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="cc" red="cc" type="rgb"/>
@@ -1102,7 +1102,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="tblCode2">
+            <Component class="javax.swing.JTable" name="tblMemory">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="cc" red="cc" type="rgb"/>
@@ -1147,7 +1147,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JLabel" name="Lbl_memoria2">
+        <Component class="javax.swing.JLabel" name="lblListaProcesos">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Times New Roman" size="14" style="1"/>
@@ -1195,7 +1195,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="tblCode3">
+            <Component class="javax.swing.JTable" name="tblProcesses2">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="cc" red="cc" type="rgb"/>

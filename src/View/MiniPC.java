@@ -87,7 +87,7 @@ public class MiniPC extends javax.swing.JFrame {
         lblAH = new javax.swing.JLabel();
         lblNumberAH = new javax.swing.JLabel();
         Pnl_Memoria = new javax.swing.JScrollPane();
-        tblCode = new javax.swing.JTable();
+        tblProcesses = new javax.swing.JTable();
         Pnl_Menu = new javax.swing.JPanel();
         loadFileBtn = new javax.swing.JButton();
         cleanTableBtn = new javax.swing.JButton();
@@ -99,40 +99,40 @@ public class MiniPC extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         pantalla = new javax.swing.JTextPane();
         automaticBtn = new javax.swing.JButton();
-        cleanTableBtn1 = new javax.swing.JButton();
-        cleanTableBtn2 = new javax.swing.JButton();
+        estadisticasBtn = new javax.swing.JButton();
+        configurarMemoriaBtn = new javax.swing.JButton();
         Lbl_memoria = new javax.swing.JLabel();
         Lbl_registros = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         Lbl_registros1 = new javax.swing.JLabel();
         Pnl_Registros1 = new javax.swing.JPanel();
         lblAX1 = new javax.swing.JLabel();
-        lblNumberAX1 = new javax.swing.JLabel();
+        lblNumberAX2 = new javax.swing.JLabel();
         lblPC1 = new javax.swing.JLabel();
-        lblNumberPC1 = new javax.swing.JLabel();
+        lblNumberPC2 = new javax.swing.JLabel();
         lblBX1 = new javax.swing.JLabel();
-        lblNumberBX1 = new javax.swing.JLabel();
+        lblNumberBX2 = new javax.swing.JLabel();
         lblAC1 = new javax.swing.JLabel();
-        lblNumberAC1 = new javax.swing.JLabel();
+        lblNumberAC2 = new javax.swing.JLabel();
         lblCX1 = new javax.swing.JLabel();
-        lblNumberCX1 = new javax.swing.JLabel();
+        lblNumberCX2 = new javax.swing.JLabel();
         lblDX1 = new javax.swing.JLabel();
-        lblNumberDX1 = new javax.swing.JLabel();
+        lblNumberDX2 = new javax.swing.JLabel();
         lblIR1 = new javax.swing.JLabel();
-        lblNumberIR1 = new javax.swing.JLabel();
+        lblNumberIR2 = new javax.swing.JLabel();
         lblAL1 = new javax.swing.JLabel();
-        lblNumberAL1 = new javax.swing.JLabel();
+        lblNumberAL2 = new javax.swing.JLabel();
         lblAH1 = new javax.swing.JLabel();
-        lblNumberAH1 = new javax.swing.JLabel();
-        Lbl_memoria1 = new javax.swing.JLabel();
-        Pnl_Memoria1 = new javax.swing.JScrollPane();
-        tblCode1 = new javax.swing.JTable();
-        Pnl_Memoria2 = new javax.swing.JScrollPane();
-        tblCode2 = new javax.swing.JTable();
+        lblNumberAH2 = new javax.swing.JLabel();
         Lbl_memoria2 = new javax.swing.JLabel();
+        Pnl_Memoria1 = new javax.swing.JScrollPane();
+        tblMemory2 = new javax.swing.JTable();
+        Pnl_Memoria2 = new javax.swing.JScrollPane();
+        tblMemory = new javax.swing.JTable();
+        lblListaProcesos = new javax.swing.JLabel();
         Lbl_memoria3 = new javax.swing.JLabel();
         Pnl_Memoria3 = new javax.swing.JScrollPane();
-        tblCode3 = new javax.swing.JTable();
+        tblProcesses2 = new javax.swing.JTable();
 
         nextInstructionBtn1.setText("Siguiente instrucción");
         nextInstructionBtn1.addActionListener(new java.awt.event.ActionListener() {
@@ -237,18 +237,18 @@ public class MiniPC extends javax.swing.JFrame {
                         .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(Pnl_RegistrosLayout.createSequentialGroup()
                                 .addComponent(lblDX)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(Pnl_RegistrosLayout.createSequentialGroup()
-                                .addComponent(lblIR)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblNumberDX)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblNumberIR, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(Pnl_RegistrosLayout.createSequentialGroup()
                                 .addComponent(lblCX)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lblNumberCX)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(Pnl_RegistrosLayout.createSequentialGroup()
+                                .addComponent(lblIR)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblNumberIR, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         Pnl_RegistrosLayout.setVerticalGroup(
@@ -269,14 +269,14 @@ public class MiniPC extends javax.swing.JFrame {
                     .addComponent(lblAC)
                     .addComponent(lblNumberAC)
                     .addComponent(lblIR)
-                    .addComponent(lblNumberIR)
-                    .addComponent(lblNumberDX))
+                    .addComponent(lblNumberIR))
                 .addGap(7, 7, 7)
                 .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblAH)
                         .addComponent(lblNumberAH)
-                        .addComponent(lblDX))
+                        .addComponent(lblDX)
+                        .addComponent(lblNumberDX))
                     .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblAL)
                         .addComponent(lblNumberAL)))
@@ -290,8 +290,8 @@ public class MiniPC extends javax.swing.JFrame {
         Pnl_Memoria.setMinimumSize(new java.awt.Dimension(101, 101));
         Pnl_Memoria.setName(""); // NOI18N
 
-        tblCode.setBackground(new java.awt.Color(204, 204, 255));
-        tblCode.setModel(new javax.swing.table.DefaultTableModel(
+        tblProcesses.setBackground(new java.awt.Color(204, 204, 255));
+        tblProcesses.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -388,8 +388,8 @@ public class MiniPC extends javax.swing.JFrame {
                 "Número", "Nombre", "Estado"
             }
         ));
-        tblCode.setRowHeight(30);
-        Pnl_Memoria.setViewportView(tblCode);
+        tblProcesses.setRowHeight(30);
+        Pnl_Memoria.setViewportView(tblProcesses);
 
         Pnl_Menu.setBackground(new java.awt.Color(204, 204, 255));
         Pnl_Menu.setPreferredSize(new java.awt.Dimension(602, 602));
@@ -459,23 +459,23 @@ public class MiniPC extends javax.swing.JFrame {
             }
         });
 
-        cleanTableBtn1.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        cleanTableBtn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/reiniciar.png"))); // NOI18N
-        cleanTableBtn1.setText("Estadísticas");
-        cleanTableBtn1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        cleanTableBtn1.addActionListener(new java.awt.event.ActionListener() {
+        estadisticasBtn.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        estadisticasBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/reiniciar.png"))); // NOI18N
+        estadisticasBtn.setText("Estadísticas");
+        estadisticasBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        estadisticasBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cleanTableBtn1ActionPerformed(evt);
+                estadisticasBtnActionPerformed(evt);
             }
         });
 
-        cleanTableBtn2.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        cleanTableBtn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/reiniciar.png"))); // NOI18N
-        cleanTableBtn2.setText("Configurar memoria");
-        cleanTableBtn2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        cleanTableBtn2.addActionListener(new java.awt.event.ActionListener() {
+        configurarMemoriaBtn.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        configurarMemoriaBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/reiniciar.png"))); // NOI18N
+        configurarMemoriaBtn.setText("Configurar memoria");
+        configurarMemoriaBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        configurarMemoriaBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cleanTableBtn2ActionPerformed(evt);
+                configurarMemoriaBtnActionPerformed(evt);
             }
         });
 
@@ -497,8 +497,8 @@ public class MiniPC extends javax.swing.JFrame {
                     .addComponent(automaticBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tecladoTxtField)
                     .addComponent(cleanTableBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cleanTableBtn1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cleanTableBtn2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
+                    .addComponent(estadisticasBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(configurarMemoriaBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pnl_MenuLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -525,9 +525,9 @@ public class MiniPC extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cleanTableBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cleanTableBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(configurarMemoriaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cleanTableBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(estadisticasBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -555,47 +555,47 @@ public class MiniPC extends javax.swing.JFrame {
         lblAX1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblAX1.setText("AX:");
 
-        lblNumberAX1.setText("0");
+        lblNumberAX2.setText("0");
 
         lblPC1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblPC1.setText("PC: ");
 
-        lblNumberPC1.setText("0");
+        lblNumberPC2.setText("0");
 
         lblBX1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblBX1.setText("BX:");
 
-        lblNumberBX1.setText("0");
+        lblNumberBX2.setText("0");
 
         lblAC1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblAC1.setText("AC:");
 
-        lblNumberAC1.setText("0");
+        lblNumberAC2.setText("0");
 
         lblCX1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCX1.setText("CX:");
 
-        lblNumberCX1.setText("0");
+        lblNumberCX2.setText("0");
 
         lblDX1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblDX1.setText("DX: ");
 
-        lblNumberDX1.setText("0");
+        lblNumberDX2.setText("0");
 
         lblIR1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblIR1.setText("IR:");
 
-        lblNumberIR1.setText(" ");
+        lblNumberIR2.setText(" ");
 
         lblAL1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblAL1.setText("AL:");
 
-        lblNumberAL1.setText("0");
+        lblNumberAL2.setText("0");
 
         lblAH1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblAH1.setText("AH:");
 
-        lblNumberAH1.setText("0");
+        lblNumberAH2.setText("0");
 
         javax.swing.GroupLayout Pnl_Registros1Layout = new javax.swing.GroupLayout(Pnl_Registros1);
         Pnl_Registros1.setLayout(Pnl_Registros1Layout);
@@ -607,18 +607,18 @@ public class MiniPC extends javax.swing.JFrame {
                     .addGroup(Pnl_Registros1Layout.createSequentialGroup()
                         .addComponent(lblAL1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblNumberAL1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblNumberAL2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(Pnl_Registros1Layout.createSequentialGroup()
                         .addGroup(Pnl_Registros1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(Pnl_Registros1Layout.createSequentialGroup()
                                 .addComponent(lblAX1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblNumberAX1))
+                                .addComponent(lblNumberAX2))
                             .addGroup(Pnl_Registros1Layout.createSequentialGroup()
                                 .addComponent(lblPC1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblNumberPC1)))
+                                .addComponent(lblNumberPC2)))
                         .addGap(87, 87, 87)
                         .addGroup(Pnl_Registros1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(Pnl_Registros1Layout.createSequentialGroup()
@@ -627,30 +627,30 @@ public class MiniPC extends javax.swing.JFrame {
                                     .addComponent(lblBX1))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(Pnl_Registros1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblNumberBX1)
-                                    .addComponent(lblNumberAC1))
+                                    .addComponent(lblNumberBX2)
+                                    .addComponent(lblNumberAC2))
                                 .addGap(35, 35, 35))
                             .addGroup(Pnl_Registros1Layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
                                 .addComponent(lblAH1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblNumberAH1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblNumberAH2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(Pnl_Registros1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(Pnl_Registros1Layout.createSequentialGroup()
                                 .addComponent(lblDX1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblNumberDX2)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(Pnl_Registros1Layout.createSequentialGroup()
-                                .addComponent(lblIR1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblNumberDX1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblNumberIR1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(Pnl_Registros1Layout.createSequentialGroup()
                                 .addComponent(lblCX1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblNumberCX1)
+                                .addComponent(lblNumberCX2)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(Pnl_Registros1Layout.createSequentialGroup()
+                                .addComponent(lblIR1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblNumberIR2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         Pnl_Registros1Layout.setVerticalGroup(
@@ -659,35 +659,35 @@ public class MiniPC extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(Pnl_Registros1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblAX1)
-                    .addComponent(lblNumberAX1)
+                    .addComponent(lblNumberAX2)
                     .addComponent(lblBX1)
-                    .addComponent(lblNumberBX1)
+                    .addComponent(lblNumberBX2)
                     .addComponent(lblCX1)
-                    .addComponent(lblNumberCX1))
+                    .addComponent(lblNumberCX2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(Pnl_Registros1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPC1)
-                    .addComponent(lblNumberPC1)
+                    .addComponent(lblNumberPC2)
                     .addComponent(lblAC1)
-                    .addComponent(lblNumberAC1)
+                    .addComponent(lblNumberAC2)
                     .addComponent(lblIR1)
-                    .addComponent(lblNumberIR1)
-                    .addComponent(lblNumberDX1))
+                    .addComponent(lblNumberIR2))
                 .addGap(7, 7, 7)
                 .addGroup(Pnl_Registros1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Pnl_Registros1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblAH1)
-                        .addComponent(lblNumberAH1)
-                        .addComponent(lblDX1))
+                        .addComponent(lblNumberAH2)
+                        .addComponent(lblDX1)
+                        .addComponent(lblNumberDX2))
                     .addGroup(Pnl_Registros1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblAL1)
-                        .addComponent(lblNumberAL1)))
+                        .addComponent(lblNumberAL2)))
                 .addContainerGap())
         );
 
-        Lbl_memoria1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        Lbl_memoria1.setText("Memoria");
-        Lbl_memoria1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Lbl_memoria2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        Lbl_memoria2.setText("Memoria");
+        Lbl_memoria2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         Pnl_Memoria1.setBackground(new java.awt.Color(204, 204, 255));
         Pnl_Memoria1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -696,8 +696,8 @@ public class MiniPC extends javax.swing.JFrame {
         Pnl_Memoria1.setMinimumSize(new java.awt.Dimension(101, 101));
         Pnl_Memoria1.setName(""); // NOI18N
 
-        tblCode1.setBackground(new java.awt.Color(204, 204, 255));
-        tblCode1.setModel(new javax.swing.table.DefaultTableModel(
+        tblMemory2.setBackground(new java.awt.Color(204, 204, 255));
+        tblMemory2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -794,10 +794,10 @@ public class MiniPC extends javax.swing.JFrame {
                 "Código ASM", "Código binario", "Address", "Tiempo"
             }
         ));
-        tblCode1.setRowHeight(30);
-        Pnl_Memoria1.setViewportView(tblCode1);
-        if (tblCode1.getColumnModel().getColumnCount() > 0) {
-            tblCode1.getColumnModel().getColumn(3).setHeaderValue("Tiempo");
+        tblMemory2.setRowHeight(30);
+        Pnl_Memoria1.setViewportView(tblMemory2);
+        if (tblMemory2.getColumnModel().getColumnCount() > 0) {
+            tblMemory2.getColumnModel().getColumn(3).setHeaderValue("Tiempo");
         }
 
         Pnl_Memoria2.setBackground(new java.awt.Color(204, 204, 255));
@@ -807,8 +807,8 @@ public class MiniPC extends javax.swing.JFrame {
         Pnl_Memoria2.setMinimumSize(new java.awt.Dimension(101, 101));
         Pnl_Memoria2.setName(""); // NOI18N
 
-        tblCode2.setBackground(new java.awt.Color(204, 204, 255));
-        tblCode2.setModel(new javax.swing.table.DefaultTableModel(
+        tblMemory.setBackground(new java.awt.Color(204, 204, 255));
+        tblMemory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -905,15 +905,15 @@ public class MiniPC extends javax.swing.JFrame {
                 "Código ASM", "Código binario", "Address", "Tiempo"
             }
         ));
-        tblCode2.setRowHeight(30);
-        Pnl_Memoria2.setViewportView(tblCode2);
-        if (tblCode2.getColumnModel().getColumnCount() > 0) {
-            tblCode2.getColumnModel().getColumn(3).setHeaderValue("Tiempo");
+        tblMemory.setRowHeight(30);
+        Pnl_Memoria2.setViewportView(tblMemory);
+        if (tblMemory.getColumnModel().getColumnCount() > 0) {
+            tblMemory.getColumnModel().getColumn(3).setHeaderValue("Tiempo");
         }
 
-        Lbl_memoria2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        Lbl_memoria2.setText("Lista de procesos");
-        Lbl_memoria2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lblListaProcesos.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lblListaProcesos.setText("Lista de procesos");
+        lblListaProcesos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         Lbl_memoria3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         Lbl_memoria3.setText("Lista de procesos");
@@ -926,8 +926,8 @@ public class MiniPC extends javax.swing.JFrame {
         Pnl_Memoria3.setMinimumSize(new java.awt.Dimension(101, 101));
         Pnl_Memoria3.setName(""); // NOI18N
 
-        tblCode3.setBackground(new java.awt.Color(204, 204, 255));
-        tblCode3.setModel(new javax.swing.table.DefaultTableModel(
+        tblProcesses2.setBackground(new java.awt.Color(204, 204, 255));
+        tblProcesses2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -1024,8 +1024,8 @@ public class MiniPC extends javax.swing.JFrame {
                 "Número", "Nombre", "Estado"
             }
         ));
-        tblCode3.setRowHeight(30);
-        Pnl_Memoria3.setViewportView(tblCode3);
+        tblProcesses2.setRowHeight(30);
+        Pnl_Memoria3.setViewportView(tblProcesses2);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -1051,7 +1051,7 @@ public class MiniPC extends javax.swing.JFrame {
                                     .addComponent(Pnl_Memoria2, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(147, 147, 147)
-                                .addComponent(Lbl_memoria2)))))
+                                .addComponent(lblListaProcesos)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -1062,7 +1062,7 @@ public class MiniPC extends javax.swing.JFrame {
                             .addComponent(Lbl_registros1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addGap(144, 144, 144)
-                            .addComponent(Lbl_memoria1)))
+                            .addComponent(Lbl_memoria2)))
                     .addComponent(Pnl_Memoria3, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(129, 129, 129)
@@ -1085,13 +1085,13 @@ public class MiniPC extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Pnl_Registros1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Lbl_memoria1)
+                        .addComponent(Lbl_memoria2)
                         .addGap(4, 4, 4)
                         .addComponent(Pnl_Memoria1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(Lbl_memoria2)
+                                .addComponent(lblListaProcesos)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(Pnl_Memoria, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -1133,11 +1133,11 @@ public class MiniPC extends javax.swing.JFrame {
         // También resetea el controlador de CPU actual y el administrador de archivos actual
         // No recibe ningún parámetro
         
-        for (int i = 0; i < this.getTblCode().getRowCount(); i++) {
-                this.getTblCode().setValueAt("", i, 0);
-                this.getTblCode().setValueAt("", i, 1);
-                this.getTblCode().setValueAt("", i, 2);
-                this.getTblCode().setValueAt("", i, 3);
+        for (int i = 0; i < this.getTblMemory().getRowCount(); i++) {
+                this.getTblMemory().setValueAt("", i, 0);
+                this.getTblMemory().setValueAt("", i, 1);
+                this.getTblMemory().setValueAt("", i, 2);
+                this.getTblMemory().setValueAt("", i, 3);
         }
         this.getLblNumberAC().setText("0");
         this.getLblNumberPC().setText("0");
@@ -1204,10 +1204,10 @@ public class MiniPC extends javax.swing.JFrame {
         System.out.println(this.getController2().getCpu().getCurrentAddress());
         System.out.println(this.getController2().getCpu().getProgramCounter());
         //cpu 1
-        this.getTblCode().setValueAt(instructionSet.get(row).getAsmInstructionString(), this.getController().getCpu().getNumberExecutedInstructions(), 0);
-        this.getTblCode().setValueAt(instructionSet.get(row).convertToBinary(), this.getController().getCpu().getNumberExecutedInstructions(), 1);
-        this.getTblCode().setValueAt(this.getController().getCpu().getCurrentAddress(), this.getController().getCpu().getNumberExecutedInstructions(), 2);
-        this.getTblCode().setValueAt(this.getController().getCpu().getCurrentTime(), this.getController().getCpu().getNumberExecutedInstructions(), 3);
+        this.getTblMemory().setValueAt(instructionSet.get(row).getAsmInstructionString(), this.getController().getCpu().getNumberExecutedInstructions(), 0);
+        this.getTblMemory().setValueAt(instructionSet.get(row).convertToBinary(), this.getController().getCpu().getNumberExecutedInstructions(), 1);
+        this.getTblMemory().setValueAt(this.getController().getCpu().getCurrentAddress(), this.getController().getCpu().getNumberExecutedInstructions(), 2);
+        this.getTblMemory().setValueAt(this.getController().getCpu().getCurrentTime(), this.getController().getCpu().getNumberExecutedInstructions(), 3);
         
         this.getLblNumberAX().setText(this.getController().getCpu().getDataRegisters().get(0).getValue()+"");
         this.getLblNumberBX().setText(this.getController().getCpu().getDataRegisters().get(1).getValue()+"");
@@ -1277,16 +1277,111 @@ public class MiniPC extends javax.swing.JFrame {
     public void setController(MiniPCController controller) {
         this.controller = controller;
     }
-    
-    
-    public JTable getTblCode() {
-        return tblCode;
+
+    public JLabel getLblNumberAC2() {
+        return lblNumberAC2;
     }
 
-    public void setTblCode(JTable tblCode) {
-        this.tblCode = tblCode;
+    public void setLblNumberAC2(JLabel lblNumberAC2) {
+        this.lblNumberAC2 = lblNumberAC2;
     }
 
+    public JLabel getLblNumberAH2() {
+        return lblNumberAH2;
+    }
+
+    public void setLblNumberAH2(JLabel lblNumberAH2) {
+        this.lblNumberAH2 = lblNumberAH2;
+    }
+
+    public JLabel getLblNumberAL2() {
+        return lblNumberAL2;
+    }
+
+    public void setLblNumberAL2(JLabel lblNumberAL2) {
+        this.lblNumberAL2 = lblNumberAL2;
+    }
+
+    public JLabel getLblNumberAX2() {
+        return lblNumberAX2;
+    }
+
+    public void setLblNumberAX2(JLabel lblNumberAX2) {
+        this.lblNumberAX2 = lblNumberAX2;
+    }
+
+    public JLabel getLblNumberBX2() {
+        return lblNumberBX2;
+    }
+
+    public void setLblNumberBX2(JLabel lblNumberBX2) {
+        this.lblNumberBX2 = lblNumberBX2;
+    }
+
+    public JLabel getLblNumberCX2() {
+        return lblNumberCX2;
+    }
+
+    public void setLblNumberCX2(JLabel lblNumberCX2) {
+        this.lblNumberCX2 = lblNumberCX2;
+    }
+
+    public JLabel getLblNumberDX2() {
+        return lblNumberDX2;
+    }
+
+    public void setLblNumberDX2(JLabel lblNumberDX2) {
+        this.lblNumberDX2 = lblNumberDX2;
+    }
+
+    public JLabel getLblNumberIR2() {
+        return lblNumberIR2;
+    }
+
+    public void setLblNumberIR2(JLabel lblNumberIR2) {
+        this.lblNumberIR2 = lblNumberIR2;
+    }
+
+    public JLabel getLblNumberPC2() {
+        return lblNumberPC2;
+    }
+
+    public void setLblNumberPC2(JLabel lblNumberPC2) {
+        this.lblNumberPC2 = lblNumberPC2;
+    }
+
+    public JTable getTblMemory() {
+        return tblMemory;
+    }
+
+    public void setTblMemory(JTable tblMemory) {
+        this.tblMemory = tblMemory;
+    }
+
+    public JTable getTblMemory2() {
+        return tblMemory2;
+    }
+
+    public void setTblMemory2(JTable tblMemory2) {
+        this.tblMemory2 = tblMemory2;
+    }
+
+    public JTable getTblProcesses() {
+        return tblProcesses;
+    }
+
+    public void setTblProcesses(JTable tblProcesses) {
+        this.tblProcesses = tblProcesses;
+    }
+
+    public JTable getTblProcesses2() {
+        return tblProcesses2;
+    }
+
+    public void setTblProcesses2(JTable tblProcesses2) {
+        this.tblProcesses2 = tblProcesses2;
+    }
+    
     
     
     public JLabel getLblNumberAC() {
@@ -1432,7 +1527,7 @@ public class MiniPC extends javax.swing.JFrame {
     }//GEN-LAST:event_loadFileBtnActionPerformed
 
     private void cleanTableBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanTableBtnActionPerformed
-        if (this.getTblCode().getValueAt(0, 0) == "" || this.getTblCode().getValueAt(0, 0) == " "){
+        if (this.getTblMemory().getValueAt(0, 0) == "" || this.getTblMemory().getValueAt(0, 0) == " "){
             JOptionPane.showMessageDialog (null, "No queda nada por limpiar", "Error: Archivo ya fue limpiado", JOptionPane.ERROR_MESSAGE);
         }
         else{
@@ -1530,13 +1625,13 @@ public class MiniPC extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_automaticBtnActionPerformed
 
-    private void cleanTableBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanTableBtn1ActionPerformed
+    private void estadisticasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadisticasBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cleanTableBtn1ActionPerformed
+    }//GEN-LAST:event_estadisticasBtnActionPerformed
 
-    private void cleanTableBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanTableBtn2ActionPerformed
+    private void configurarMemoriaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configurarMemoriaBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cleanTableBtn2ActionPerformed
+    }//GEN-LAST:event_configurarMemoriaBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1578,7 +1673,6 @@ public class MiniPC extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Lbl_memoria;
-    private javax.swing.JLabel Lbl_memoria1;
     private javax.swing.JLabel Lbl_memoria2;
     private javax.swing.JLabel Lbl_memoria3;
     private javax.swing.JLabel Lbl_registros;
@@ -1592,8 +1686,8 @@ public class MiniPC extends javax.swing.JFrame {
     private javax.swing.JPanel Pnl_Registros1;
     private javax.swing.JButton automaticBtn;
     private javax.swing.JButton cleanTableBtn;
-    private javax.swing.JButton cleanTableBtn1;
-    private javax.swing.JButton cleanTableBtn2;
+    private javax.swing.JButton configurarMemoriaBtn;
+    private javax.swing.JButton estadisticasBtn;
     private javax.swing.JButton exitBtn;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel3;
@@ -1614,24 +1708,25 @@ public class MiniPC extends javax.swing.JFrame {
     private javax.swing.JLabel lblDX1;
     private javax.swing.JLabel lblIR;
     private javax.swing.JLabel lblIR1;
+    private javax.swing.JLabel lblListaProcesos;
     private javax.swing.JLabel lblNumberAC;
-    private javax.swing.JLabel lblNumberAC1;
+    private javax.swing.JLabel lblNumberAC2;
     private javax.swing.JLabel lblNumberAH;
-    private javax.swing.JLabel lblNumberAH1;
+    private javax.swing.JLabel lblNumberAH2;
     private javax.swing.JLabel lblNumberAL;
-    private javax.swing.JLabel lblNumberAL1;
+    private javax.swing.JLabel lblNumberAL2;
     private javax.swing.JLabel lblNumberAX;
-    private javax.swing.JLabel lblNumberAX1;
+    private javax.swing.JLabel lblNumberAX2;
     private javax.swing.JLabel lblNumberBX;
-    private javax.swing.JLabel lblNumberBX1;
+    private javax.swing.JLabel lblNumberBX2;
     private javax.swing.JLabel lblNumberCX;
-    private javax.swing.JLabel lblNumberCX1;
+    private javax.swing.JLabel lblNumberCX2;
     private javax.swing.JLabel lblNumberDX;
-    private javax.swing.JLabel lblNumberDX1;
+    private javax.swing.JLabel lblNumberDX2;
     private javax.swing.JLabel lblNumberIR;
-    private javax.swing.JLabel lblNumberIR1;
+    private javax.swing.JLabel lblNumberIR2;
     private javax.swing.JLabel lblNumberPC;
-    private javax.swing.JLabel lblNumberPC1;
+    private javax.swing.JLabel lblNumberPC2;
     private javax.swing.JLabel lblPC;
     private javax.swing.JLabel lblPC1;
     private javax.swing.JLabel lblPantalla;
@@ -1640,10 +1735,10 @@ public class MiniPC extends javax.swing.JFrame {
     private javax.swing.JButton nextInstructionBtn;
     private javax.swing.JButton nextInstructionBtn1;
     private javax.swing.JTextPane pantalla;
-    private javax.swing.JTable tblCode;
-    private javax.swing.JTable tblCode1;
-    private javax.swing.JTable tblCode2;
-    private javax.swing.JTable tblCode3;
+    private javax.swing.JTable tblMemory;
+    private javax.swing.JTable tblMemory2;
+    private javax.swing.JTable tblProcesses;
+    private javax.swing.JTable tblProcesses2;
     private javax.swing.JTextField tecladoTxtField;
     // End of variables declaration//GEN-END:variables
 }
