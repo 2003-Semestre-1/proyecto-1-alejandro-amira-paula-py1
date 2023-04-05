@@ -1147,10 +1147,39 @@ public class MiniPC extends javax.swing.JFrame {
         this.getLblNumberBX().setText("0");
         this.getLblNumberCX().setText("0");
         this.getLblNumberDX().setText("0");
+        this.getLblNumberAL().setText("0");
+        this.getLblNumberAH().setText("0");
         this.getController().setCpu(null);
         this.getController2().setCpu(null);
         FileManager newFileManager = new FileManager();
         this.setFileManager(newFileManager);
+        
+        for (int i = 0; i < this.getTblMemory2().getRowCount(); i++) {
+                this.getTblMemory2().setValueAt("", i, 0);
+                this.getTblMemory2().setValueAt("", i, 1);
+                this.getTblMemory2().setValueAt("", i, 2);
+                this.getTblMemory2().setValueAt("", i, 3);
+        }
+        this.getLblNumberAC2().setText("0");
+        this.getLblNumberPC2().setText("0");
+        this.getLblNumberIR2().setText(" ");
+        this.getLblNumberAX2().setText("0");
+        this.getLblNumberBX2().setText("0");
+        this.getLblNumberCX2().setText("0");
+        this.getLblNumberDX2().setText("0");
+        this.getLblNumberAL2().setText("0");
+        this.getLblNumberAH2().setText("0");
+        
+        CPU cpu = new CPU("CPU #0");
+        Memory memory = new Memory();
+        cpu.setMemory(memory);
+        
+        CPU cpu2 = new CPU("CPU #1");
+        Memory memory2 = new Memory();
+        cpu2.setMemory(memory2);
+        
+        this.getController().setCpu(cpu);
+        this.getController2().setCpu(cpu2);
     }
 
     public boolean isJumpFlag() {
@@ -1563,6 +1592,7 @@ public class MiniPC extends javax.swing.JFrame {
                System.out.println(this.fileManager.getInstructions());
                System.out.println(this.fileManager.getInstructions2());
                this.updateTable(this.fileManager.getInstructions(),this.fileManager.getInstructions2(),controller.getRowCount());
+               this.setArchivoAbierto(true);
             }
 
         }
@@ -1571,7 +1601,7 @@ public class MiniPC extends javax.swing.JFrame {
     }//GEN-LAST:event_loadFileBtnActionPerformed
 
     private void cleanTableBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanTableBtnActionPerformed
-        if (this.getTblMemory().getValueAt(0, 0) == "" || this.getTblMemory().getValueAt(0, 0) == " "){
+        if (this.getTblMemory().getValueAt(0, 0) == "" && this.getTblMemory().getValueAt(0, 0) == " "){
             JOptionPane.showMessageDialog (null, "No queda nada por limpiar", "Error: Archivo ya fue limpiado", JOptionPane.ERROR_MESSAGE);
         }
         else{
@@ -1589,7 +1619,7 @@ public class MiniPC extends javax.swing.JFrame {
 
     private void nextInstructionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextInstructionBtnActionPerformed
         if (!this.isWaitingForInput()){
-            if (this.getController().getCpu().getMemory().getBcpList().size() == 0 && this.getController2().getCpu().getMemory().getBcpList().size() == 0){
+            if (!this.isArchivoAbierto()){
                 JOptionPane.showMessageDialog (null, "Por favor cargue un archivo", "Error: No hay archivos cargados", JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -1634,9 +1664,9 @@ public class MiniPC extends javax.swing.JFrame {
                     try {
                         this.getController2().executeInstruction(currentInstruction.getOp(),currentInstruction.getRegister(),currentInstruction.getValue(),currentInstruction.getStringValue(),this);
                         this.getController2().getCpu().setProgramCounter(this.getController2().getCpu().getProgramCounter()+1);
-                } catch (InterruptedException ex) {
+                    } catch (InterruptedException ex) {
                         Logger.getLogger(MiniPC.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                    }
                 }
                 
                 this.updateTable(this.fileManager.getInstructions(), this.fileManager.getInstructions2(),this.getController().getRowCount());
