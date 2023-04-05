@@ -1149,10 +1149,6 @@ public class MiniPC extends javax.swing.JFrame {
         this.getLblNumberDX().setText("0");
         this.getLblNumberAL().setText("0");
         this.getLblNumberAH().setText("0");
-        this.getController().setCpu(null);
-        this.getController2().setCpu(null);
-        FileManager newFileManager = new FileManager();
-        this.setFileManager(newFileManager);
         
         for (int i = 0; i < this.getTblMemory2().getRowCount(); i++) {
                 this.getTblMemory2().setValueAt("", i, 0);
@@ -1169,6 +1165,14 @@ public class MiniPC extends javax.swing.JFrame {
         this.getLblNumberDX2().setText("0");
         this.getLblNumberAL2().setText("0");
         this.getLblNumberAH2().setText("0");
+        
+        FileManager newFileManager = new FileManager();
+        this.setFileManager(newFileManager);
+        
+        MiniPCController controller = new MiniPCController();
+        MiniPCController controller2 = new MiniPCController();
+        this.setController(controller);
+        this.setController2(controller2);
         
         CPU cpu = new CPU("CPU #0");
         Memory memory = new Memory();
