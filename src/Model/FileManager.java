@@ -64,7 +64,7 @@ public class FileManager {
         return filePath;
     }
     
-    public ArrayList<MemoryRegister> loadFileInstructions(String filePath){
+    public ArrayList<MemoryRegister> loadFileInstructions(String filePath, int cpuEscogido){
         // Este método carga las instrucciones leídas en memoria
         // Procesa cada instrucción línea por línea y la valida, si está valida entonces la agrega a un instruction set que será cargado al CPU
         // Recibe como parámetro el path del archivo que se desea cargar
@@ -77,8 +77,10 @@ public class FileManager {
             while(instruction != null) {
                 
                 if (!instruction.isEmpty()){
-                    this.instructions.add(this.processInstruction(instruction)); // Se procesa la instrucción para agergarla a memoria, luego se procede a la siguiente línea
-                    System.out.println("Instruccion es: " + instruction);
+                    if (cpuEscogido==0)
+                        this.instructions.add(this.processInstruction(instruction)); // Se procesa la instrucción para agergarla a memoria, luego se procede a la siguiente línea
+                    if (cpuEscogido==1)
+                        this.instructions2.add(this.processInstruction(instruction)); // Se procesa la instrucción para agergarla a memoria, luego se procede a la siguiente línea
                 }
                 
                 instructionPos++;
@@ -87,14 +89,27 @@ public class FileManager {
                 
             }
             
-            for (int i = 0; i < instructions.size(); i++) {
-                String currentInstruction = "";
-                if (!instructions.get(i).getOp().equals("int")){
-                    currentInstruction = instructions.get(i).convertToBinary();
-                    System.out.println("Instruccion #"+i+": "+currentInstruction);
-                }
+            if (cpuEscogido==0){
+                for (int i = 0; i < instructions.size(); i++) {
+                    String currentInstruction = "";
+                    if (!instructions.get(i).getOp().equals("int")){
+                        currentInstruction = instructions.get(i).convertToBinary();
+                        System.out.println("Instruccion #"+i+": "+currentInstruction);
+                    }  
                     
+                }
             }
+            else if (cpuEscogido==1){
+                for (int i = 0; i < instructions2.size(); i++) {
+                    String currentInstruction = "";
+                    if (!instructions2.get(i).getOp().equals("int")){
+                        currentInstruction = instructions2.get(i).convertToBinary();
+                        System.out.println("Instruccion #"+i+": "+currentInstruction);
+                    }  
+                    
+                }
+            }
+            
             
             
             if(instructionPos == 0){
@@ -103,7 +118,10 @@ public class FileManager {
                 return null;
             }
             
-            return instructions;
+            if (cpuEscogido==0)
+                return instructions;
+            else if (cpuEscogido==1)
+                return instructions2;
             
         } catch (IOException e) {
             // Si hubo errores en la lectura del archivo, tira un error

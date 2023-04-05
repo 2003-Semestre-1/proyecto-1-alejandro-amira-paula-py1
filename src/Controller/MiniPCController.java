@@ -43,7 +43,7 @@ public class MiniPCController {
         System.out.println("value: "+value);
         System.out.println("valueString: "+valueString);
          
-        this.getCpu().getMemory().getBcpList().get(0).setEstadoActual("Ejecución");
+        //this.getCpu().getMemory().getBcpList().get(0).setEstadoActual("Ejecución");
         
         switch(op) {
         case 1:
