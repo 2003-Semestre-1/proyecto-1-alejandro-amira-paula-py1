@@ -110,16 +110,16 @@
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="Lbl_memoria4" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="393" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
                           <Component id="Pnl_Memoria4" min="-2" pref="371" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="265" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="Pnl_Memoria" min="-2" pref="552" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="162" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="Lbl_memoria4" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="394" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -160,10 +160,10 @@
                           <Component id="Pnl_Memoria1" min="-2" pref="198" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                  <Component id="Lbl_memoria4" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="Pnl_Memoria4" min="-2" pref="114" max="-2" attributes="0"/>
+                  <Component id="Lbl_memoria4" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="Pnl_Memoria4" min="-2" pref="126" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -436,7 +436,7 @@
                   <Color blue="ff" green="cc" red="cc" type="rgb"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="90">
+                  <Table columnCount="4" rowCount="100">
                     <Column editable="true" title="N&#xfa;mero" type="java.lang.Object"/>
                     <Column editable="true" title="Nombre" type="java.lang.Object"/>
                     <Column editable="true" title="Estado" type="java.lang.Object"/>
@@ -1048,7 +1048,7 @@
                   <Color blue="ff" green="cc" red="cc" type="rgb"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="90">
+                  <Table columnCount="4" rowCount="100">
                     <Column editable="true" title="C&#xf3;digo ASM" type="java.lang.Object"/>
                     <Column editable="true" title="C&#xf3;digo binario" type="java.lang.Object"/>
                     <Column editable="true" title="Address" type="java.lang.Object"/>
@@ -1068,12 +1068,12 @@
                       <Renderer/>
                     </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title value="Address"/>
+                      <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                      <Title value="Tiempo"/>
+                      <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
@@ -1115,7 +1115,7 @@
                   <Color blue="ff" green="cc" red="cc" type="rgb"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="90">
+                  <Table columnCount="4" rowCount="100">
                     <Column editable="true" title="C&#xf3;digo ASM" type="java.lang.Object"/>
                     <Column editable="true" title="C&#xf3;digo binario" type="java.lang.Object"/>
                     <Column editable="true" title="Address" type="java.lang.Object"/>
@@ -1140,7 +1140,7 @@
                       <Renderer/>
                     </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title value="Tiempo"/>
+                      <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>

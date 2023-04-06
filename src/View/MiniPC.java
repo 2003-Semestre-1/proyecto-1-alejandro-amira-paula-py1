@@ -23,6 +23,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -62,7 +63,15 @@ public class MiniPC extends javax.swing.JFrame {
         
         this.getController().setCpu(cpu);
         this.getController2().setCpu(cpu2);
+
         initComponents();
+        
+        this.getTblMemoryList().setValueAt("Memoria Principal", 0, 0);
+        this.getTblMemoryList().setValueAt(this.getController().getCpu().getMemory().getSize(), 0, 1);
+        this.getTblMemoryList().setValueAt("Memoria Secundaria", 1, 0);
+        this.getTblMemoryList().setValueAt(this.getSecondaryMemory().getSize(), 1, 1);
+        this.getTblMemoryList().setValueAt("Memoria Virtual", 2, 0);
+        this.getTblMemoryList().setValueAt(this.getSecondaryMemory().getVirtualMemorySize(), 2, 1);
     }
 
     /**
@@ -302,6 +311,16 @@ public class MiniPC extends javax.swing.JFrame {
         tblProcesses.setBackground(new java.awt.Color(204, 204, 255));
         tblProcesses.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
@@ -797,6 +816,16 @@ public class MiniPC extends javax.swing.JFrame {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
@@ -806,9 +835,7 @@ public class MiniPC extends javax.swing.JFrame {
         tblMemory2.setRowHeight(30);
         Pnl_Memoria1.setViewportView(tblMemory2);
         if (tblMemory2.getColumnModel().getColumnCount() > 0) {
-            tblMemory2.getColumnModel().getColumn(2).setHeaderValue("Address");
             tblMemory2.getColumnModel().getColumn(3).setResizable(false);
-            tblMemory2.getColumnModel().getColumn(3).setHeaderValue("Tiempo");
         }
 
         Pnl_Memoria2.setBackground(new java.awt.Color(204, 204, 255));
@@ -910,6 +937,16 @@ public class MiniPC extends javax.swing.JFrame {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
@@ -918,9 +955,6 @@ public class MiniPC extends javax.swing.JFrame {
         ));
         tblMemory.setRowHeight(30);
         Pnl_Memoria2.setViewportView(tblMemory);
-        if (tblMemory.getColumnModel().getColumnCount() > 0) {
-            tblMemory.getColumnModel().getColumn(3).setHeaderValue("Tiempo");
-        }
 
         lblListaProcesos.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         lblListaProcesos.setText("Lista de procesos");
@@ -994,14 +1028,14 @@ public class MiniPC extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(Lbl_memoria4)
-                        .addGap(393, 393, 393))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(Pnl_Memoria4, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(265, 265, 265))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(Pnl_Memoria, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(162, 162, 162))))
+                        .addGap(162, 162, 162))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(Lbl_memoria4)
+                        .addGap(394, 394, 394))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1033,10 +1067,10 @@ public class MiniPC extends javax.swing.JFrame {
                         .addComponent(Lbl_memoria2)
                         .addGap(4, 4, 4)
                         .addComponent(Pnl_Memoria1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(Lbl_memoria4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Pnl_Memoria4, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Lbl_memoria4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Pnl_Memoria4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37))
         );
 
@@ -1734,13 +1768,25 @@ public class MiniPC extends javax.swing.JFrame {
     }//GEN-LAST:event_automaticBtnActionPerformed
 
     private void estadisticasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadisticasBtnActionPerformed
-        // TODO add your handling code here:
+        MostrarEstadisticas statsWindow = new MostrarEstadisticas();
+        statsWindow.setVisible(true);
+        statsWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
+        for(int i = 0 ; i < this.getController().getCpu().getMemory().getBcpList().size() ; i ++){
+            statsWindow.getTblStats().setValueAt(this.getController().getCpu().getMemory().getBcpList().get(i).getIdProcess(), i, 0);
+            statsWindow.getTblStats().setValueAt(this.getController().getCpu().getMemory().getBcpList().get(i).getNameProcess(), i, 1);
+            statsWindow.getTblStats().setValueAt(this.getController().getCpu().getMemory().getBcpList().get(i).getInformacionContable().getStartTime(), i, 2);
+            statsWindow.getTblStats().setValueAt(this.getController().getCpu().getMemory().getBcpList().get(i).getInformacionContable().getEndTime(), i, 3);
+            statsWindow.getTblStats().setValueAt(this.getController().getCpu().getMemory().getBcpList().get(i).getInformacionContable().getDurationTime(), i, 4);
+        }
+        
     }//GEN-LAST:event_estadisticasBtnActionPerformed
 
     private void configurarMemoriaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configurarMemoriaBtnActionPerformed
         ConfigMemoria configMemoria = new ConfigMemoria();
         configMemoria.setMiniPC(this);
-        configMemoria.setVisible(true); 
+        configMemoria.setVisible(true);
+        configMemoria.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
              
     }//GEN-LAST:event_configurarMemoriaBtnActionPerformed
 
