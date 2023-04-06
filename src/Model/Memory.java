@@ -22,7 +22,7 @@ public class Memory {
     // El índice siempre será 10 o más ya que los primeros 10 índices son tomados por archivos del sistema
     
     ArrayList<Optional<MemoryRegister>> memoryRegisters = new ArrayList();
-    int size = 100;
+    int size = 256;
     int allocatedSize;
     int allocationStartIndex;
     ArrayList<BCP> bcpList = new ArrayList();

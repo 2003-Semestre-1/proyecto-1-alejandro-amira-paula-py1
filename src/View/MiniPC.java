@@ -10,8 +10,10 @@ import Model.BCP;
 import Model.CPU;
 import Model.FileManager;
 import Model.Memory;
+import Model.SecondaryMemory;
 import Model.MemoryRegister;
 import Model.StatsSet;
+import View.ConfigMemoria;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Random;
@@ -54,6 +56,7 @@ public class MiniPC extends javax.swing.JFrame {
         Memory memory2 = new Memory();
         cpu2.setMemory(memory2);
         
+        SecondaryMemory secondaryMemory = new SecondaryMemory();
         this.getController().setCpu(cpu);
         this.getController2().setCpu(cpu2);
         initComponents();
@@ -1788,9 +1791,49 @@ public class MiniPC extends javax.swing.JFrame {
     }//GEN-LAST:event_estadisticasBtnActionPerformed
 
     private void configurarMemoriaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configurarMemoriaBtnActionPerformed
-        // TODO add your handling code here:
+        ConfigMemoria configMemoria = new ConfigMemoria();
+        configMemoria.setVisible(true); 
+        
+        String Snumero1 = configMemoria.getTxt_MemPrincipal();
+        String Snumero2 = configMemoria.getTxt_Disco();
+        String Snumero3 = configMemoria.getTxt_MemVirtual();
+        
+        int numero1 = Integer.parseInt(Snumero1);
+        int numero2 = Integer.parseInt(Snumero2);
+        int numero3 = Integer.parseInt(Snumero3);
+        
+        this.getController().getCpu().getMemory().setSize(numero1); 
+        System.out.println(numero1);
+        System.out.println("MemoriaPrincipal: "+this.getController().getCpu().getMemory().getSize());
+        this.getController().getCpu().getSecondaryMemory().setSize(numero2); 
+        this.getController().getCpu().getSecondaryMemory().setVirtualMemorySize(numero3);
+        
+        System.out.println("MemoriaPrincipal: "+this.getController().getCpu().getMemory().getSize());
+        System.out.println("MemoriaDisco: "+this.getController().getCpu().getSecondaryMemory().getSize());
+        System.out.println("MemoriaVirtual: "+this.getController().getCpu().getSecondaryMemory().getVirtualMemorySize());                
     }//GEN-LAST:event_configurarMemoriaBtnActionPerformed
 
+    
+    /**private void setMemorias(){
+        String Snumero1 = configMemoria.getTxt_MemPrincipal();
+        String Snumero2 = configMemoria.getTxt_Disco();
+        String Snumero3 = configMemoria.getTxt_MemVirtual();
+        
+        int numero1 = Integer.parseInt(Snumero1);
+        int numero2 = Integer.parseInt(Snumero2);
+        int numero3 = Integer.parseInt(Snumero3);
+        
+        this.getController().getCpu().getMemory().setSize(numero1); 
+        System.out.println(numero1);
+        System.out.println("MemoriaPrincipal: "+this.getController().getCpu().getMemory().getSize());
+        this.getController().getCpu().getSecondaryMemory().setSize(numero2); 
+        this.getController().getCpu().getSecondaryMemory().setVirtualMemorySize(numero3);
+        
+        System.out.println("MemoriaPrincipal: "+this.getController().getCpu().getMemory().getSize());
+        System.out.println("MemoriaDisco: "+this.getController().getCpu().getSecondaryMemory().getSize());
+        System.out.println("MemoriaVirtual: "+this.getController().getCpu().getSecondaryMemory().getVirtualMemorySize());  
+    } **/
+    
     /**
      * @param args the command line arguments
      */

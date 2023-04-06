@@ -18,6 +18,7 @@ public class CPU {
     // y el registro de instrucción almacena la instrucción actual
     
     Memory memory;
+    SecondaryMemory secondaryMemory;
     String cpuName;
     int currentAddress = 0;
     int programCounter = 0;
@@ -33,6 +34,7 @@ public class CPU {
     public CPU(Memory memory, String cpuName) {
         this.cpuName = cpuName;
         this.memory = memory;
+        this.secondaryMemory = new SecondaryMemory();
         DataRegister ax = new DataRegister(0,"","16-bit");
         DataRegister bx = new DataRegister(0,"","16-bit");
         DataRegister cx = new DataRegister(0,"","16-bit");
@@ -139,6 +141,14 @@ public class CPU {
 
     public void setMemory(Memory memory) {
         this.memory = memory;
+    }
+    
+    public SecondaryMemory getSecondaryMemory() {
+        return secondaryMemory;
+    }
+
+    public void setSecondaryMemory(SecondaryMemory secondaryMemory) {
+        this.secondaryMemory = secondaryMemory;
     }
 
     public ArrayList<DataRegister> getDataRegisters() {
