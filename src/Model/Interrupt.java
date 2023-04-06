@@ -37,10 +37,10 @@ public class Interrupt {
     public void executeInterrupt(MiniPC miniPC) throws InterruptedException{
         System.out.println(codigo);
         switch(this.codigo) {
-        case 20:
+        case 32:
             this.interrupt20H(this.getCpu().getMemory().getBcpList(), miniPC);
             break;
-        case 10:
+        case 16:
             this.interrupt10H(this.getCpu(), miniPC);
             break;
         case 9:
@@ -57,8 +57,20 @@ public class Interrupt {
     
     public void interrupt20H(ArrayList<BCP> bcpList, MiniPC miniPC){
         
-        BCP bcp = bcpList.get(0);
-        bcp.setEstadoActual("finalizado");
+        int lastProcessIndex = 0;
+        for(int i = 0 ; i < this.getCpu().getMemory().getBcpList().size() ; i ++){
+            lastProcessIndex = i;
+        }
+
+        this.getCpu().getMemory().getBcpList().get(lastProcessIndex).setEstadoActual("Finalizado");
+        
+        if (this.getCpu().getCpuName().equalsIgnoreCase("CPU #0"))
+            miniPC.getTblProcesses().setValueAt("Finalizado", lastProcessIndex, 2);
+        else if (this.getCpu().getCpuName().equalsIgnoreCase("CPU #1"))
+            miniPC.getTblProcesses2().setValueAt("Finalizado", lastProcessIndex, 2);
+        
+        this.getCpu().setProgramaTerminado(true);
+        
         String textPantalla = miniPC.getPantalla().getText();
         textPantalla = textPantalla + "\n" + "Programa terminado.";
         miniPC.getPantalla().setText(textPantalla);
@@ -76,7 +88,18 @@ public class Interrupt {
     
     public void interrupt09H(MiniPC miniPC) throws InterruptedException{
         miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Escriba un valor entre 0-255.");
-        this.getCpu().getMemory().getBcpList().get(0).setEstadoActual("En espera");
+        
+        int lastProcessIndex = 0;
+        for(int i = 0 ; i < this.getCpu().getMemory().getBcpList().size() ; i ++){
+            lastProcessIndex = i;
+        }
+        this.getCpu().getMemory().getBcpList().get(lastProcessIndex).setEstadoActual("En espera");
+        
+        if (this.getCpu().getCpuName().equalsIgnoreCase("CPU #0"))
+            miniPC.getTblProcesses().setValueAt("En espera", lastProcessIndex, 2);
+        else if (this.getCpu().getCpuName().equalsIgnoreCase("CPU #1"))
+            miniPC.getTblProcesses2().setValueAt("En espera", lastProcessIndex, 2);
+        
         miniPC.setWaitingForInput(true);
         miniPC.getTecladoTxtField().setEditable(true);
     }

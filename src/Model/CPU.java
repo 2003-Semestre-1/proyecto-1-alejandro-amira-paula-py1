@@ -26,6 +26,7 @@ public class CPU {
     int accumulator = 0;
     ArrayList<DataRegister> dataRegisters = new ArrayList<DataRegister>();
     boolean zeroFlag = false;
+    boolean programaTerminado = false;
     int currentTime = 0;
     int numberExecutedInstructions = 0;
     
@@ -66,6 +67,16 @@ public class CPU {
         this.dataRegisters.add(ah);
         
     }
+
+    public boolean isProgramaTerminado() {
+        return programaTerminado;
+    }
+
+    public void setProgramaTerminado(boolean programaTerminado) {
+        this.programaTerminado = programaTerminado;
+    }
+    
+    
 
     public int getCurrentTime() {
         return currentTime;
