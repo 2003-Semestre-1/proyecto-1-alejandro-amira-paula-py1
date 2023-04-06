@@ -35,7 +35,6 @@ public class CPU {
     public CPU(Memory memory, String cpuName) {
         this.cpuName = cpuName;
         this.memory = memory;
-        this.secondaryMemory = new SecondaryMemory();
         DataRegister ax = new DataRegister(0,"","16-bit");
         DataRegister bx = new DataRegister(0,"","16-bit");
         DataRegister cx = new DataRegister(0,"","16-bit");

@@ -5,6 +5,7 @@
 package View;
 
 
+import Controller.ConfigMemoriaController;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -16,12 +17,13 @@ import View.MiniPC;
  */
 public class ConfigMemoria extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Config_Memoria
-     */
+    ConfigMemoriaController controller = new ConfigMemoriaController();
+    MiniPC miniPC;
+    
     public ConfigMemoria() {
         initComponents();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -153,21 +155,29 @@ public class ConfigMemoria extends javax.swing.JFrame {
 
     private void btn_AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AceptarActionPerformed
         // Obtener los números ingresados por el usuario
-    String strNumero1 = txt_MemPrincipal.getText();
-    String strNumero2 = txt_Disco.getText();
-    String strNumero3 = txt_MemVirtual.getText();
-    System.out.println(strNumero1);
+        String strNumero1 = txt_MemPrincipal.getText();
+        String strNumero2 = txt_Disco.getText();
+        String strNumero3 = txt_MemVirtual.getText();
 
-    // Validar que los números ingresados sean enteros y mayores a 256
-    try {
-        int numero1 = Integer.parseInt(strNumero1);
-        int numero2 = Integer.parseInt(strNumero2);
-        int numero3 = Integer.parseInt(strNumero3);
-        System.out.println(numero1);
+        // Validar que los números ingresados sean enteros y mayores a 256
+        try {
+            int numero1 = Integer.parseInt(strNumero1);
+            int numero2 = Integer.parseInt(strNumero2);
+            int numero3 = Integer.parseInt(strNumero3);
+            System.out.println(numero1);
+            System.out.println(numero2);
+            System.out.println(numero3);
 
         if (numero1 >= 256 && numero2 >= 512 && numero3 >= 64) {
             // Los números son válidos
             JOptionPane.showMessageDialog(this, "Los tamaños son correctos");
+            this.getController().setMemorySizes(miniPC, numero1, numero2, numero3);
+            miniPC.getTblMemoryList().setValueAt("Memoria Principal", 0, 0);
+            miniPC.getTblMemoryList().setValueAt(miniPC.getController().getCpu().getMemory().getSize(), 0, 1);
+            miniPC.getTblMemoryList().setValueAt("Memoria Secundaria", 1, 0);
+            miniPC.getTblMemoryList().setValueAt(miniPC.getSecondaryMemory().getSize(), 1, 1);
+            miniPC.getTblMemoryList().setValueAt("Memoria Virtual", 2, 0);
+            miniPC.getTblMemoryList().setValueAt(miniPC.getSecondaryMemory().getVirtualMemorySize(), 2, 1);
             this.setVisible(false);
             
           
@@ -175,14 +185,29 @@ public class ConfigMemoria extends javax.swing.JFrame {
             // Los números no son válidos
             JOptionPane.showMessageDialog(this, "Los tamaños son incorrectos");
         }
-    } catch (NumberFormatException e) {
-        // Al menos uno de los campos de texto no contiene un número entero
-        JOptionPane.showMessageDialog(this, "Uno de los campos de texto no contiene un número entero");
+            } catch (NumberFormatException e) {
+            // Al menos uno de los campos de texto no contiene un número entero
+            JOptionPane.showMessageDialog(this, "Uno de los campos de texto no contiene un número entero");
         
-    }
+        }
  
     }//GEN-LAST:event_btn_AceptarActionPerformed
 
+    public ConfigMemoriaController getController() {
+        return controller;
+    }
+
+    public void setController(ConfigMemoriaController controller) {
+        this.controller = controller;
+    }
+
+    public MiniPC getMiniPC() {
+        return miniPC;
+    }
+
+    public void setMiniPC(MiniPC miniPC) {
+        this.miniPC = miniPC;
+    }
     
     public String getTxt_MemPrincipal() {
         System.out.println(txt_MemPrincipal.getText());

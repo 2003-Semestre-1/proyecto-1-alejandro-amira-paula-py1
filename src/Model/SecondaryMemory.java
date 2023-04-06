@@ -19,27 +19,23 @@ public class SecondaryMemory {
     int virtualMemorySize = 64;
     int allocatedSize;
     int allocationStartIndex;
-    Pila stack = new Pila();
     ArrayList<BCP> bcpList = new ArrayList();
-    Queue<BCP> jobQueue = new LinkedList<>();
     ArrayList<Optional<MemoryRegister>> memoryRegisters = new ArrayList();
+    ArrayList<Optional<MemoryRegister>> virtualMemory = new ArrayList();
     
     
-     public SecondaryMemory() {
+     public SecondaryMemory(int size, int virtualMemorySize) {
+         this.size = size;
+         this.virtualMemorySize = virtualMemorySize;
+         
         for(int i = 0 ; i < size ; i ++){
             memoryRegisters.add(Optional.empty());                 
+        }
+        for(int i = 0 ; i < virtualMemorySize ; i ++){
+            virtualMemory.add(Optional.empty());                 
         }
     }
 
-    public SecondaryMemory(int allocatedSize) {
-        // Este constructor rercibe el tamano del set de instrucciones
-        // Además agrega 512 registros de memoria vacíos porque el tamano de la memoria es 512
-        this.allocatedSize = allocatedSize;
-        for(int i = 0 ; i < size ; i ++){
-            memoryRegisters.add(Optional.empty());                 
-        }
-    }
-    
     public void allocateMemory(ArrayList<MemoryRegister> instructionSet){
         // Este método asigna las instrucciones recibidas a la memoria
         // Recibe un set de instrucciones de tipo ArrayList<MemoryRegister>
@@ -114,28 +110,12 @@ public class SecondaryMemory {
         this.allocationStartIndex = allocationStartIndex;
     }
 
-    public Pila getStack() {
-        return stack;
-    }
-
-    public void setStack(Pila stack) {
-        this.stack = stack;
-    }
-
     public ArrayList<BCP> getBcpList() {
         return bcpList;
     }
 
     public void setBcpList(ArrayList<BCP> bcpList) {
         this.bcpList = bcpList;
-    }
-
-    public Queue<BCP> getJobQueue() {
-        return jobQueue;
-    }
-
-    public void setJobQueue(Queue<BCP> jobQueue) {
-        this.jobQueue = jobQueue;
     }
 
     public ArrayList<Optional<MemoryRegister>> getMemoryRegisters() {

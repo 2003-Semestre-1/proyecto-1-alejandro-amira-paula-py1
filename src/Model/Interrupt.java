@@ -64,10 +64,7 @@ public class Interrupt {
 
         this.getCpu().getMemory().getBcpList().get(lastProcessIndex).setEstadoActual("Finalizado");
         
-        if (this.getCpu().getCpuName().equalsIgnoreCase("CPU #0"))
-            miniPC.getTblProcesses().setValueAt("Finalizado", lastProcessIndex, 2);
-        else if (this.getCpu().getCpuName().equalsIgnoreCase("CPU #1"))
-            miniPC.getTblProcesses2().setValueAt("Finalizado", lastProcessIndex, 2);
+        miniPC.getTblProcesses().setValueAt("Finalizado", lastProcessIndex, 2);
         
         this.getCpu().setProgramaTerminado(true);
         
@@ -95,10 +92,7 @@ public class Interrupt {
         }
         this.getCpu().getMemory().getBcpList().get(lastProcessIndex).setEstadoActual("En espera");
         
-        if (this.getCpu().getCpuName().equalsIgnoreCase("CPU #0"))
-            miniPC.getTblProcesses().setValueAt("En espera", lastProcessIndex, 2);
-        else if (this.getCpu().getCpuName().equalsIgnoreCase("CPU #1"))
-            miniPC.getTblProcesses2().setValueAt("En espera", lastProcessIndex, 2);
+        miniPC.getTblProcesses().setValueAt("En espera", lastProcessIndex, 2);
         
         miniPC.setWaitingForInput(true);
         miniPC.getTecladoTxtField().setEditable(true);

@@ -17,6 +17,7 @@ public class BCP {
     int idProcess;
     String nameProcess;
     String estadoActual;
+    String cpuName;
     int programCounter;
     ArrayList<DataRegister> dataRegisters = new ArrayList<DataRegister>();
     int ac = 0;
@@ -27,10 +28,11 @@ public class BCP {
     int tamanoProceso;
     int prioridad;
 
-    public BCP(int idProcess, String nameProcess, String estadoActual, int programCounter, Pila pila, StatsSet informacionContable, int direccionInicio, int tamanoProceso, int prioridad) {
+    public BCP(int idProcess, String nameProcess, String estadoActual, String cpuName, int programCounter, Pila pila, StatsSet informacionContable, int direccionInicio, int tamanoProceso, int prioridad) {
         this.idProcess = idProcess;
         this.nameProcess = nameProcess;
         this.estadoActual = estadoActual;
+        this.cpuName = cpuName;
         this.programCounter = programCounter;
         
         DataRegister ax = new DataRegister(0,"","16-bit");
@@ -76,6 +78,14 @@ public class BCP {
 
     public void setEstadoActual(String estadoActual) {
         this.estadoActual = estadoActual;
+    }
+
+    public String getCpuName() {
+        return cpuName;
+    }
+
+    public void setCpuName(String cpuName) {
+        this.cpuName = cpuName;
     }
     
     

@@ -29,16 +29,9 @@ public class Memory {
     Queue<BCP> jobQueue = new LinkedList<>();
     Pila stack = new Pila();
     
-    public Memory() {
-        for(int i = 0 ; i < size ; i ++){
-            memoryRegisters.add(Optional.empty());                 
-        }
-    }
-
-    public Memory(int allocatedSize) {
-        // Este constructor rercibe el tamano del set de instrucciones
-        // Además agrega 100 registros de memoria vacíos porque el tamano de la memoria es 100
-        this.allocatedSize = allocatedSize;
+    public Memory(int size) {
+        this.size = size;
+        
         for(int i = 0 ; i < size ; i ++){
             memoryRegisters.add(Optional.empty());                 
         }
