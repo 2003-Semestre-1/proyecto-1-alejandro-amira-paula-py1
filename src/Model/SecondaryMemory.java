@@ -36,6 +36,16 @@ public class SecondaryMemory {
         }
     }
 
+    public ArrayList<Optional<MemoryRegister>> getVirtualMemory() {
+        return virtualMemory;
+    }
+
+    public void setVirtualMemory(ArrayList<Optional<MemoryRegister>> virtualMemory) {
+        this.virtualMemory = virtualMemory;
+    }
+     
+     
+
     public void allocateMemory(ArrayList<MemoryRegister> instructionSet){
         // Este método asigna las instrucciones recibidas a la memoria
         // Recibe un set de instrucciones de tipo ArrayList<MemoryRegister>
