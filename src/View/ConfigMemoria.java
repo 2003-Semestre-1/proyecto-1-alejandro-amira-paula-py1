@@ -159,7 +159,7 @@ public class ConfigMemoria extends javax.swing.JFrame {
         String strNumero2 = txt_Disco.getText();
         String strNumero3 = txt_MemVirtual.getText();
 
-        // Validar que los números ingresados sean enteros y mayores a 256
+        // Pasar los numeros a enteros
         try {
             int numero1 = Integer.parseInt(strNumero1);
             int numero2 = Integer.parseInt(strNumero2);
@@ -167,7 +167,8 @@ public class ConfigMemoria extends javax.swing.JFrame {
             System.out.println(numero1);
             System.out.println(numero2);
             System.out.println(numero3);
-
+          
+        // Validar que los numeros sean mayor a lo que corresponde    
         if (numero1 >= 256 && numero2 >= 512 && numero3 >= 64) {
             // Los números son válidos
             JOptionPane.showMessageDialog(this, "Los tamaños son correctos");

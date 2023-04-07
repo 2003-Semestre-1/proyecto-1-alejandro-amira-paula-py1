@@ -61,7 +61,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="316" max="-2" attributes="0"/>
                   <Component id="Lbl_registros" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="231" max="32767" attributes="0"/>
+                  <EmptySpace pref="233" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="Pnl_Memoria1" alignment="0" pref="0" max="32767" attributes="0"/>
                       <Component id="Pnl_Registros1" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -414,7 +414,7 @@
               <Color blue="ff" green="cc" red="cc" type="rgb"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Curseur par d&#xe9;faut"/>
+              <Color id="Default Cursor"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Times New Roman" size="12" style="0"/>
@@ -520,7 +520,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblPantalla" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="8" max="32767" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="123" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="lblTeclado" min="-2" max="-2" attributes="0"/>
@@ -663,7 +663,7 @@
                   <Font name="Times New Roman" size="12" style="1"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Images/siguiente.png"/>
+                  <Image iconType="3" name="/Images/automatic.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Autom&#xe1;tico"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -682,7 +682,7 @@
                   <Font name="Times New Roman" size="12" style="1"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Images/reiniciar.png"/>
+                  <Image iconType="3" name="/Images/estadisitica.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Estad&#xed;sticas"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -701,7 +701,7 @@
                   <Font name="Times New Roman" size="12" style="1"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Images/reiniciar.png"/>
+                  <Image iconType="3" name="/Images/configuraciones.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Configurar memoria"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -1026,7 +1026,7 @@
               <Color blue="ff" green="cc" red="cc" type="rgb"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Curseur par d&#xe9;faut"/>
+              <Color id="Default Cursor"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Times New Roman" size="12" style="0"/>
@@ -1093,7 +1093,7 @@
               <Color blue="ff" green="cc" red="cc" type="rgb"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Curseur par d&#xe9;faut"/>
+              <Color id="Default Cursor"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Times New Roman" size="12" style="0"/>
@@ -1173,7 +1173,7 @@
               <Color blue="ff" green="cc" red="cc" type="rgb"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Curseur par d&#xe9;faut"/>
+              <Color id="Default Cursor"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Times New Roman" size="12" style="0"/>

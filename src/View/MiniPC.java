@@ -478,7 +478,7 @@ public class MiniPC extends javax.swing.JFrame {
         jScrollPane1.setViewportView(pantalla);
 
         automaticBtn.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        automaticBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/siguiente.png"))); // NOI18N
+        automaticBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/automatic.png"))); // NOI18N
         automaticBtn.setText("Automático");
         automaticBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         automaticBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -488,7 +488,7 @@ public class MiniPC extends javax.swing.JFrame {
         });
 
         estadisticasBtn.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        estadisticasBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/reiniciar.png"))); // NOI18N
+        estadisticasBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/estadisitica.png"))); // NOI18N
         estadisticasBtn.setText("Estadísticas");
         estadisticasBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         estadisticasBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -498,7 +498,7 @@ public class MiniPC extends javax.swing.JFrame {
         });
 
         configurarMemoriaBtn.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        configurarMemoriaBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/reiniciar.png"))); // NOI18N
+        configurarMemoriaBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/configuraciones.png"))); // NOI18N
         configurarMemoriaBtn.setText("Configurar memoria");
         configurarMemoriaBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         configurarMemoriaBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -538,7 +538,7 @@ public class MiniPC extends javax.swing.JFrame {
             .addGroup(Pnl_MenuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblPantalla)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblTeclado)
@@ -992,7 +992,7 @@ public class MiniPC extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(316, 316, 316)
                 .addComponent(Lbl_registros)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 231, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 233, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(Pnl_Memoria1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(Pnl_Registros1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
