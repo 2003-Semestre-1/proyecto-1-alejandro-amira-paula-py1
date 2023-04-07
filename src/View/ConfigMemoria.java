@@ -180,6 +180,7 @@ public class ConfigMemoria extends javax.swing.JFrame {
             miniPC.getTblMemoryList().setValueAt("Memoria Virtual", 2, 0);
             miniPC.getTblMemoryList().setValueAt(miniPC.getSecondaryMemory().getVirtualMemorySize(), 2, 1);
             this.setVisible(false);
+            this.getMiniPC().updateMemory(this.getMiniPC().getController().getCpu().getMemory().getSize(), this.getMiniPC().getSecondaryMemory().getSize(), this.getMiniPC().getSecondaryMemory().getVirtualMemorySize());
             
           
         } else {
