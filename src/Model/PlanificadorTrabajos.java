@@ -56,9 +56,6 @@ public class PlanificadorTrabajos {
             return;
         }
         
-        //ArrayList<Optional<MemoryRegister>> instructionSet = (ArrayList<Optional<MemoryRegister>>) miniPC.getSecondaryMemory().getMemoryRegisters().subList(job.getDireccionInicio(), job.getDireccionFin());
-        //System.out.println("InstructionSet: "+instructionSet);
-        
         if (cpuEscogido == 0){
             controller = miniPC.getController();
         }
@@ -75,8 +72,6 @@ public class PlanificadorTrabajos {
         job.setInformacionContable(estadisticas);
         job.setCpuName("CPU #"+cpuEscogido);
         job.setIdProcess(this.getProcessList().size());
-        this.getProcessList().add(job);
-        this.getColaTrabajos().remove();
 
         Memory memory = controller.getCpu().getMemory();
         memory.setAllocatedSize(memory.getAllocatedSize()+instructionSet.size());
@@ -86,6 +81,8 @@ public class PlanificadorTrabajos {
         job.setDireccionInicio(processStartIndex);
         job.setDireccionFin(processEndIndex);
         job.setProgramCounter(processStartIndex);
+        this.getProcessList().add(job);
+        this.getColaTrabajos().remove();
                 
         //MemoryRegister currentInstruction = instructions.get(0);
         //controller.getCpu().setInstructionRegister(currentInstruction.getAsmInstructionString());

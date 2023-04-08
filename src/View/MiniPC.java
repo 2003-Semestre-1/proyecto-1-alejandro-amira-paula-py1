@@ -1354,9 +1354,6 @@ public class MiniPC extends javax.swing.JFrame {
         }
         
         for (int i = 0; i < indexFilesSize; i++) {
-            System.out.println(this.getSecondaryMemory().getIndiceArchivos().get(i));
-            System.out.println(this.getSecondaryMemory().getIndiceArchivos().get(i).getNombreArchivo());
-            System.out.println(this.getSecondaryMemory().getIndiceArchivos().get(i).getDireccionMemoriaSecundaria());
             IndiceArchivo indiceArchivo = this.getSecondaryMemory().getIndiceArchivos().get(i);
             indexFilesModel.addRow(new Object[] { indiceArchivo.getDireccionMemoriaSecundaria(), indiceArchivo.getNombreArchivo() });
         }
@@ -1557,6 +1554,7 @@ public class MiniPC extends javax.swing.JFrame {
                 if (!processState.equalsIgnoreCase("Finalizado")){
                     this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).setEstadoActual("Ejecución");
                     process = this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i);
+                    break;
                 }
 
             }
@@ -1587,6 +1585,7 @@ public class MiniPC extends javax.swing.JFrame {
         }
         catch(Exception e){
             asmString1 = "";
+            
         }
         
         try{
@@ -1610,6 +1609,7 @@ public class MiniPC extends javax.swing.JFrame {
                     String path = this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getNameProcess();
                     File file = new File(path);
                     processName = file.getName();
+                    break;
                 }
 
             }
@@ -1663,6 +1663,7 @@ public class MiniPC extends javax.swing.JFrame {
                     String path = this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getNameProcess();
                     File file = new File(path);
                     processName = file.getName();
+                    break;
                 }
                 
             }
@@ -1974,7 +1975,34 @@ public class MiniPC extends javax.swing.JFrame {
         this.configurarMemoriaBtn = configurarMemoriaBtn;
     }
 
+    public int getProcessListSize(CPU cpu){
+        int size = 0;
+        
+        for(int i = 0 ; i < this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size() ; i ++){
+            if (this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getCpuName().equalsIgnoreCase(cpu.getCpuName())){
+                size = size + 1;
+
+            }
+            
+        }
+        
+        return size;
+    }
     
+    public int getRunningProcessListSize(CPU cpu){
+        int size = 0;
+        
+        for(int i = 0 ; i < this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size() ; i ++){
+            if (this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getCpuName().equalsIgnoreCase(cpu.getCpuName())){
+                if (!this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getEstadoActual().equalsIgnoreCase("Finalizado"))
+                    size = size + 1;
+
+            }
+            
+        }
+        
+        return size;
+    }
     
     public void simulateSecond(){
         if (!this.isWaitingForInput()){
@@ -2006,10 +2034,16 @@ public class MiniPC extends javax.swing.JFrame {
                 
                 try{
                     instructionCPU1 = (MemoryRegister)this.getController().getCpu().getMemory().getMemoryRegisters().get(cpu1CurrentProcess.getProgramCounter()).get();
+                }
+                catch(Exception e){
+
+                }
+                
+                try{
                     instructionCPU2 = (MemoryRegister)this.getController2().getCpu().getMemory().getMemoryRegisters().get(cpu2CurrentProcess.getProgramCounter()).get();
                 }
                 catch(Exception e){
-                    System.out.println("No instruction to execute.");
+                    
                 }
                 
                 if (instructionCPU1 != null){
@@ -2057,6 +2091,45 @@ public class MiniPC extends javax.swing.JFrame {
                 catch(Exception e){
                     
                 }
+                
+                if (this.getRunningProcessListSize(this.getController().getCpu())>0){
+                        if (this.getController().getCpu().getMemory().getMemoryRegisters().get(cpu1CurrentProcess.getProgramCounter()).isPresent()){
+                            instructionCPU1 = (MemoryRegister)this.getController().getCpu().getMemory().getMemoryRegisters().get(cpu1CurrentProcess.getProgramCounter()).get();
+                        }
+                        else{
+                            System.out.println("It's JOEEEEVEEEEEEEEEEEEEEEEEER 1");
+                            cpu1CurrentProcess.setEstadoActual("Finalizado");
+                            this.getController().getCpu().getMemory().freeFromMemory(cpu1CurrentProcess.getDireccionInicio(), cpu1CurrentProcess.getDireccionFin());
+                        }
+                            
+                        //instructionCPU1 = (MemoryRegister)this.getController().getCpu().getMemory().getMemoryRegisters().get(cpu1CurrentProcess.getProgramCounter()-1).get();
+                        if (this.findCurrentProcess(this.getController().getCpu()) != null)
+                            cpu1CurrentProcess = this.findCurrentProcess(this.getController().getCpu());
+                        
+                        this.updateMemory(this.getController().getCpu().getMemory().getSize(), this.getSecondaryMemory().getSize(), this.getSecondaryMemory().getVirtualMemorySize(), this.getSecondaryMemory().getIndiceArchivos().size());
+                        this.updateMemoryList();
+                }
+                
+                if (this.getRunningProcessListSize(this.getController2().getCpu())>0){
+                        if (this.getController2().getCpu().getMemory().getMemoryRegisters().get(cpu2CurrentProcess.getProgramCounter()).isPresent()){
+                            instructionCPU2 = (MemoryRegister)this.getController2().getCpu().getMemory().getMemoryRegisters().get(cpu2CurrentProcess.getProgramCounter()).get();
+                        }
+                        else{
+                            System.out.println("It's JOEEEEVEEEEEEEEEEEEEEEEEER 2");
+                            cpu2CurrentProcess.setEstadoActual("Finalizado");
+                            this.getController().getCpu().getMemory().freeFromMemory(cpu2CurrentProcess.getDireccionInicio(), cpu2CurrentProcess.getDireccionFin());
+                        }
+                            
+                        // Conseguir la direccion de inicio del proximo proceso
+                        //instructionCPU2 = (MemoryRegister)this.getController2().getCpu().getMemory().getMemoryRegisters().get(cpu2CurrentProcess.getProgramCounter()-1).get();
+                        if (this.findCurrentProcess(this.getController2().getCpu()) != null)
+                            cpu2CurrentProcess = this.findCurrentProcess(this.getController2().getCpu());
+                        
+                        this.updateMemory(this.getController().getCpu().getMemory().getSize(), this.getSecondaryMemory().getSize(), this.getSecondaryMemory().getVirtualMemorySize(), this.getSecondaryMemory().getIndiceArchivos().size());
+                        this.updateMemoryList();
+                }
+                
+                this.updateProcesses();
             
                 if (this.isJumpFlag()){
                     int nextInstructionAddress = this.getController().getCpu().getProgramCounter();
@@ -2082,7 +2155,6 @@ public class MiniPC extends javax.swing.JFrame {
         if (evt.getSource() == loadFileBtn && !this.isWaitingForInput()) {
             int cpuEscogido = (int)Math.round(Math.random());
             System.out.println("CPU escogido: #"+cpuEscogido);
-
             String filePath = fileManager.selectFile(this);
             fileManager.loadOperations();
             fileManager.loadDataRegisters();
@@ -2150,7 +2222,7 @@ public class MiniPC extends javax.swing.JFrame {
     }//GEN-LAST:event_nextInstructionBtnActionPerformed
 
     private void tecladoTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tecladoTxtFieldActionPerformed
-        System.out.println(this.getTecladoTxtField().getText());
+
         String inputTeclado = "";
         int valorTeclado = -1;
         inputTeclado = this.getTecladoTxtField().getText();

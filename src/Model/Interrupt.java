@@ -57,7 +57,7 @@ public class Interrupt {
     
     public void interrupt20H(ArrayList<BCP> bcpList, MiniPC miniPC){
         
-        int lastProcessIndex = 0;
+        /*int lastProcessIndex = 0;
         for(int i = 0 ; i < this.getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size() ; i ++){
             if (!this.getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getEstadoActual().equalsIgnoreCase("Finalizado"))
                 lastProcessIndex = i;
@@ -68,7 +68,7 @@ public class Interrupt {
         miniPC.getTblProcesses().setValueAt("Finalizado", lastProcessIndex, 2);
         
         this.getCpu().setProgramaTerminado(true);
-        
+        */
         String textPantalla = miniPC.getPantalla().getText();
         textPantalla = textPantalla + "\n" + "Programa terminado.";
         miniPC.getPantalla().setText(textPantalla);
@@ -116,6 +116,7 @@ public class Interrupt {
                 System.out.println("File created");
             }
             catch(IOException e){
+                Logger.getLogger(MiniPC.class.getName()).log(Level.SEVERE, null, e);
                 JOptionPane.showMessageDialog (null, "El archivo no pudo ser creado.", "Error: Archivo no pudo ser creado con éxito.", JOptionPane.ERROR_MESSAGE);
             }
             break;
@@ -145,6 +146,7 @@ public class Interrupt {
                     miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Archivo "+fileName+" leído");
                     miniPC.getController().getCpu().getDataRegisters().get(5-1).setStringValue(contents);
                 } catch (IOException e) {
+                    Logger.getLogger(MiniPC.class.getName()).log(Level.SEVERE, null, e);
                     miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Archivo no pudo ser leído");
                 }
             }
@@ -169,6 +171,7 @@ public class Interrupt {
                     System.out.println(content);
                     miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Se escribió al archivo con éxito");
                 } catch (IOException e) {
+                    Logger.getLogger(MiniPC.class.getName()).log(Level.SEVERE, null, e);
                     miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"No se pudo escribir al archivo");
                 }
             }
@@ -180,7 +183,7 @@ public class Interrupt {
          case 65 :
             if (miniPC.isArchivoAbierto()){
                 filePath = "src\\Files\\"+fileName;
-                System.out.println(filePath);
+                System.out.println("Filepath: "+filePath);
                 file = new File(filePath);
             
                 if (file.delete()) {
