@@ -42,7 +42,7 @@ public class Pila {
 
     public int peek() throws EmptyStackException {
         if (top == -1) {
-            throw new EmptyStackException();
+            return -1;
         }
         return data[top];
     }

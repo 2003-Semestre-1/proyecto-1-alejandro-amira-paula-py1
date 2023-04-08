@@ -588,6 +588,7 @@ public class MiniPCController {
         int registerValue = miniPC.getController().getCpu().getMemory().getStack().pop();
         System.out.println(registerValue);
         miniPC.getController().getCpu().getDataRegisters().get(register-1).setValue(registerValue);
+        System.out.println("Popped: "+registerValue);
     }
     
     public CPU getCpu() {
