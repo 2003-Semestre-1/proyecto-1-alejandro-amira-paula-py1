@@ -45,12 +45,14 @@ public class MiniPC extends javax.swing.JFrame {
     public MiniPCController controller2 = new MiniPCController();
     public FileManager fileManager = new FileManager();
     public SecondaryMemory secondaryMemory = new SecondaryMemory(512,64);
-    int currentInstructionDisplay = 0;
+    int currentInstructionDisplay1 = 0;
+    int currentInstructionDisplay2 = 0;
     boolean waitingForInput = false;
     boolean archivoAbierto = false;
     boolean jumpFlag = false;
     boolean isAutomatic = false;
-    int timeDifference = 0;
+    int timeDifference1 = 0;
+    int timeDifference2 = 0;
     int countTimeTable = 0;
     int jumpToAddress = 0;
     
@@ -1188,12 +1190,36 @@ public class MiniPC extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public int getTimeDifference() {
-        return timeDifference;
+    public int getTimeDifference1() {
+        return timeDifference1;
     }
 
-    public void setTimeDifference(int timeDifference) {
-        this.timeDifference = timeDifference;
+    public void setTimeDifference1(int timeDifference1) {
+        this.timeDifference1 = timeDifference1;
+    }
+
+    public int getTimeDifference2() {
+        return timeDifference2;
+    }
+
+    public void setTimeDifference2(int timeDifference2) {
+        this.timeDifference2 = timeDifference2;
+    }
+
+    public int getCurrentInstructionDisplay1() {
+        return currentInstructionDisplay1;
+    }
+
+    public void setCurrentInstructionDisplay1(int currentInstructionDisplay1) {
+        this.currentInstructionDisplay1 = currentInstructionDisplay1;
+    }
+
+    public int getCurrentInstructionDisplay2() {
+        return currentInstructionDisplay2;
+    }
+
+    public void setCurrentInstructionDisplay2(int currentInstructionDisplay2) {
+        this.currentInstructionDisplay2 = currentInstructionDisplay2;
     }
     
     private void cleanMemory(){
@@ -1325,7 +1351,8 @@ public class MiniPC extends javax.swing.JFrame {
         this.getController2().setCpu(cpu2);
         this.setArchivoAbierto(false);
         this.setCountTimeTable(0);
-        this.setTimeDifference(0);
+        this.setTimeDifference1(0);
+        this.setTimeDifference2(0);
         this.cleanMemory();
         
     }
@@ -1432,17 +1459,7 @@ public class MiniPC extends javax.swing.JFrame {
         this.controller2 = controller2;
     }
 
-    public int getCurrentInstructionDisplay() {
-        return currentInstructionDisplay;
-    }
-
-    public void setCurrentInstructionDisplay(int currentInstructionDisplay) {
-        this.currentInstructionDisplay = currentInstructionDisplay;
-    }
-    
-    
-    
-    public void updateTable(ArrayList<MemoryRegister> instructionSet,ArrayList<MemoryRegister> instructionSet2, int row, int currentDisplayInstruction) {
+    public void updateTable(ArrayList<MemoryRegister> instructionSet,ArrayList<MemoryRegister> instructionSet2, int row, int currentDisplayInstruction1, int currentDisplayInstruction2) {
         // Este método actualiza la tabla visualmente, es decir actualiza la información que está siendo desplegada en la GUI
         // Va mostrando paso a paso las instrucciones cargadas en memoria y toda la información relevante a estas
         // Recibe como parámetros el set de instrucciones y el valor entero de la fila donde se desplegará la instrucción
@@ -1450,34 +1467,39 @@ public class MiniPC extends javax.swing.JFrame {
         
         String asmString1 = "";
         String asmString2 = "";
-        System.out.println("Diff: "+this.getTimeDifference());
+        System.out.println("TD1 : "+this.getTimeDifference1());
+        System.out.println("TD2 : "+this.getTimeDifference2());
+        System.out.println("CDI1 : "+currentDisplayInstruction1);
+        System.out.println("CDI2 : "+currentDisplayInstruction2);
         if (instructionSet.size()>0){
             
-            if (this.getTimeDifference()>1){
-                this.setCurrentInstructionDisplay(this.getCurrentInstructionDisplay()-1);
+            if (this.getTimeDifference1()>1){
+                this.setCurrentInstructionDisplay1(this.getCurrentInstructionDisplay1()-1);
             }
-            asmString1 = instructionSet.get(currentDisplayInstruction).getAsmInstructionString();
+            asmString1 = instructionSet.get(currentDisplayInstruction1).getAsmInstructionString();
             
             if (this.getController().getCpu().isProgramaTerminado()){
-                this.setCurrentInstructionDisplay(this.getFileManager().getInstructions().size()-1);
+                this.setCurrentInstructionDisplay1(this.getFileManager().getInstructions().size()-1);
                 this.getController().getCpu().setProgramaTerminado(false);
             }
             
         }
         if (instructionSet2.size()>0){
             
-            if (this.getTimeDifference()>1){
-                this.setCurrentInstructionDisplay(this.getCurrentInstructionDisplay()-1);
+            if (this.getTimeDifference2()>1){
+                this.setCurrentInstructionDisplay2(this.getCurrentInstructionDisplay2()-1);
             }
-            asmString2 = instructionSet2.get(currentDisplayInstruction).getAsmInstructionString();
+            asmString2 = instructionSet2.get(currentDisplayInstruction2).getAsmInstructionString();
             
             if (this.getController2().getCpu().isProgramaTerminado()){
-                this.setCurrentInstructionDisplay(this.getFileManager().getInstructions2().size()-1);
+                this.setCurrentInstructionDisplay2(this.getFileManager().getInstructions2().size()-1);
                 this.getController2().getCpu().setProgramaTerminado(false);
             }
         }
-        if (this.getTimeDifference()>0)
-            this.setTimeDifference(this.getTimeDifference()-1);
+        if (this.getTimeDifference1()>0)
+            this.setTimeDifference1(this.getTimeDifference1()-1);
+        if (this.getTimeDifference2()>0)
+            this.setTimeDifference2(this.getTimeDifference2()-1);
         String processID = "";
         String processName = "";
         String processState = "";
@@ -1581,7 +1603,8 @@ public class MiniPC extends javax.swing.JFrame {
         this.getController2().setRowCount(this.getController2().getRowCount()+1);
         this.getController2().getCpu().setNumberExecutedInstructions(this.getController2().getCpu().getNumberExecutedInstructions()+1);
         this.getController2().getCpu().setCurrentAddress(this.getController2().getCpu().getCurrentAddress()+1);
-        this.setCurrentInstructionDisplay(this.getCurrentInstructionDisplay()+1);
+        this.setCurrentInstructionDisplay1(this.getCurrentInstructionDisplay1()+1);
+        this.setCurrentInstructionDisplay2(this.getCurrentInstructionDisplay2()+1);
         
         this.getTblMemoryList().setValueAt("Memoria Principal", 0, 0);
         this.getTblMemoryList().setValueAt(this.getController().getCpu().getMemory().getSize(), 0, 1);
@@ -1839,35 +1862,35 @@ public class MiniPC extends javax.swing.JFrame {
 
                 MemoryRegister currentInstruction = null;
                 if (this.getFileManager().getInstructions().size()>0){
-                    currentInstruction = this.getFileManager().getInstructions().get(this.getCurrentInstructionDisplay());
+                    currentInstruction = this.getFileManager().getInstructions().get(this.getCurrentInstructionDisplay1());
                     this.getController().getCpu().setInstructionRegister(currentInstruction.getAsmInstructionString());
                     try {
                         int timeBefore = this.getController().getCpu().getCurrentTime();
                         this.getController().executeInstruction(currentInstruction.getOp(),currentInstruction.getRegister(),currentInstruction.getValue(),currentInstruction.getStringValue(),this);
                         int timeAfter = this.getController().getCpu().getCurrentTime();
-                        if (this.getTimeDifference()==0)
-                            this.setTimeDifference(timeAfter-timeBefore);
+                        if (this.getTimeDifference1()==0)
+                            this.setTimeDifference1(timeAfter-timeBefore);
                         this.getController().getCpu().setProgramCounter(this.getController().getCpu().getProgramCounter()+1);
                 } catch (InterruptedException ex) {
                         Logger.getLogger(MiniPC.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 }
                 if (this.getFileManager().getInstructions2().size()>0){
-                    currentInstruction = this.getFileManager().getInstructions2().get(this.getCurrentInstructionDisplay());
+                    currentInstruction = this.getFileManager().getInstructions2().get(this.getCurrentInstructionDisplay2());
                     this.getController2().getCpu().setInstructionRegister(currentInstruction.getAsmInstructionString());
                     try {
                         int timeBefore = this.getController2().getCpu().getCurrentTime();
                         this.getController2().executeInstruction(currentInstruction.getOp(),currentInstruction.getRegister(),currentInstruction.getValue(),currentInstruction.getStringValue(),this);
                         int timeAfter = this.getController2().getCpu().getCurrentTime();
-                        if (this.getTimeDifference()==0)
-                            this.setTimeDifference(timeAfter-timeBefore);
+                        if (this.getTimeDifference2()==0)
+                            this.setTimeDifference2(timeAfter-timeBefore);
                         this.getController2().getCpu().setProgramCounter(this.getController2().getCpu().getProgramCounter()+1);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(MiniPC.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 
-                this.updateTable(this.fileManager.getInstructions(), this.fileManager.getInstructions2(),this.getController().getRowCount(),this.getCurrentInstructionDisplay());
+                this.updateTable(this.fileManager.getInstructions(), this.fileManager.getInstructions2(),this.getController().getRowCount(),this.getCurrentInstructionDisplay1(),this.getCurrentInstructionDisplay2());
             
                 if (this.isJumpFlag()){
                     int nextInstructionAddress = this.getController().getCpu().getProgramCounter();
@@ -1881,7 +1904,7 @@ public class MiniPC extends javax.swing.JFrame {
                 }
             
             
-            if (this.getCurrentInstructionDisplay() >= this.fileManager.getInstructions().size() && this.fileManager.getInstructions().size()>0 && this.getController().getCpu().getMemory().getBcpList().size()>0){
+            if (this.getCurrentInstructionDisplay1() >= this.fileManager.getInstructions().size() && this.fileManager.getInstructions().size()>0 && this.getController().getCpu().getMemory().getBcpList().size()>0){
                 int lastProcessIndex = 0;
                 for(int i = 0 ; i < this.getController().getCpu().getMemory().getBcpList().size() ; i ++){
                     lastProcessIndex = i;
@@ -1893,10 +1916,10 @@ public class MiniPC extends javax.swing.JFrame {
                 int startTime = this.getController().getCpu().getMemory().getBcpList().get(lastProcessIndex).getInformacionContable().getStartTime();
                 int endTime = this.getController().getCpu().getMemory().getBcpList().get(lastProcessIndex).getInformacionContable().getEndTime();
                 this.getController().getCpu().getMemory().getBcpList().get(lastProcessIndex).getInformacionContable().setDurationTime(endTime-startTime);
-                this.setCurrentInstructionDisplay(0);
+                this.setCurrentInstructionDisplay1(0);
                 this.getFileManager().setInstructions(new ArrayList<MemoryRegister>());
             }
-            if (this.getCurrentInstructionDisplay() >= this.fileManager.getInstructions2().size() && this.fileManager.getInstructions2().size()>0  && this.getController2().getCpu().getMemory().getBcpList().size()>0){
+            if (this.getCurrentInstructionDisplay2() >= this.fileManager.getInstructions2().size() && this.fileManager.getInstructions2().size()>0  && this.getController2().getCpu().getMemory().getBcpList().size()>0){
                 int lastProcessIndex = 0;
                 for(int i = 0 ; i < this.getController2().getCpu().getMemory().getBcpList().size() ; i ++){
                     lastProcessIndex = i;
@@ -1908,7 +1931,7 @@ public class MiniPC extends javax.swing.JFrame {
                 int startTime = this.getController2().getCpu().getMemory().getBcpList().get(lastProcessIndex).getInformacionContable().getStartTime();
                 int endTime = this.getController2().getCpu().getMemory().getBcpList().get(lastProcessIndex).getInformacionContable().getEndTime();
                 this.getController2().getCpu().getMemory().getBcpList().get(lastProcessIndex).getInformacionContable().setDurationTime(endTime-startTime);
-                this.setCurrentInstructionDisplay(0);
+                this.setCurrentInstructionDisplay2(0);
                 this.getFileManager().setInstructions2(new ArrayList<MemoryRegister>());
             }
         }
@@ -1954,11 +1977,14 @@ public class MiniPC extends javax.swing.JFrame {
                 memory.setAllocatedSize(memory.getAllocatedSize()+instructionSet.size());
                 memory.allocateMemory(instructionSet);
                 int processStartIndex = memory.getAllocationStartIndex();
+                int processEndIndex = processStartIndex+instructionSet.size()-1;
+                System.out.println(processStartIndex);
+                System.out.println(processEndIndex);
                 
                 CPU cpu = controller.getCpu();
                 
                 StatsSet estadisticas = new StatsSet(cpu,cpu.getCurrentTime());
-                BCP newBCP = new BCP(cpu.getMemory().getBcpList().size(),filePath,"Nuevo",cpu.getCpuName(),processStartIndex+1,cpu.getMemory().getStack(),estadisticas,processStartIndex,instructionSet.size(),1);
+                BCP newBCP = new BCP(cpu.getMemory().getBcpList().size(),filePath,"Nuevo",cpu.getCpuName(),processStartIndex+1,cpu.getMemory().getStack(),estadisticas,processStartIndex,processEndIndex,instructionSet.size(),1);
                 newBCP.setEstadoActual("Preparado");
                 cpu.getMemory().getBcpList().add(newBCP);
                 
@@ -1966,6 +1992,7 @@ public class MiniPC extends javax.swing.JFrame {
                 System.out.println(newBCP.getAc());
                 System.out.println(newBCP.getDataRegisters());
                 System.out.println(newBCP.getDireccionInicio());
+                System.out.println(newBCP.getDireccionFin());
                 System.out.println(newBCP.getEstadoActual());
                 System.out.println(newBCP.getIdProcess());
                 System.out.println(newBCP.getInformacionContable());
@@ -1981,8 +2008,9 @@ public class MiniPC extends javax.swing.JFrame {
                 controller.getCpu().setProgramCounter(controller.getCpu().getMemory().getAllocationStartIndex()+1);
                 controller.getCpu().setCurrentAddress(controller.getCpu().getMemory().getAllocationStartIndex());
                 
-                this.setCurrentInstructionDisplay(0);
-                this.updateTable(this.fileManager.getInstructions(),this.fileManager.getInstructions2(),controller.getRowCount(),this.getCurrentInstructionDisplay());
+                this.setCurrentInstructionDisplay1(0);
+                this.setCurrentInstructionDisplay2(0);
+                this.updateTable(this.fileManager.getInstructions(),this.fileManager.getInstructions2(),controller.getRowCount(),this.getCurrentInstructionDisplay1(),this.getCurrentInstructionDisplay2());
                 this.setArchivoAbierto(true);
                 this.getConfigurarMemoriaBtn().setEnabled(false);
                 this.updateMemory(this.getController().getCpu().getMemory().getSize(), this.getSecondaryMemory().getSize(), this.getSecondaryMemory().getVirtualMemorySize());

@@ -25,10 +25,11 @@ public class BCP {
     StatsSet informacionContable;
     int siguienteBPC;
     int direccionInicio;
+    int direccionFin;
     int tamanoProceso;
     int prioridad;
 
-    public BCP(int idProcess, String nameProcess, String estadoActual, String cpuName, int programCounter, Pila pila, StatsSet informacionContable, int direccionInicio, int tamanoProceso, int prioridad) {
+    public BCP(int idProcess, String nameProcess, String estadoActual, String cpuName, int programCounter, Pila pila, StatsSet informacionContable, int direccionInicio, int direccionFin, int tamanoProceso, int prioridad) {
         this.idProcess = idProcess;
         this.nameProcess = nameProcess;
         this.estadoActual = estadoActual;
@@ -52,8 +53,17 @@ public class BCP {
         this.informacionContable = informacionContable;
         this.siguienteBPC = siguienteBPC;
         this.direccionInicio = direccionInicio;
+        this.direccionFin = direccionFin;
         this.tamanoProceso = tamanoProceso;
         this.prioridad = prioridad;
+    }
+
+    public int getDireccionFin() {
+        return direccionFin;
+    }
+
+    public void setDireccionFin(int direccionFin) {
+        this.direccionFin = direccionFin;
     }
 
     public int getIdProcess() {
