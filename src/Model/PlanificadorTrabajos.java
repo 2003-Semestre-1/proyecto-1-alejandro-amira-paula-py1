@@ -9,6 +9,7 @@ import Controller.MiniPCController;
 import View.MiniPC;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Optional;
 import java.util.Queue;
 
 /**
@@ -40,22 +41,55 @@ public class PlanificadorTrabajos {
         this.processList = processList;
     }
     
-    public void planificarTrabajo(MiniPC miniPC){
-        int cpuEscogido = (int)Math.round(Math.random());
-        System.out.println("CPU escogido: #"+cpuEscogido);
+    public void planificarTrabajo(MiniPC miniPC, ArrayList<MemoryRegister> instructionSet, int cpuEscogido){
+        //int cpuEscogido = (int)Math.round(Math.random());
         
         MiniPCController controller = null;
         ArrayList<MemoryRegister> instructions = null;
+        BCP job = null;
+        
+        try{
+            job = this.getColaTrabajos().peek();
+        }
+        catch(Exception e){
+            miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"No hay procesos que planificar.");
+            return;
+        }
+        
+        //ArrayList<Optional<MemoryRegister>> instructionSet = (ArrayList<Optional<MemoryRegister>>) miniPC.getSecondaryMemory().getMemoryRegisters().subList(job.getDireccionInicio(), job.getDireccionFin());
+        //System.out.println("InstructionSet: "+instructionSet);
         
         if (cpuEscogido == 0){
             controller = miniPC.getController();
-            //miniPC.getFileManager().setInstructions(instructionSet);
-            instructions = miniPC.getFileManager().getInstructions();
         }
         else if (cpuEscogido == 1){
             controller = miniPC.getController2();
-            //miniPC.getFileManager().setInstructions2(instructionSet);
-            instructions = miniPC.getFileManager().getInstructions2();
         }
+        
+        CPU cpu = controller.getCpu();
+        
+        // El planificador elige el proceso que se ejecutará y lo asigna a un CPU
+        job.setEstadoActual("Preparado");
+        miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Proceso #"+job.getIdProcess()+" preparado.");
+        StatsSet estadisticas = new StatsSet(cpu,cpu.getCurrentTime());
+        job.setInformacionContable(estadisticas);
+        job.setCpuName("CPU #"+cpuEscogido);
+        job.setIdProcess(this.getProcessList().size());
+        this.getProcessList().add(job);
+        this.getColaTrabajos().remove();
+
+        Memory memory = controller.getCpu().getMemory();
+        memory.setAllocatedSize(memory.getAllocatedSize()+instructionSet.size());
+        memory.allocateMemory(instructionSet);
+        int processStartIndex = memory.getAllocationStartIndex();
+        int processEndIndex = processStartIndex+instructionSet.size()-1;
+        job.setDireccionInicio(processStartIndex);
+        job.setDireccionFin(processEndIndex);
+        job.setProgramCounter(processStartIndex);
+                
+        //MemoryRegister currentInstruction = instructions.get(0);
+        //controller.getCpu().setInstructionRegister(currentInstruction.getAsmInstructionString());
+        //controller.getCpu().setProgramCounter(controller.getCpu().getMemory().getAllocationStartIndex()+1);
+        //controller.getCpu().setCurrentAddress(controller.getCpu().getMemory().getAllocationStartIndex());
     }
 }

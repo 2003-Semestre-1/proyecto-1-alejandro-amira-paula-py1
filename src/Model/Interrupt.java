@@ -38,7 +38,7 @@ public class Interrupt {
         System.out.println(codigo);
         switch(this.codigo) {
         case 32:
-            this.interrupt20H(this.getCpu().getMemory().getBcpList(), miniPC);
+            this.interrupt20H(this.getCpu().getMemory().getPlanificadorTrabajos().getProcessList(), miniPC);
             break;
         case 16:
             this.interrupt10H(this.getCpu(), miniPC);
@@ -58,11 +58,12 @@ public class Interrupt {
     public void interrupt20H(ArrayList<BCP> bcpList, MiniPC miniPC){
         
         int lastProcessIndex = 0;
-        for(int i = 0 ; i < this.getCpu().getMemory().getBcpList().size() ; i ++){
-            lastProcessIndex = i;
+        for(int i = 0 ; i < this.getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size() ; i ++){
+            if (!this.getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getEstadoActual().equalsIgnoreCase("Finalizado"))
+                lastProcessIndex = i;
         }
 
-        this.getCpu().getMemory().getBcpList().get(lastProcessIndex).setEstadoActual("Finalizado");
+        this.getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(lastProcessIndex).setEstadoActual("Finalizado");
         
         miniPC.getTblProcesses().setValueAt("Finalizado", lastProcessIndex, 2);
         
@@ -87,10 +88,10 @@ public class Interrupt {
         miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Escriba un valor entre 0-255.");
         
         int lastProcessIndex = 0;
-        for(int i = 0 ; i < this.getCpu().getMemory().getBcpList().size() ; i ++){
+        for(int i = 0 ; i < this.getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size() ; i ++){
             lastProcessIndex = i;
         }
-        this.getCpu().getMemory().getBcpList().get(lastProcessIndex).setEstadoActual("En espera");
+        this.getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(lastProcessIndex).setEstadoActual("En espera");
         
         miniPC.getTblProcesses().setValueAt("En espera", lastProcessIndex, 2);
         

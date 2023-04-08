@@ -51,7 +51,32 @@ public class BCP {
         
         this.pila = pila;
         this.informacionContable = informacionContable;
-        this.siguienteBPC = siguienteBPC;
+        this.direccionInicio = direccionInicio;
+        this.direccionFin = direccionFin;
+        this.tamanoProceso = tamanoProceso;
+        this.prioridad = prioridad;
+    }
+    
+    public BCP(int idProcess, String nameProcess, String estadoActual, int programCounter, Pila pila, int direccionInicio, int direccionFin, int tamanoProceso, int prioridad) {
+        this.idProcess = idProcess;
+        this.nameProcess = nameProcess;
+        this.estadoActual = estadoActual;
+        this.programCounter = programCounter;
+        
+        DataRegister ax = new DataRegister(0,"","16-bit");
+        DataRegister bx = new DataRegister(0,"","16-bit");
+        DataRegister cx = new DataRegister(0,"","16-bit");
+        DataRegister dx = new DataRegister(0,"","16-bit");
+        DataRegister al = new DataRegister(0,"","8-bit");
+        DataRegister ah = new DataRegister(0,"","8-bit");
+        dataRegisters.add(ax);
+        dataRegisters.add(bx);
+        dataRegisters.add(cx);
+        dataRegisters.add(dx);
+        dataRegisters.add(al);
+        dataRegisters.add(ah);
+        
+        this.pila = pila;
         this.direccionInicio = direccionInicio;
         this.direccionFin = direccionFin;
         this.tamanoProceso = tamanoProceso;

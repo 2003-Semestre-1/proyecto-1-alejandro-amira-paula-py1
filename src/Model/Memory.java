@@ -24,7 +24,6 @@ public class Memory {
     int size = 256;
     int allocatedSize;
     int allocationStartIndex;
-    ArrayList<BCP> bcpList = new ArrayList();
     PlanificadorTrabajos planificadorTrabajos = new PlanificadorTrabajos();
     Pila stack = new Pila();
     
@@ -129,14 +128,6 @@ public class Memory {
 
     public void setAllocatedSize(int allocatedSize) {
         this.allocatedSize = allocatedSize;
-    }
-
-    public ArrayList<BCP> getBcpList() {
-        return bcpList;
-    }
-
-    public void setBcpList(ArrayList<BCP> bcpList) {
-        this.bcpList = bcpList;
     }
 
     public PlanificadorTrabajos getPlanificadorTrabajos() {

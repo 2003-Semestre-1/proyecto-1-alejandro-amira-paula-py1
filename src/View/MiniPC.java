@@ -75,13 +75,7 @@ public class MiniPC extends javax.swing.JFrame {
 
         initComponents();
         
-        this.getTblMemoryList().setValueAt("Memoria Principal", 0, 0);
-        this.getTblMemoryList().setValueAt(this.getController().getCpu().getMemory().getSize(), 0, 1);
-        this.getTblMemoryList().setValueAt("Memoria Secundaria", 1, 0);
-        this.getTblMemoryList().setValueAt(this.getSecondaryMemory().getSize(), 1, 1);
-        this.getTblMemoryList().setValueAt("Memoria Virtual", 2, 0);
-        this.getTblMemoryList().setValueAt(this.getSecondaryMemory().getVirtualMemorySize(), 2, 1);
-        
+        this.updateMemoryList();
         this.updateMemory(this.getController().getCpu().getMemory().getSize(), this.getSecondaryMemory().getSize(), this.getSecondaryMemory().getVirtualMemorySize(), this.getSecondaryMemory().getIndiceArchivos().size());
     }
 
@@ -1551,8 +1545,28 @@ public class MiniPC extends javax.swing.JFrame {
     public void setController2(MiniPCController controller2) {
         this.controller2 = controller2;
     }
+    
+    public BCP findCurrentProcess(CPU cpu){
+        BCP process = null;
+        String processState = "";
+        
+        for(int i = 0 ; i < this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size() ; i ++){
+            if (this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getCpuName().equalsIgnoreCase(cpu.getCpuName())){
+                processState = this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getEstadoActual();
+                
+                if (!processState.equalsIgnoreCase("Finalizado")){
+                    this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).setEstadoActual("Ejecución");
+                    process = this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i);
+                }
 
-    public void updateTable(ArrayList<MemoryRegister> instructionSet,ArrayList<MemoryRegister> instructionSet2, int row, int currentDisplayInstruction1, int currentDisplayInstruction2) {
+            }
+            
+        }
+        
+        return process;
+    }
+
+    public void updateTable() {
         // Este método actualiza la tabla visualmente, es decir actualiza la información que está siendo desplegada en la GUI
         // Va mostrando paso a paso las instrucciones cargadas en memoria y toda la información relevante a estas
         // Recibe como parámetros el set de instrucciones y el valor entero de la fila donde se desplegará la instrucción
@@ -1562,47 +1576,38 @@ public class MiniPC extends javax.swing.JFrame {
         String asmString2 = "";
         System.out.println("TD1 : "+this.getTimeDifference1());
         System.out.println("TD2 : "+this.getTimeDifference2());
-        System.out.println("CDI1 : "+currentDisplayInstruction1);
-        System.out.println("CDI2 : "+currentDisplayInstruction2);
-        if (instructionSet.size()>0){
-            
-            if (this.getTimeDifference1()>1){
-                this.setCurrentInstructionDisplay1(this.getCurrentInstructionDisplay1()-1);
-            }
-            asmString1 = instructionSet.get(currentDisplayInstruction1).getAsmInstructionString();
-            
-            if (this.getController().getCpu().isProgramaTerminado()){
-                this.setCurrentInstructionDisplay1(this.getFileManager().getInstructions().size()-1);
-                this.getController().getCpu().setProgramaTerminado(false);
-            }
+        MemoryRegister instructionCPU1 = null;
+        MemoryRegister instructionCPU2 = null;
+        
+        BCP cpu1CurrentProcess = this.findCurrentProcess(this.getController().getCpu());
+        BCP cpu2CurrentProcess = this.findCurrentProcess(this.getController2().getCpu());
+        try{
+            instructionCPU1 = (MemoryRegister)this.getController().getCpu().getMemory().getMemoryRegisters().get(cpu1CurrentProcess.getProgramCounter()).get();
+            asmString1 = instructionCPU1.getAsmInstructionString();
+        }
+        catch(Exception e){
+            asmString1 = "";
+        }
+        
+        try{
+            instructionCPU2 = (MemoryRegister)this.getController2().getCpu().getMemory().getMemoryRegisters().get(cpu2CurrentProcess.getProgramCounter()).get();
+            asmString2 = instructionCPU2.getAsmInstructionString();
+        }
+        catch(Exception e){
+            asmString2 = "";
             
         }
-        if (instructionSet2.size()>0){
-            
-            if (this.getTimeDifference2()>1){
-                this.setCurrentInstructionDisplay2(this.getCurrentInstructionDisplay2()-1);
-            }
-            asmString2 = instructionSet2.get(currentDisplayInstruction2).getAsmInstructionString();
-            
-            if (this.getController2().getCpu().isProgramaTerminado()){
-                this.setCurrentInstructionDisplay2(this.getFileManager().getInstructions2().size()-1);
-                this.getController2().getCpu().setProgramaTerminado(false);
-            }
-        }
-        if (this.getTimeDifference1()>0)
-            this.setTimeDifference1(this.getTimeDifference1()-1);
-        if (this.getTimeDifference2()>0)
-            this.setTimeDifference2(this.getTimeDifference2()-1);
+        
         String processID = "";
         String processName = "";
         String processState = "";
-        for(int i = 0 ; i < this.getController().getCpu().getMemory().getBcpList().size() ; i ++){
-            if (this.getController().getCpu().getMemory().getBcpList().get(i).getCpuName().equalsIgnoreCase("CPU #0")){
-                processState = this.getController().getCpu().getMemory().getBcpList().get(i).getEstadoActual();
+        for(int i = 0 ; i < this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size() ; i ++){
+            if (this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getCpuName().equalsIgnoreCase("CPU #0")){
+                processState = this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getEstadoActual();
                 
                 if (!processState.equalsIgnoreCase("Finalizado")){
-                    processID = this.getController().getCpu().getMemory().getBcpList().get(i).getIdProcess()+"";
-                    String path = this.getController().getCpu().getMemory().getBcpList().get(i).getNameProcess();
+                    processID = this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getIdProcess()+"";
+                    String path = this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getNameProcess();
                     File file = new File(path);
                     processName = file.getName();
                 }
@@ -1634,12 +1639,14 @@ public class MiniPC extends javax.swing.JFrame {
         }
         
         this.getLblNumberAC().setText(this.getController().getCpu().getAccumulator()+"");
-        if (this.getFileManager().getInstructions().size() > this.getController().getRowCount()+1){
-            this.getLblNumberPC().setText(""+(this.getController().getCpu().getProgramCounter()));
-            this.getLblNumberIR().setText(this.getFileManager().getInstructions().get(this.getController().getRowCount()).getAsmInstructionString());
+        this.getLblNumberPC().setText(""+(this.getController().getCpu().getProgramCounter()));
+        
+        try{
+            this.getController().getCpu().setProgramCounter(cpu1CurrentProcess.getProgramCounter());
+            this.getLblNumberIR().setText(instructionCPU1.getAsmInstructionString());
         }
-        else{
-            this.getController().getCpu().setProgramCounter(Integer.parseInt(this.getLblNumberPC().getText()));
+        catch(Exception e){
+            this.getLblNumberIR2().setText("");
         }
         //
         
@@ -1647,13 +1654,13 @@ public class MiniPC extends javax.swing.JFrame {
         processID = "";
         processName = "";
         processState = "";
-        for(int i = 0 ; i < this.getController().getCpu().getMemory().getBcpList().size() ; i ++){
-            if (this.getController().getCpu().getMemory().getBcpList().get(i).getCpuName().equalsIgnoreCase("CPU #1")){
-                processState = this.getController().getCpu().getMemory().getBcpList().get(i).getEstadoActual();
+        for(int i = 0 ; i < this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size() ; i ++){
+            if (this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getCpuName().equalsIgnoreCase("CPU #1")){
+                processState = this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getEstadoActual();
                 
                 if (!processState.equalsIgnoreCase("Finalizado")){
-                    processID = this.getController().getCpu().getMemory().getBcpList().get(i).getIdProcess()+"";
-                    String path = this.getController().getCpu().getMemory().getBcpList().get(i).getNameProcess();
+                    processID = this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getIdProcess()+"";
+                    String path = this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getNameProcess();
                     File file = new File(path);
                     processName = file.getName();
                 }
@@ -1686,28 +1693,24 @@ public class MiniPC extends javax.swing.JFrame {
         }
         
         this.getLblNumberAC2().setText(this.getController2().getCpu().getAccumulator()+"");
-        if (this.getFileManager().getInstructions2().size() > this.getController().getRowCount()+1){
-            this.getLblNumberPC2().setText(""+(this.getController2().getCpu().getProgramCounter()));
-            this.getLblNumberIR2().setText(this.getFileManager().getInstructions2().get(this.getController2().getRowCount()).getAsmInstructionString());
+        try{
+            this.getController2().getCpu().setProgramCounter(cpu2CurrentProcess.getProgramCounter()+1);
+            this.getLblNumberIR2().setText(instructionCPU2.getAsmInstructionString());
         }
-        else{
-            this.getController2().getCpu().setProgramCounter(Integer.parseInt(this.getLblNumberPC2().getText()));
+        catch(Exception e){
+            this.getLblNumberIR2().setText("");
         }
+        this.getLblNumberPC2().setText(""+(this.getController2().getCpu().getProgramCounter()));
         //
         
-        this.setCountTimeTable(this.getCountTimeTable()+1);
-        
         this.updateProcesses();
-        
-        this.getController().setRowCount(this.getController().getRowCount()+1);
+        this.setCountTimeTable(this.getCountTimeTable()+1);
         this.getController().getCpu().setNumberExecutedInstructions(this.getController().getCpu().getNumberExecutedInstructions()+1);
-        this.getController().getCpu().setCurrentAddress(this.getController().getCpu().getCurrentAddress()+1);
-        
-        this.getController2().setRowCount(this.getController2().getRowCount()+1);
         this.getController2().getCpu().setNumberExecutedInstructions(this.getController2().getCpu().getNumberExecutedInstructions()+1);
-        this.getController2().getCpu().setCurrentAddress(this.getController2().getCpu().getCurrentAddress()+1);
-        this.setCurrentInstructionDisplay1(this.getCurrentInstructionDisplay1()+1);
-        this.setCurrentInstructionDisplay2(this.getCurrentInstructionDisplay2()+1);
+        
+    }
+    
+    public void updateMemoryList(){
         
         this.getTblMemoryList().setValueAt("Memoria Principal", 0, 0);
         this.getTblMemoryList().setValueAt(this.getController().getCpu().getMemory().getSize(), 0, 1);
@@ -1716,7 +1719,7 @@ public class MiniPC extends javax.swing.JFrame {
         this.getTblMemoryList().setValueAt("Memoria Virtual", 2, 0);
         this.getTblMemoryList().setValueAt(this.getSecondaryMemory().getVirtualMemorySize(), 2, 1);
         
-    } 
+    }
 
     public JLabel getLblNumberStack() {
         return lblNumberStack;
@@ -1737,16 +1740,17 @@ public class MiniPC extends javax.swing.JFrame {
     
     
     public void updateProcesses() {
-        for(int i = 0 ; i < this.getController().getCpu().getMemory().getBcpList().size() ; i ++){
-            this.getTblProcesses().setValueAt(this.getController().getCpu().getMemory().getBcpList().get(i).getIdProcess(), i, 0);
+        for(int i = 0 ; i < this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size() ; i ++){
+            System.out.print("AAAAAAAAAAAAAAAAAAAAAAA"+this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getIdProcess()+"\n");
+            this.getTblProcesses().setValueAt(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getIdProcess(), i, 0);
             
-            String path = this.getController().getCpu().getMemory().getBcpList().get(i).getNameProcess();
+            String path = this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getNameProcess();
             File file = new File(path);
             String fileName = file.getName();
             
             this.getTblProcesses().setValueAt(fileName, i, 1);
-            this.getTblProcesses().setValueAt(this.getController().getCpu().getMemory().getBcpList().get(i).getEstadoActual(), i, 2);
-            this.getTblProcesses().setValueAt(this.getController().getCpu().getMemory().getBcpList().get(i).getCpuName(), i, 3);
+            this.getTblProcesses().setValueAt(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getEstadoActual(), i, 2);
+            this.getTblProcesses().setValueAt(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getCpuName(), i, 3);
         }
     }
     
@@ -1982,12 +1986,12 @@ public class MiniPC extends javax.swing.JFrame {
             String estadoUltimoProceso1 = "";
             String estadoUltimoProceso2 = "";
             
-            for(int i = 0 ; i < this.getController().getCpu().getMemory().getBcpList().size() ; i ++){
-                estadoUltimoProceso1 = this.getController().getCpu().getMemory().getBcpList().get(i).getEstadoActual();
+            for(int i = 0 ; i < this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size() ; i ++){
+                estadoUltimoProceso1 = this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getEstadoActual();
             }
                 
-            for(int i = 0 ; i < this.getController2().getCpu().getMemory().getBcpList().size() ; i ++){
-                estadoUltimoProceso2 = this.getController2().getCpu().getMemory().getBcpList().get(i).getEstadoActual();
+            for(int i = 0 ; i < this.getController2().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size() ; i ++){
+                estadoUltimoProceso2 = this.getController2().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getEstadoActual();
             }
             
             if (estadoUltimoProceso1.equalsIgnoreCase("Finalizado") && estadoUltimoProceso2.equalsIgnoreCase("Finalizado") && this.isIsAutomatic()){
@@ -1995,37 +1999,64 @@ public class MiniPC extends javax.swing.JFrame {
                 return;
             }
 
-                MemoryRegister currentInstruction = null;
-                if (this.getFileManager().getInstructions().size()>0){
-                    currentInstruction = this.getFileManager().getInstructions().get(this.getCurrentInstructionDisplay1());
-                    this.getController().getCpu().setInstructionRegister(currentInstruction.getAsmInstructionString());
+                BCP cpu1CurrentProcess = this.findCurrentProcess(this.getController().getCpu());
+                BCP cpu2CurrentProcess = this.findCurrentProcess(this.getController2().getCpu());
+                MemoryRegister instructionCPU1 = null;
+                MemoryRegister instructionCPU2 = null;
+                
+                try{
+                    instructionCPU1 = (MemoryRegister)this.getController().getCpu().getMemory().getMemoryRegisters().get(cpu1CurrentProcess.getProgramCounter()).get();
+                    instructionCPU2 = (MemoryRegister)this.getController2().getCpu().getMemory().getMemoryRegisters().get(cpu2CurrentProcess.getProgramCounter()).get();
+                }
+                catch(Exception e){
+                    System.out.println("No instruction to execute.");
+                }
+                
+                if (instructionCPU1 != null){
+                    this.getController().getCpu().setInstructionRegister(instructionCPU1.getAsmInstructionString());
                     try {
                         int timeBefore = this.getController().getCpu().getCurrentTime();
-                        this.getController().executeInstruction(currentInstruction.getOp(),currentInstruction.getRegister(),currentInstruction.getValue(),currentInstruction.getStringValue(),this);
+                        this.getController().executeInstruction(instructionCPU1.getOp(),instructionCPU1.getRegister(),instructionCPU1.getValue(),instructionCPU1.getStringValue(),this);
                         int timeAfter = this.getController().getCpu().getCurrentTime();
                         if (this.getTimeDifference1()==0)
                             this.setTimeDifference1(timeAfter-timeBefore);
-                        this.getController().getCpu().setProgramCounter(this.getController().getCpu().getProgramCounter()+1);
-                } catch (InterruptedException ex) {
-                        Logger.getLogger(MiniPC.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                }
-                if (this.getFileManager().getInstructions2().size()>0){
-                    currentInstruction = this.getFileManager().getInstructions2().get(this.getCurrentInstructionDisplay2());
-                    this.getController2().getCpu().setInstructionRegister(currentInstruction.getAsmInstructionString());
-                    try {
-                        int timeBefore = this.getController2().getCpu().getCurrentTime();
-                        this.getController2().executeInstruction(currentInstruction.getOp(),currentInstruction.getRegister(),currentInstruction.getValue(),currentInstruction.getStringValue(),this);
-                        int timeAfter = this.getController2().getCpu().getCurrentTime();
-                        if (this.getTimeDifference2()==0)
-                            this.setTimeDifference2(timeAfter-timeBefore);
-                        this.getController2().getCpu().setProgramCounter(this.getController2().getCpu().getProgramCounter()+1);
-                    } catch (InterruptedException ex) {
+                        this.getController().getCpu().setProgramCounter(cpu1CurrentProcess.getProgramCounter()+1);
+                    } catch (Exception ex) {
                         Logger.getLogger(MiniPC.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 
-                this.updateTable(this.fileManager.getInstructions(), this.fileManager.getInstructions2(),this.getController().getRowCount(),this.getCurrentInstructionDisplay1(),this.getCurrentInstructionDisplay2());
+                if (instructionCPU2 != null){
+                    this.getController2().getCpu().setInstructionRegister(instructionCPU2.getAsmInstructionString());
+                    try {
+                        int timeBefore = this.getController2().getCpu().getCurrentTime();
+                        this.getController2().executeInstruction(instructionCPU2.getOp(),instructionCPU2.getRegister(),instructionCPU2.getValue(),instructionCPU2.getStringValue(),this);
+                        int timeAfter = this.getController2().getCpu().getCurrentTime();
+                        if (this.getTimeDifference2()==0)
+                            this.setTimeDifference2(timeAfter-timeBefore);
+                        this.getController2().getCpu().setProgramCounter(cpu2CurrentProcess.getProgramCounter()+1);
+                    } catch (Exception ex) {
+                        Logger.getLogger(MiniPC.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                
+                this.updateTable();
+                
+                try{
+                    cpu1CurrentProcess.setProgramCounter(cpu1CurrentProcess.getProgramCounter()+1);
+                    this.getController().getCpu().setProgramCounter(cpu1CurrentProcess.getProgramCounter());
+                }
+                catch(Exception e){
+                    
+                }
+                
+                try{
+                    cpu2CurrentProcess.setProgramCounter(cpu2CurrentProcess.getProgramCounter()+1);
+                    this.getController2().getCpu().setProgramCounter(cpu2CurrentProcess.getProgramCounter());
+                }
+                catch(Exception e){
+                    
+                }
             
                 if (this.isJumpFlag()){
                     int nextInstructionAddress = this.getController().getCpu().getProgramCounter();
@@ -2038,43 +2069,6 @@ public class MiniPC extends javax.swing.JFrame {
                     this.setJumpFlag(false);
                 }
             
-            
-            if (this.getCurrentInstructionDisplay1() >= this.fileManager.getInstructions().size() && this.fileManager.getInstructions().size()>0 && this.getController().getCpu().getMemory().getBcpList().size()>0){
-                int lastProcessIndex = 0;
-                for(int i = 0 ; i < this.getController().getCpu().getMemory().getBcpList().size() ; i ++){
-                    lastProcessIndex = i;
-                }
-                
-                this.getController().getCpu().getMemory().getBcpList().get(lastProcessIndex).setEstadoActual("Finalizado");
-                this.getTblProcesses().setValueAt("Finalizado", lastProcessIndex, 2);
-                this.getController().getCpu().getMemory().getBcpList().get(lastProcessIndex).getInformacionContable().setEndTime(this.getController().getCpu().getCurrentTime());
-                int startTime = this.getController().getCpu().getMemory().getBcpList().get(lastProcessIndex).getInformacionContable().getStartTime();
-                int endTime = this.getController().getCpu().getMemory().getBcpList().get(lastProcessIndex).getInformacionContable().getEndTime();
-                this.getController().getCpu().getMemory().getBcpList().get(lastProcessIndex).getInformacionContable().setDurationTime(endTime-startTime);
-                this.setCurrentInstructionDisplay1(0);
-                this.getFileManager().setInstructions(new ArrayList<MemoryRegister>());
-                this.getController().getCpu().getMemory().freeFromMemory(this.getController().getCpu().getMemory().getBcpList().get(lastProcessIndex).getDireccionInicio(), this.getController().getCpu().getMemory().getBcpList().get(lastProcessIndex).getDireccionFin());
-                this.updateMemory(this.getController().getCpu().getMemory().getSize(), this.getSecondaryMemory().getSize(), this.getSecondaryMemory().getVirtualMemorySize(), this.getSecondaryMemory().getIndiceArchivos().size());
-                this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Proceso #"+this.getController().getCpu().getMemory().getBcpList().get(lastProcessIndex).getIdProcess()+" liberado de memoria principal.");
-            }
-            if (this.getCurrentInstructionDisplay2() >= this.fileManager.getInstructions2().size() && this.fileManager.getInstructions2().size()>0  && this.getController2().getCpu().getMemory().getBcpList().size()>0){
-                int lastProcessIndex = 0;
-                for(int i = 0 ; i < this.getController2().getCpu().getMemory().getBcpList().size() ; i ++){
-                    lastProcessIndex = i;
-                }
-                
-                this.getController2().getCpu().getMemory().getBcpList().get(lastProcessIndex).setEstadoActual("Finalizado");
-                this.getTblProcesses().setValueAt("Finalizado", lastProcessIndex, 2);
-                this.getController2().getCpu().getMemory().getBcpList().get(lastProcessIndex).getInformacionContable().setEndTime(this.getController2().getCpu().getCurrentTime());
-                int startTime = this.getController2().getCpu().getMemory().getBcpList().get(lastProcessIndex).getInformacionContable().getStartTime();
-                int endTime = this.getController2().getCpu().getMemory().getBcpList().get(lastProcessIndex).getInformacionContable().getEndTime();
-                this.getController2().getCpu().getMemory().getBcpList().get(lastProcessIndex).getInformacionContable().setDurationTime(endTime-startTime);
-                this.setCurrentInstructionDisplay2(0);
-                this.getFileManager().setInstructions2(new ArrayList<MemoryRegister>());
-                this.getController2().getCpu().getMemory().freeFromMemory(this.getController2().getCpu().getMemory().getBcpList().get(lastProcessIndex).getDireccionInicio(), this.getController().getCpu().getMemory().getBcpList().get(lastProcessIndex).getDireccionFin());
-                this.updateMemory(this.getController2().getCpu().getMemory().getSize(), this.getSecondaryMemory().getSize(), this.getSecondaryMemory().getVirtualMemorySize(), this.getSecondaryMemory().getIndiceArchivos().size());
-                this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Proceso #"+this.getController2().getCpu().getMemory().getBcpList().get(lastProcessIndex).getIdProcess()+" liberado de memoria principal.");
-            }
         }
         else
             JOptionPane.showMessageDialog (null, "Escriba un valor.", "Error: Debe escribir un valor.", JOptionPane.ERROR_MESSAGE);
@@ -2100,79 +2094,31 @@ public class MiniPC extends javax.swing.JFrame {
             }
             else if (instructionSet != null){
                 
-                MiniPCController controller = null;
-                ArrayList<MemoryRegister> instructions = null;
-                
-                if (cpuEscogido == 0){
-                    controller = this.getController();
-                    this.getFileManager().setInstructions(instructionSet);
-                    instructions = this.getFileManager().getInstructions();
-                }
-                else if (cpuEscogido == 1){
-                    controller = this.getController2();
-                    this.getFileManager().setInstructions2(instructionSet);
-                    instructions = this.getFileManager().getInstructions2();
-                }
-                
-                Memory memory = controller.getCpu().getMemory();
-                memory.setAllocatedSize(memory.getAllocatedSize()+instructionSet.size());
-                memory.allocateMemory(instructionSet);
-                int processStartIndex = memory.getAllocationStartIndex();
-                int processEndIndex = processStartIndex+instructionSet.size()-1;
-                
                 // Cargar a memoria secundaria
                 this.getSecondaryMemory().setAllocatedSize(instructionSet.size());
                 this.getSecondaryMemory().allocateMemory(instructionSet);
                 int secondaryStartIndex = this.getSecondaryMemory().getAllocationStartIndex();
+                int secondaryEndIndex = secondaryStartIndex+instructionSet.size()-1;
                 
                 // Se crea el proceso y se le asigna el ID de proceso
-                CPU cpu = controller.getCpu();
-                StatsSet estadisticas = new StatsSet(cpu,cpu.getCurrentTime());
-                BCP newBCP = new BCP(cpu.getMemory().getBcpList().size(),filePath,"Nuevo",cpu.getCpuName(),processStartIndex+1,cpu.getMemory().getStack(),estadisticas,processStartIndex,processEndIndex,instructionSet.size(),1);
-                
+                BCP newBCP = new BCP(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size(),filePath,"Nuevo",secondaryStartIndex+1,this.getController().getCpu().getMemory().getStack(),secondaryStartIndex,secondaryEndIndex,instructionSet.size(),1);
+                // Se agrega el indice del archivo a la memoria secundaria
                 File file = new File(filePath);
                 String fileName = file.getName();
-                
-                // Se agrega el indice del archivo a la memoria secundaria
                 IndiceArchivo indiceArchivo = new IndiceArchivo(fileName,secondaryStartIndex);
-                System.out.println(indiceArchivo);
                 this.getSecondaryMemory().getIndiceArchivos().add(indiceArchivo);
                 
-                System.out.println("------------------------------------");
-                System.out.println(newBCP.getAc());
-                System.out.println(newBCP.getDataRegisters());
-                System.out.println(newBCP.getDireccionInicio());
-                System.out.println(newBCP.getDireccionFin());
-                System.out.println(newBCP.getEstadoActual());
-                System.out.println(newBCP.getIdProcess());
-                System.out.println(newBCP.getInformacionContable());
-                System.out.println(newBCP.getNameProcess());
-                System.out.println(newBCP.getPila());
-                System.out.println(newBCP.getPrioridad());
-                System.out.println(newBCP.getProgramCounter());
-                System.out.println(newBCP.getTamanoProceso());
-                System.out.println("------------------------------------");
-                
                 // Se agrega el proceso a la cola de trabajo
-                cpu.getMemory().getPlanificadorTrabajos().getColaTrabajos().add(newBCP);
-                BCP loadBCP = cpu.getMemory().getPlanificadorTrabajos().getColaTrabajos().peek();
+                this.getController().getCpu().getMemory().getPlanificadorTrabajos().getColaTrabajos().add(newBCP);
                 
-                // El planificador elige el proceso que se ejecutará y lo asigna a un CPU
-                loadBCP.setEstadoActual("Preparado");
-                cpu.getMemory().getBcpList().add(loadBCP);
+                // Se carga en memoria principal el proceso escogido por el planificador de trabajos
+                this.getController().getCpu().getMemory().getPlanificadorTrabajos().planificarTrabajo(this, instructionSet, cpuEscogido);
                 
-                MemoryRegister currentInstruction = instructions.get(0);
-                controller.getCpu().setInstructionRegister(currentInstruction.getAsmInstructionString());
-                controller.getCpu().setProgramCounter(controller.getCpu().getMemory().getAllocationStartIndex()+1);
-                controller.getCpu().setCurrentAddress(controller.getCpu().getMemory().getAllocationStartIndex());
-                
-                this.setCurrentInstructionDisplay1(0);
-                this.setCurrentInstructionDisplay2(0);
-                this.updateTable(this.fileManager.getInstructions(),this.fileManager.getInstructions2(),controller.getRowCount(),this.getCurrentInstructionDisplay1(),this.getCurrentInstructionDisplay2());
                 this.updateProcesses();
                 this.setArchivoAbierto(true);
                 this.getConfigurarMemoriaBtn().setEnabled(false);
                 this.updateMemory(this.getController().getCpu().getMemory().getSize(), this.getSecondaryMemory().getSize(), this.getSecondaryMemory().getVirtualMemorySize(), this.getSecondaryMemory().getIndiceArchivos().size());
+                this.updateMemoryList();
             }
 
         }
@@ -2248,17 +2194,17 @@ public class MiniPC extends javax.swing.JFrame {
         statsWindow.setVisible(true);
         statsWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
-        for(int i = 0 ; i < this.getController().getCpu().getMemory().getBcpList().size() ; i ++){
+        for(int i = 0 ; i < this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size() ; i ++){
             
-            String path = this.getController().getCpu().getMemory().getBcpList().get(i).getNameProcess();
+            String path = this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getNameProcess();
             File file = new File(path);
             String processName = file.getName();
             
-            statsWindow.getTblStats().setValueAt(this.getController().getCpu().getMemory().getBcpList().get(i).getIdProcess(), i, 0);
+            statsWindow.getTblStats().setValueAt(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getIdProcess(), i, 0);
             statsWindow.getTblStats().setValueAt(processName, i, 1);
-            statsWindow.getTblStats().setValueAt(this.getController().getCpu().getMemory().getBcpList().get(i).getInformacionContable().getStartTime(), i, 2);
-            statsWindow.getTblStats().setValueAt(this.getController().getCpu().getMemory().getBcpList().get(i).getInformacionContable().getEndTime(), i, 3);
-            statsWindow.getTblStats().setValueAt(this.getController().getCpu().getMemory().getBcpList().get(i).getInformacionContable().getDurationTime(), i, 4);
+            statsWindow.getTblStats().setValueAt(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getInformacionContable().getStartTime(), i, 2);
+            statsWindow.getTblStats().setValueAt(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getInformacionContable().getEndTime(), i, 3);
+            statsWindow.getTblStats().setValueAt(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getInformacionContable().getDurationTime(), i, 4);
         }
         
     }//GEN-LAST:event_estadisticasBtnActionPerformed

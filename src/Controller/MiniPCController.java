@@ -45,10 +45,10 @@ public class MiniPCController {
         System.out.println("valueString: "+valueString);
          
         int lastProcessIndex = 0;
-            for(int i = 0 ; i < this.getCpu().getMemory().getBcpList().size() ; i ++){
+            for(int i = 0 ; i < this.getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size() ; i ++){
                 lastProcessIndex = i;
        }
-        this.getCpu().getMemory().getBcpList().get(lastProcessIndex).setEstadoActual("Ejecución");
+        this.getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(lastProcessIndex).setEstadoActual("Ejecución");
         
         switch(op) {
         case 1:
