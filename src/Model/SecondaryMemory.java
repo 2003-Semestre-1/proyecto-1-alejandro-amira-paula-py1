@@ -44,7 +44,37 @@ public class SecondaryMemory {
         this.virtualMemory = virtualMemory;
     }
      
-     
+    public void freeAllMemory(){
+        memoryRegisters.clear();
+        for(int i = 0 ; i < size ; i ++){
+            memoryRegisters.add(Optional.empty());                 
+        }
+        
+    }
+    
+    public void freeFromMemory(int startIndex, int endIndex){
+        memoryRegisters.subList(startIndex, endIndex).clear();
+        for(int i = startIndex ; i <= endIndex ; i ++){
+            memoryRegisters.add(Optional.empty());                 
+        }
+        
+    }
+    
+    public void freeAllVirtualMemory(){
+        virtualMemory.clear();
+        for(int i = 0 ; i < virtualMemorySize ; i ++){
+            virtualMemory.add(Optional.empty());                 
+        }
+        
+    }
+    
+    public void freeFromVirtualMemory(int startIndex, int endIndex){
+        virtualMemory.subList(startIndex, endIndex).clear();
+        for(int i = startIndex ; i <= endIndex ; i ++){
+            virtualMemory.add(Optional.empty());                 
+        }
+        
+    }
 
     public void allocateMemory(ArrayList<MemoryRegister> instructionSet){
         // Este método asigna las instrucciones recibidas a la memoria

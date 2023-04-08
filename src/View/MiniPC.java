@@ -1985,6 +1985,7 @@ public class MiniPC extends javax.swing.JFrame {
                 
                 StatsSet estadisticas = new StatsSet(cpu,cpu.getCurrentTime());
                 BCP newBCP = new BCP(cpu.getMemory().getBcpList().size(),filePath,"Nuevo",cpu.getCpuName(),processStartIndex+1,cpu.getMemory().getStack(),estadisticas,processStartIndex,processEndIndex,instructionSet.size(),1);
+                
                 newBCP.setEstadoActual("Preparado");
                 cpu.getMemory().getBcpList().add(newBCP);
                 

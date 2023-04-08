@@ -78,6 +78,22 @@ public class Memory {
         System.out.println(this.memoryRegisters);
         System.out.println(this.memoryRegisters.size());
     }
+    
+    public void freeAllMemory(){
+        memoryRegisters.clear();
+        for(int i = 0 ; i < size ; i ++){
+            memoryRegisters.add(Optional.empty());                 
+        }
+        
+    }
+    
+    public void freeFromMemory(int startIndex, int endIndex){
+        memoryRegisters.subList(startIndex, endIndex).clear();
+        for(int i = startIndex ; i <= endIndex ; i ++){
+            memoryRegisters.add(Optional.empty());                 
+        }
+        
+    }
 
     public Pila getStack() {
         return stack;
