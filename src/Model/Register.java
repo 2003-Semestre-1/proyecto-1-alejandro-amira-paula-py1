@@ -26,6 +26,10 @@ public abstract class Register {
         this.stringValue = valueString;
     }
     
+    public Register(String stringValue) {
+        this.stringValue = stringValue;
+    }
+    
     // Este método abstracto deberá ser implementado por todas las clases que hereden de Register y convierten lo almacenado en el registro a binario
     public abstract String convertToBinary();
 

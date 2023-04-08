@@ -9,6 +9,7 @@ import Controller.MiniPCController;
 import Model.BCP;
 import Model.CPU;
 import Model.FileManager;
+import Model.IndiceArchivo;
 import Model.Memory;
 import Model.SecondaryMemory;
 import Model.MemoryRegister;
@@ -81,7 +82,7 @@ public class MiniPC extends javax.swing.JFrame {
         this.getTblMemoryList().setValueAt("Memoria Virtual", 2, 0);
         this.getTblMemoryList().setValueAt(this.getSecondaryMemory().getVirtualMemorySize(), 2, 1);
         
-        this.updateMemory(this.getController().getCpu().getMemory().getSize(), this.getSecondaryMemory().getSize(), this.getSecondaryMemory().getVirtualMemorySize());
+        this.updateMemory(this.getController().getCpu().getMemory().getSize(), this.getSecondaryMemory().getSize(), this.getSecondaryMemory().getVirtualMemorySize(), this.getSecondaryMemory().getIndiceArchivos().size());
     }
 
     /**
@@ -174,6 +175,9 @@ public class MiniPC extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblVirtualMemory = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
+        tblIndexFiles = new javax.swing.JTable();
+        Lbl_memoria3 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
         tblMainMemory = new javax.swing.JTable();
 
         nextInstructionBtn1.setText("Siguiente instrucción");
@@ -307,7 +311,7 @@ public class MiniPC extends javax.swing.JFrame {
                                 .addComponent(lblIR)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lblNumberIR, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(17, Short.MAX_VALUE))))))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         Pnl_RegistrosLayout.setVerticalGroup(
             Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -890,6 +894,10 @@ public class MiniPC extends javax.swing.JFrame {
         ));
         tblMemory2.setRowHeight(30);
         Pnl_Memoria1.setViewportView(tblMemory2);
+        if (tblMemory2.getColumnModel().getColumnCount() > 0) {
+            tblMemory2.getColumnModel().getColumn(2).setHeaderValue("Proceso");
+            tblMemory2.getColumnModel().getColumn(3).setHeaderValue("Tiempo");
+        }
 
         Pnl_Memoria2.setBackground(new java.awt.Color(204, 204, 255));
         Pnl_Memoria2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -1061,6 +1069,9 @@ public class MiniPC extends javax.swing.JFrame {
         ));
         tblSecondaryMemory.setRowHeight(30);
         jScrollPane2.setViewportView(tblSecondaryMemory);
+        if (tblSecondaryMemory.getColumnModel().getColumnCount() > 0) {
+            tblSecondaryMemory.getColumnModel().getColumn(2).setHeaderValue("ASM");
+        }
 
         tblVirtualMemory.setBackground(new java.awt.Color(204, 204, 255));
         tblVirtualMemory.setModel(new javax.swing.table.DefaultTableModel(
@@ -1073,6 +1084,25 @@ public class MiniPC extends javax.swing.JFrame {
         ));
         tblVirtualMemory.setRowHeight(30);
         jScrollPane3.setViewportView(tblVirtualMemory);
+        if (tblVirtualMemory.getColumnModel().getColumnCount() > 0) {
+            tblVirtualMemory.getColumnModel().getColumn(2).setHeaderValue("ASM");
+        }
+
+        tblIndexFiles.setBackground(new java.awt.Color(204, 204, 255));
+        tblIndexFiles.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Dirección", "Nombre archivo"
+            }
+        ));
+        tblIndexFiles.setRowHeight(30);
+        jScrollPane4.setViewportView(tblIndexFiles);
+
+        Lbl_memoria3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        Lbl_memoria3.setText("Índice de archivos en almacenamiento");
+        Lbl_memoria3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         tblMainMemory.setBackground(new java.awt.Color(204, 204, 255));
         tblMainMemory.setModel(new javax.swing.table.DefaultTableModel(
@@ -1084,41 +1114,20 @@ public class MiniPC extends javax.swing.JFrame {
             }
         ));
         tblMainMemory.setRowHeight(30);
-        jScrollPane4.setViewportView(tblMainMemory);
+        jScrollPane6.setViewportView(tblMainMemory);
+        if (tblMainMemory.getColumnModel().getColumnCount() > 0) {
+            tblMainMemory.getColumnModel().getColumn(2).setHeaderValue("ASM");
+        }
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(316, 316, 316)
-                .addComponent(Lbl_registros)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Pnl_Registros1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(144, 144, 144)
-                        .addComponent(Lbl_memoria2))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(139, 139, 139)
-                        .addComponent(Lbl_registros1))
-                    .addComponent(Pnl_Memoria1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Lbl_memoria6)
-                .addGap(247, 247, 247)
-                .addComponent(Lbl_memoria7)
-                .addGap(111, 111, 111))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Pnl_Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Lbl_memoria5)
-                        .addGap(133, 133, 133))
                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(Pnl_Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(165, 165, 165)
@@ -1130,31 +1139,54 @@ public class MiniPC extends javax.swing.JFrame {
                                         .addComponent(Pnl_Memoria2, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(Pnl_Registros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGap(170, 170, 170)
+                                        .addComponent(lblListaProcesos)
+                                        .addGap(304, 304, 304)
+                                        .addComponent(Lbl_memoria5))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addComponent(Pnl_Memoria, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addContainerGap())))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(Pnl_Memoria4, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(88, 88, 88)
-                                .addComponent(Lbl_memoria4)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(350, 350, 350)
-                        .addComponent(lblListaProcesos))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(605, 605, 605)
-                        .addComponent(jLabel4)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addContainerGap()
+                                    .addComponent(Pnl_Memoria4, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addGap(88, 88, 88)
+                                    .addComponent(Lbl_memoria4)))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addGap(316, 316, 316)
+                            .addComponent(Lbl_registros)
+                            .addGap(209, 209, 209)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(Pnl_Registros1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addGap(139, 139, 139)
+                                    .addComponent(Lbl_registros1))
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addGap(144, 144, 144)
+                                    .addComponent(Lbl_memoria2)
+                                    .addGap(250, 250, 250)
+                                    .addComponent(Lbl_memoria3))
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addComponent(Pnl_Memoria1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addGap(419, 419, 419)
+                            .addComponent(Lbl_memoria6)
+                            .addGap(258, 258, 258)
+                            .addComponent(Lbl_memoria7))
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addGap(559, 559, 559)
+                            .addComponent(jLabel4))))
+                .addGap(21, 21, 21))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1172,25 +1204,31 @@ public class MiniPC extends javax.swing.JFrame {
                                 .addComponent(Pnl_Registros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
                                 .addComponent(Lbl_memoria)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Pnl_Memoria2, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblListaProcesos)
-                                    .addComponent(Lbl_memoria5))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Pnl_Memoria, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(Pnl_Memoria2, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblListaProcesos)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(Pnl_Memoria, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGap(2, 2, 2)
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                            .addComponent(Pnl_Memoria1, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(Lbl_memoria5)
+                                        .addGap(4, 4, 4)
+                                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(Lbl_registros1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Pnl_Registros1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Lbl_memoria2)
-                        .addGap(4, 4, 4)
-                        .addComponent(Pnl_Memoria1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Lbl_memoria2)
+                            .addComponent(Lbl_memoria3))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Lbl_memoria6)
@@ -1210,7 +1248,7 @@ public class MiniPC extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1037, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1341, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1256,10 +1294,12 @@ public class MiniPC extends javax.swing.JFrame {
         JTable mainMemoryTable = this.getTblMainMemory();
         JTable secondaryMemoryTable = this.getTblSecondaryMemory();
         JTable virtualMemoryTable = this.getTblVirtualMemory();
+        JTable indexFilesTable = this.getTblIndexFiles();
         
         DefaultTableModel mainMemoryModel = (DefaultTableModel) mainMemoryTable.getModel();
         DefaultTableModel secondaryMemoryModel = (DefaultTableModel) secondaryMemoryTable.getModel();
         DefaultTableModel virtualMemoryModel = (DefaultTableModel) virtualMemoryTable.getModel();
+        DefaultTableModel indexFilesModel = (DefaultTableModel) indexFilesTable.getModel();
         
         while (mainMemoryModel.getRowCount() > 0) {
             mainMemoryModel.removeRow(0);
@@ -1273,16 +1313,22 @@ public class MiniPC extends javax.swing.JFrame {
             virtualMemoryModel.removeRow(0);
         }
         
+        while (indexFilesModel.getRowCount() > 0) {
+            indexFilesModel.removeRow(0);
+        }
+        
     }
     
-    public void updateMemory(int mainMemorySize, int secondaryMemorySize, int virtualMemorySize){
+    public void updateMemory(int mainMemorySize, int secondaryMemorySize, int virtualMemorySize, int indexFilesSize){
         JTable mainMemoryTable = this.getTblMainMemory();
         JTable secondaryMemoryTable = this.getTblSecondaryMemory();
         JTable virtualMemoryTable = this.getTblVirtualMemory();
+        JTable indexFilesTable = this.getTblIndexFiles();
         
         DefaultTableModel mainMemoryModel = (DefaultTableModel) mainMemoryTable.getModel();
         DefaultTableModel secondaryMemoryModel = (DefaultTableModel) secondaryMemoryTable.getModel();
         DefaultTableModel virtualMemoryModel = (DefaultTableModel) virtualMemoryTable.getModel();
+        DefaultTableModel indexFilesModel = (DefaultTableModel) indexFilesTable.getModel();
         
         this.cleanMemory();
         
@@ -1312,6 +1358,15 @@ public class MiniPC extends javax.swing.JFrame {
             else
                 virtualMemoryModel.addRow(new Object[] { i , 0, " " });
         }
+        
+        for (int i = 0; i < indexFilesSize; i++) {
+            System.out.println(this.getSecondaryMemory().getIndiceArchivos().get(i));
+            System.out.println(this.getSecondaryMemory().getIndiceArchivos().get(i).getNombreArchivo());
+            System.out.println(this.getSecondaryMemory().getIndiceArchivos().get(i).getDireccionMemoriaSecundaria());
+            IndiceArchivo indiceArchivo = this.getSecondaryMemory().getIndiceArchivos().get(i);
+            indexFilesModel.addRow(new Object[] { indiceArchivo.getDireccionMemoriaSecundaria(), indiceArchivo.getNombreArchivo() });
+        }
+        
     }
     
     private void cleanTable(){
@@ -1415,6 +1470,14 @@ public class MiniPC extends javax.swing.JFrame {
 
     public JButton getNextInstructionBtn1() {
         return nextInstructionBtn1;
+    }
+
+    public JTable getTblIndexFiles() {
+        return tblIndexFiles;
+    }
+
+    public void setTblIndexFiles(JTable tblIndexFiles) {
+        this.tblIndexFiles = tblIndexFiles;
     }
 
     public void setNextInstructionBtn1(JButton nextInstructionBtn1) {
@@ -1818,7 +1881,7 @@ public class MiniPC extends javax.swing.JFrame {
     public void setTblMemory(JTable tblMemory) {
         this.tblMemory = tblMemory;
     }
-
+    
     public JTable getTblMemory2() {
         return tblMemory2;
     }
@@ -1991,7 +2054,7 @@ public class MiniPC extends javax.swing.JFrame {
                 this.setCurrentInstructionDisplay1(0);
                 this.getFileManager().setInstructions(new ArrayList<MemoryRegister>());
                 this.getController().getCpu().getMemory().freeFromMemory(this.getController().getCpu().getMemory().getBcpList().get(lastProcessIndex).getDireccionInicio(), this.getController().getCpu().getMemory().getBcpList().get(lastProcessIndex).getDireccionFin());
-                this.updateMemory(this.getController().getCpu().getMemory().getSize(), this.getSecondaryMemory().getSize(), this.getSecondaryMemory().getVirtualMemorySize());
+                this.updateMemory(this.getController().getCpu().getMemory().getSize(), this.getSecondaryMemory().getSize(), this.getSecondaryMemory().getVirtualMemorySize(), this.getSecondaryMemory().getIndiceArchivos().size());
                 this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Proceso #"+this.getController().getCpu().getMemory().getBcpList().get(lastProcessIndex).getIdProcess()+" liberado de memoria principal.");
             }
             if (this.getCurrentInstructionDisplay2() >= this.fileManager.getInstructions2().size() && this.fileManager.getInstructions2().size()>0  && this.getController2().getCpu().getMemory().getBcpList().size()>0){
@@ -2009,7 +2072,7 @@ public class MiniPC extends javax.swing.JFrame {
                 this.setCurrentInstructionDisplay2(0);
                 this.getFileManager().setInstructions2(new ArrayList<MemoryRegister>());
                 this.getController2().getCpu().getMemory().freeFromMemory(this.getController2().getCpu().getMemory().getBcpList().get(lastProcessIndex).getDireccionInicio(), this.getController().getCpu().getMemory().getBcpList().get(lastProcessIndex).getDireccionFin());
-                this.updateMemory(this.getController2().getCpu().getMemory().getSize(), this.getSecondaryMemory().getSize(), this.getSecondaryMemory().getVirtualMemorySize());
+                this.updateMemory(this.getController2().getCpu().getMemory().getSize(), this.getSecondaryMemory().getSize(), this.getSecondaryMemory().getVirtualMemorySize(), this.getSecondaryMemory().getIndiceArchivos().size());
                 this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Proceso #"+this.getController2().getCpu().getMemory().getBcpList().get(lastProcessIndex).getIdProcess()+" liberado de memoria principal.");
             }
         }
@@ -2060,9 +2123,17 @@ public class MiniPC extends javax.swing.JFrame {
                 
                 this.getSecondaryMemory().setAllocatedSize(instructionSet.size());
                 this.getSecondaryMemory().allocateMemory(instructionSet);
+                int secondaryStartIndex = this.getSecondaryMemory().getAllocationStartIndex();
                 
                 StatsSet estadisticas = new StatsSet(cpu,cpu.getCurrentTime());
                 BCP newBCP = new BCP(cpu.getMemory().getBcpList().size(),filePath,"Nuevo",cpu.getCpuName(),processStartIndex+1,cpu.getMemory().getStack(),estadisticas,processStartIndex,processEndIndex,instructionSet.size(),1);
+                
+                File file = new File(filePath);
+                String fileName = file.getName();
+                
+                IndiceArchivo indiceArchivo = new IndiceArchivo(fileName,secondaryStartIndex);
+                System.out.println(indiceArchivo);
+                this.getSecondaryMemory().getIndiceArchivos().add(indiceArchivo);
                 
                 System.out.println("------------------------------------");
                 System.out.println(newBCP.getAc());
@@ -2079,8 +2150,11 @@ public class MiniPC extends javax.swing.JFrame {
                 System.out.println(newBCP.getTamanoProceso());
                 System.out.println("------------------------------------");
                 
-                newBCP.setEstadoActual("Preparado");
-                cpu.getMemory().getBcpList().add(newBCP);
+                cpu.getMemory().getJobQueue().add(newBCP);
+                BCP loadBCP = cpu.getMemory().getJobQueue().peek();
+                
+                loadBCP.setEstadoActual("Preparado");
+                cpu.getMemory().getBcpList().add(loadBCP);
                 
                 MemoryRegister currentInstruction = instructions.get(0);
                 controller.getCpu().setInstructionRegister(currentInstruction.getAsmInstructionString());
@@ -2093,7 +2167,7 @@ public class MiniPC extends javax.swing.JFrame {
                 this.updateProcesses();
                 this.setArchivoAbierto(true);
                 this.getConfigurarMemoriaBtn().setEnabled(false);
-                this.updateMemory(this.getController().getCpu().getMemory().getSize(), this.getSecondaryMemory().getSize(), this.getSecondaryMemory().getVirtualMemorySize());
+                this.updateMemory(this.getController().getCpu().getMemory().getSize(), this.getSecondaryMemory().getSize(), this.getSecondaryMemory().getVirtualMemorySize(), this.getSecondaryMemory().getIndiceArchivos().size());
             }
 
         }
@@ -2258,6 +2332,7 @@ public class MiniPC extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Lbl_memoria;
     private javax.swing.JLabel Lbl_memoria2;
+    private javax.swing.JLabel Lbl_memoria3;
     private javax.swing.JLabel Lbl_memoria4;
     private javax.swing.JLabel Lbl_memoria5;
     private javax.swing.JLabel Lbl_memoria6;
@@ -2282,6 +2357,7 @@ public class MiniPC extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane6;
     private java.awt.Label label1;
     private javax.swing.JLabel lblAC;
     private javax.swing.JLabel lblAC1;
@@ -2330,6 +2406,7 @@ public class MiniPC extends javax.swing.JFrame {
     private javax.swing.JButton nextInstructionBtn;
     private javax.swing.JButton nextInstructionBtn1;
     private javax.swing.JTextPane pantalla;
+    private javax.swing.JTable tblIndexFiles;
     private javax.swing.JTable tblMainMemory;
     private javax.swing.JTable tblMemory;
     private javax.swing.JTable tblMemory2;

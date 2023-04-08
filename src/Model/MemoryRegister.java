@@ -16,11 +16,17 @@ public class MemoryRegister extends Register {
     public Integer op;
     public Integer address;
     public Integer register;
+    public String fileName = "";
     
     public MemoryRegister(Integer op, Integer register, Integer value, String valueString, String registerType) {
         super(value, valueString, registerType);
         this.op = op;
         this.register = register;
+    }
+    
+    public MemoryRegister(String fileName, int address) {
+        super(fileName);
+        this.address = address;
     }
 
     public Integer getRegister() {

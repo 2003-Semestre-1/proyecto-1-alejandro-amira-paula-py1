@@ -20,6 +20,7 @@ public class SecondaryMemory {
     int allocatedSize;
     int allocationStartIndex;
     ArrayList<BCP> bcpList = new ArrayList();
+    ArrayList<IndiceArchivo> indiceArchivos = new ArrayList<IndiceArchivo>();
     ArrayList<Optional<MemoryRegister>> memoryRegisters = new ArrayList();
     ArrayList<Optional<MemoryRegister>> virtualMemory = new ArrayList();
     
@@ -102,7 +103,6 @@ public class SecondaryMemory {
             allocationStartIndex = (int)Math.floor(Math.random() * ((maxIndex) - minIndex + 1) + minIndex);
         }
             // Se asigna la instrucción en el índice de la memoria que fue generado al azar
-            System.out.println(allocationStartIndex);
             this.setAllocationStartIndex(allocationStartIndex);
             int instructionSetIndex = 0;
             for(int i = allocationStartIndex ; i < instructionSet.size()+allocationStartIndex; i ++){
@@ -111,9 +111,15 @@ public class SecondaryMemory {
                 instructionSetIndex++;
             }
         }
-        
-        System.out.println(this.memoryRegisters);
-        System.out.println(this.memoryRegisters.size());
+
+    }
+
+    public ArrayList<IndiceArchivo> getIndiceArchivos() {
+        return indiceArchivos;
+    }
+
+    public void setIndiceArchivos(ArrayList<IndiceArchivo> indiceArchivos) {
+        this.indiceArchivos = indiceArchivos;
     }
 
     public int getSize() {
@@ -163,4 +169,5 @@ public class SecondaryMemory {
     public void setMemoryRegisters(ArrayList<Optional<MemoryRegister>> memoryRegisters) {
         this.memoryRegisters = memoryRegisters;
     }
+    
 }

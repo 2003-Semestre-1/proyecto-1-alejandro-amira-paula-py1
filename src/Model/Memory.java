@@ -65,7 +65,6 @@ public class Memory {
             allocationStartIndex = (int)Math.floor(Math.random() * ((maxIndex) - minIndex + 1) + minIndex);
         }
             // Se asigna la instrucción en el índice de la memoria que fue generado al azar
-            System.out.println(allocationStartIndex);
             this.setAllocationStartIndex(allocationStartIndex);
             int instructionSetIndex = 0;
             for(int i = allocationStartIndex ; i < instructionSet.size()+allocationStartIndex; i ++){
@@ -74,9 +73,6 @@ public class Memory {
                 instructionSetIndex++;
             }
         }
-        
-        System.out.println(this.memoryRegisters);
-        System.out.println(this.memoryRegisters.size());
     }
     
     public void freeAllMemory(){
@@ -101,8 +97,14 @@ public class Memory {
     public void setStack(Pila stack) {
         this.stack = stack;
     }
-    
-    
+
+    public Queue<BCP> getJobQueue() {
+        return jobQueue;
+    }
+
+    public void setJobQueue(Queue<BCP> jobQueue) {
+        this.jobQueue = jobQueue;
+    }
 
     public int getAllocationStartIndex() {
         return allocationStartIndex;
