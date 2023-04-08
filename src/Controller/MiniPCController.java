@@ -12,6 +12,7 @@ import Model.Memory;
 import Model.MemoryRegister;
 import View.MiniPC;
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import javax.swing.JOptionPane;
 
 /**
@@ -580,15 +581,29 @@ public class MiniPCController {
     public void pushInstruction(MiniPC miniPC, int register){
         int registerValue = miniPC.getController().getCpu().getDataRegisters().get(register-1).getValue();
         System.out.println(registerValue);
-        miniPC.getController().getCpu().getMemory().getStack().push(registerValue);
-        System.out.println("Pushed: "+miniPC.getController().getCpu().getMemory().getStack().peek());
+        try {
+            miniPC.getController().getCpu().getMemory().getStack().push(registerValue);
+            System.out.println("Pushed: "+miniPC.getController().getCpu().getMemory().getStack().peek());
+        } catch (StackOverflowError e) {
+            miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Stack overflow.");
+        } catch (EmptyStackException e) {
+           miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Empty stack.");
+        }
+        
     }
     
     public void popInstruction(MiniPC miniPC, int register){
-        int registerValue = miniPC.getController().getCpu().getMemory().getStack().pop();
-        System.out.println(registerValue);
+        int registerValue = 0;
+        try {
+            registerValue = miniPC.getController().getCpu().getMemory().getStack().pop();
+            System.out.println("Popped: "+registerValue);
+            miniPC.getController().getCpu().getDataRegisters().get(register-1).setValue(registerValue);
+        } catch (StackOverflowError e) {
+            miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Stack overflow.");
+        } catch (EmptyStackException e) {
+           miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Empty stack.");
+        }
         miniPC.getController().getCpu().getDataRegisters().get(register-1).setValue(registerValue);
-        System.out.println("Popped: "+registerValue);
     }
     
     public CPU getCpu() {

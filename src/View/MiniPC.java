@@ -18,6 +18,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.Optional;
 import java.util.Random;
 import java.util.logging.Level;
@@ -246,7 +247,7 @@ public class MiniPC extends javax.swing.JFrame {
         lblStack.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblStack.setText("Pila");
 
-        lblNumberStack.setText("0");
+        lblNumberStack.setText("-");
 
         javax.swing.GroupLayout Pnl_RegistrosLayout = new javax.swing.GroupLayout(Pnl_Registros);
         Pnl_Registros.setLayout(Pnl_RegistrosLayout);
@@ -670,7 +671,7 @@ public class MiniPC extends javax.swing.JFrame {
         lblStack2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblStack2.setText("Pila");
 
-        lblNumberStack2.setText("0");
+        lblNumberStack2.setText("-");
 
         javax.swing.GroupLayout Pnl_Registros1Layout = new javax.swing.GroupLayout(Pnl_Registros1);
         Pnl_Registros1.setLayout(Pnl_Registros1Layout);
@@ -1558,11 +1559,16 @@ public class MiniPC extends javax.swing.JFrame {
         this.getLblNumberDX().setText(this.getController().getCpu().getDataRegisters().get(3).getValue()+"");
         this.getLblNumberAL().setText(this.getController().getCpu().getDataRegisters().get(1).getLowByteValue()+"");
         this.getLblNumberAH().setText(this.getController().getCpu().getDataRegisters().get(1).getHighByteValue()+"");
-        if (this.getController().getCpu().getMemory().getStack().peek()==-1)
+        
+        String stackValue = "-";
+        try {
+            stackValue = this.getController().getCpu().getMemory().getStack().peek()+"";
+            this.getLblNumberStack().setText(stackValue);
+        } catch (EmptyStackException e) {
             this.getLblNumberStack().setText("-");
-        else
-            this.getLblNumberStack().setText(this.getController().getCpu().getMemory().getStack().peek()+"");
-        System.out.println();
+        } catch (StackOverflowError e) {
+            this.getLblNumberStack2().setText("Overflow error");
+        }
         
         this.getLblNumberAC().setText(this.getController().getCpu().getAccumulator()+"");
         if (this.getFileManager().getInstructions().size() > this.getController().getRowCount()+1){
@@ -1605,10 +1611,16 @@ public class MiniPC extends javax.swing.JFrame {
         this.getLblNumberDX2().setText(this.getController2().getCpu().getDataRegisters().get(3).getValue()+"");
         this.getLblNumberAL2().setText(this.getController2().getCpu().getDataRegisters().get(1).getLowByteValue()+"");
         this.getLblNumberAH2().setText(this.getController2().getCpu().getDataRegisters().get(1).getHighByteValue()+"");
-        if (this.getController2().getCpu().getMemory().getStack().peek()==-1)
+        
+        stackValue = "-";
+        try {
+            stackValue = this.getController2().getCpu().getMemory().getStack().peek()+"";
+            this.getLblNumberStack2().setText(stackValue);
+        } catch (EmptyStackException e) {
             this.getLblNumberStack2().setText("-");
-        else
-            this.getLblNumberStack2().setText(this.getController2().getCpu().getMemory().getStack().peek()+"");
+        } catch (StackOverflowError e) {
+            this.getLblNumberStack2().setText("Overflow error");
+        }
         
         this.getLblNumberAC2().setText(this.getController2().getCpu().getAccumulator()+"");
         if (this.getFileManager().getInstructions2().size() > this.getController().getRowCount()+1){
