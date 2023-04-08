@@ -53,9 +53,8 @@ public class SecondaryMemory {
     }
     
     public void freeFromMemory(int startIndex, int endIndex){
-        memoryRegisters.subList(startIndex, endIndex).clear();
         for(int i = startIndex ; i <= endIndex ; i ++){
-            memoryRegisters.add(Optional.empty());                 
+            memoryRegisters.set(i, Optional.empty());
         }
         
     }
@@ -69,9 +68,8 @@ public class SecondaryMemory {
     }
     
     public void freeFromVirtualMemory(int startIndex, int endIndex){
-        virtualMemory.subList(startIndex, endIndex).clear();
         for(int i = startIndex ; i <= endIndex ; i ++){
-            virtualMemory.add(Optional.empty());                 
+            virtualMemory.set(i, Optional.empty());              
         }
         
     }

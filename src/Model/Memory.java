@@ -88,9 +88,8 @@ public class Memory {
     }
     
     public void freeFromMemory(int startIndex, int endIndex){
-        memoryRegisters.subList(startIndex, endIndex).clear();
         for(int i = startIndex ; i <= endIndex ; i ++){
-            memoryRegisters.add(Optional.empty());                 
+            memoryRegisters.set(i, Optional.empty());
         }
         
     }

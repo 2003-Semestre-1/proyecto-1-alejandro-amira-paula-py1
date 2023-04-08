@@ -1990,6 +1990,9 @@ public class MiniPC extends javax.swing.JFrame {
                 this.getController().getCpu().getMemory().getBcpList().get(lastProcessIndex).getInformacionContable().setDurationTime(endTime-startTime);
                 this.setCurrentInstructionDisplay1(0);
                 this.getFileManager().setInstructions(new ArrayList<MemoryRegister>());
+                this.getController().getCpu().getMemory().freeFromMemory(this.getController().getCpu().getMemory().getBcpList().get(lastProcessIndex).getDireccionInicio(), this.getController().getCpu().getMemory().getBcpList().get(lastProcessIndex).getDireccionFin());
+                this.updateMemory(this.getController().getCpu().getMemory().getSize(), this.getSecondaryMemory().getSize(), this.getSecondaryMemory().getVirtualMemorySize());
+                this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Proceso #"+this.getController().getCpu().getMemory().getBcpList().get(lastProcessIndex).getIdProcess()+" liberado de memoria principal.");
             }
             if (this.getCurrentInstructionDisplay2() >= this.fileManager.getInstructions2().size() && this.fileManager.getInstructions2().size()>0  && this.getController2().getCpu().getMemory().getBcpList().size()>0){
                 int lastProcessIndex = 0;
@@ -2005,6 +2008,9 @@ public class MiniPC extends javax.swing.JFrame {
                 this.getController2().getCpu().getMemory().getBcpList().get(lastProcessIndex).getInformacionContable().setDurationTime(endTime-startTime);
                 this.setCurrentInstructionDisplay2(0);
                 this.getFileManager().setInstructions2(new ArrayList<MemoryRegister>());
+                this.getController2().getCpu().getMemory().freeFromMemory(this.getController2().getCpu().getMemory().getBcpList().get(lastProcessIndex).getDireccionInicio(), this.getController().getCpu().getMemory().getBcpList().get(lastProcessIndex).getDireccionFin());
+                this.updateMemory(this.getController2().getCpu().getMemory().getSize(), this.getSecondaryMemory().getSize(), this.getSecondaryMemory().getVirtualMemorySize());
+                this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Proceso #"+this.getController2().getCpu().getMemory().getBcpList().get(lastProcessIndex).getIdProcess()+" liberado de memoria principal.");
             }
         }
         else
