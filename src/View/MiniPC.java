@@ -2094,8 +2094,8 @@ public class MiniPC extends javax.swing.JFrame {
             fileManager.loadDataRegisters();
             ArrayList<MemoryRegister> instructionSet = fileManager.loadFileInstructions(filePath,cpuEscogido);
 
-            if (instructionSet.size() > 90){
-                JOptionPane.showMessageDialog (null, "Hay más de 90 instrucciones por lo que no hay suficiente memoria para correrlas.", "Error: No hay suficiente memoria", JOptionPane.ERROR_MESSAGE);
+            if (instructionSet.size() > this.getSecondaryMemory().getSize()){
+                this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Error: No hay suficiente memoria para almacenar el archivo");
                 return;
             }
             else if (instructionSet != null){
@@ -2113,24 +2113,27 @@ public class MiniPC extends javax.swing.JFrame {
                     this.getFileManager().setInstructions2(instructionSet);
                     instructions = this.getFileManager().getInstructions2();
                 }
-
+                
                 Memory memory = controller.getCpu().getMemory();
                 memory.setAllocatedSize(memory.getAllocatedSize()+instructionSet.size());
                 memory.allocateMemory(instructionSet);
                 int processStartIndex = memory.getAllocationStartIndex();
                 int processEndIndex = processStartIndex+instructionSet.size()-1;
-                CPU cpu = controller.getCpu();
                 
+                // Cargar a memoria secundaria
                 this.getSecondaryMemory().setAllocatedSize(instructionSet.size());
                 this.getSecondaryMemory().allocateMemory(instructionSet);
                 int secondaryStartIndex = this.getSecondaryMemory().getAllocationStartIndex();
                 
+                // Se crea el proceso y se le asigna el ID de proceso
+                CPU cpu = controller.getCpu();
                 StatsSet estadisticas = new StatsSet(cpu,cpu.getCurrentTime());
                 BCP newBCP = new BCP(cpu.getMemory().getBcpList().size(),filePath,"Nuevo",cpu.getCpuName(),processStartIndex+1,cpu.getMemory().getStack(),estadisticas,processStartIndex,processEndIndex,instructionSet.size(),1);
                 
                 File file = new File(filePath);
                 String fileName = file.getName();
                 
+                // Se agrega el indice del archivo a la memoria secundaria
                 IndiceArchivo indiceArchivo = new IndiceArchivo(fileName,secondaryStartIndex);
                 System.out.println(indiceArchivo);
                 this.getSecondaryMemory().getIndiceArchivos().add(indiceArchivo);
@@ -2150,9 +2153,11 @@ public class MiniPC extends javax.swing.JFrame {
                 System.out.println(newBCP.getTamanoProceso());
                 System.out.println("------------------------------------");
                 
-                cpu.getMemory().getJobQueue().add(newBCP);
-                BCP loadBCP = cpu.getMemory().getJobQueue().peek();
+                // Se agrega el proceso a la cola de trabajo
+                cpu.getMemory().getPlanificadorTrabajos().getColaTrabajos().add(newBCP);
+                BCP loadBCP = cpu.getMemory().getPlanificadorTrabajos().getColaTrabajos().peek();
                 
+                // El planificador elige el proceso que se ejecutará y lo asigna a un CPU
                 loadBCP.setEstadoActual("Preparado");
                 cpu.getMemory().getBcpList().add(loadBCP);
                 

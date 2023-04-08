@@ -8,7 +8,6 @@ package Model;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Optional;
-import java.util.Queue;
 import java.util.Stack;
 import javax.swing.JOptionPane;
 
@@ -26,7 +25,7 @@ public class Memory {
     int allocatedSize;
     int allocationStartIndex;
     ArrayList<BCP> bcpList = new ArrayList();
-    Queue<BCP> jobQueue = new LinkedList<>();
+    PlanificadorTrabajos planificadorTrabajos = new PlanificadorTrabajos();
     Pila stack = new Pila();
     
     public Memory(int size) {
@@ -98,14 +97,6 @@ public class Memory {
         this.stack = stack;
     }
 
-    public Queue<BCP> getJobQueue() {
-        return jobQueue;
-    }
-
-    public void setJobQueue(Queue<BCP> jobQueue) {
-        this.jobQueue = jobQueue;
-    }
-
     public int getAllocationStartIndex() {
         return allocationStartIndex;
     }
@@ -146,6 +137,14 @@ public class Memory {
 
     public void setBcpList(ArrayList<BCP> bcpList) {
         this.bcpList = bcpList;
+    }
+
+    public PlanificadorTrabajos getPlanificadorTrabajos() {
+        return planificadorTrabajos;
+    }
+
+    public void setPlanificadorTrabajos(PlanificadorTrabajos planificadorTrabajos) {
+        this.planificadorTrabajos = planificadorTrabajos;
     }
     
     
