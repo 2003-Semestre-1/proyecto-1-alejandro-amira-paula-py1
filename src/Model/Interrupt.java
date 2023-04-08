@@ -69,6 +69,8 @@ public class Interrupt {
         
         this.getCpu().setProgramaTerminado(true);
         */
+        BCP process = miniPC.findCurrentProcess(cpu);
+        process.setEstadoActual("Finalizado");
         String textPantalla = miniPC.getPantalla().getText();
         textPantalla = textPantalla + "\n" + "Programa terminado.";
         miniPC.getPantalla().setText(textPantalla);
