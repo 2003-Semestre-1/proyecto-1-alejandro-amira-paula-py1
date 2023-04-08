@@ -1579,6 +1579,7 @@ public class MiniPC extends javax.swing.JFrame {
         
         BCP cpu1CurrentProcess = this.findCurrentProcess(this.getController().getCpu());
         BCP cpu2CurrentProcess = this.findCurrentProcess(this.getController2().getCpu());
+        
         try{
             instructionCPU1 = (MemoryRegister)this.getController().getCpu().getMemory().getMemoryRegisters().get(cpu1CurrentProcess.getProgramCounter()).get();
             asmString1 = instructionCPU1.getAsmInstructionString();
@@ -1708,6 +1709,19 @@ public class MiniPC extends javax.swing.JFrame {
         this.setCountTimeTable(this.getCountTimeTable()+1);
         this.getController().getCpu().setNumberExecutedInstructions(this.getController().getCpu().getNumberExecutedInstructions()+1);
         this.getController2().getCpu().setNumberExecutedInstructions(this.getController2().getCpu().getNumberExecutedInstructions()+1);
+        
+        if (this.getTimeDifference1()>1){
+         
+            cpu1CurrentProcess.setProgramCounter(cpu1CurrentProcess.getProgramCounter()-1);
+        }
+        
+        if (this.getTimeDifference2()>1){
+         
+            cpu2CurrentProcess.setProgramCounter(cpu2CurrentProcess.getProgramCounter()-1);
+        }
+        
+        this.setTimeDifference1(this.getTimeDifference1()-1);
+        this.setTimeDifference2(this.getTimeDifference2()-1);
         
     }
     
@@ -2052,6 +2066,8 @@ public class MiniPC extends javax.swing.JFrame {
                         int timeBefore = this.getController().getCpu().getCurrentTime();
                         this.getController().executeInstruction(instructionCPU1.getOp(),instructionCPU1.getRegister(),instructionCPU1.getValue(),instructionCPU1.getStringValue(),this);
                         int timeAfter = this.getController().getCpu().getCurrentTime();
+                        System.out.println("TB: "+timeBefore);
+                        System.out.println("TA: "+timeAfter);
                         if (this.getTimeDifference1()==0)
                             this.setTimeDifference1(timeAfter-timeBefore);
                         this.getController().getCpu().setProgramCounter(cpu1CurrentProcess.getProgramCounter()+1);
@@ -2066,6 +2082,8 @@ public class MiniPC extends javax.swing.JFrame {
                         int timeBefore = this.getController2().getCpu().getCurrentTime();
                         this.getController2().executeInstruction(instructionCPU2.getOp(),instructionCPU2.getRegister(),instructionCPU2.getValue(),instructionCPU2.getStringValue(),this);
                         int timeAfter = this.getController2().getCpu().getCurrentTime();
+                        System.out.println("TB: "+timeBefore);
+                        System.out.println("TA: "+timeAfter);
                         if (this.getTimeDifference2()==0)
                             this.setTimeDifference2(timeAfter-timeBefore);
                         this.getController2().getCpu().setProgramCounter(cpu2CurrentProcess.getProgramCounter()+1);
