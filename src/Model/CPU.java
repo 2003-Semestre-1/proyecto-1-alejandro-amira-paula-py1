@@ -29,6 +29,7 @@ public class CPU {
     int currentTime = 0;
     int numberExecutedInstructions = 0;
     boolean jumpFlag = false;
+    boolean repeatFlag = false;
     String jumpString = "";
     
     // En el constructor se toma solamente la memoria como parámetro
@@ -68,6 +69,16 @@ public class CPU {
         
     }
 
+    public boolean isRepeatFlag() {
+        return repeatFlag;
+    }
+
+    public void setRepeatFlag(boolean repeatFlag) {
+        this.repeatFlag = repeatFlag;
+    }
+
+    
+    
     public boolean isProgramaTerminado() {
         return programaTerminado;
     }

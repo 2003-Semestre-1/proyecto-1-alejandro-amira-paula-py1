@@ -1693,6 +1693,24 @@ public class MiniPC extends javax.swing.JFrame {
         this.getController().getCpu().setNumberExecutedInstructions(this.getController().getCpu().getNumberExecutedInstructions()+1);
         this.getController2().getCpu().setNumberExecutedInstructions(this.getController2().getCpu().getNumberExecutedInstructions()+1);
         
+        if (this.getTimeDifference1()>1){
+         
+            cpu1CurrentProcess.setProgramCounter(cpu1CurrentProcess.getProgramCounter()-1);
+        }
+        
+        if (this.getTimeDifference2()>1){
+         
+            cpu2CurrentProcess.setProgramCounter(cpu2CurrentProcess.getProgramCounter()-1);
+        }
+        
+        this.setTimeDifference1(this.getTimeDifference1()-1);
+        this.setTimeDifference2(this.getTimeDifference2()-1);
+        if (this.getTimeDifference1()==0)
+            this.getController().getCpu().setRepeatFlag(false);
+        if (this.getTimeDifference2()==0)
+            this.getController2().getCpu().setRepeatFlag(false);
+                            
+        
     }
 
     public JLabel getLblValueZeroFlag() {
@@ -2130,11 +2148,14 @@ public class MiniPC extends javax.swing.JFrame {
                     try {
                         int timeBefore = this.getController().getCpu().getCurrentTime();
                         System.out.println("TB1: "+timeBefore);
-                        this.getController().executeInstruction(instructionCPU1.getOp(),instructionCPU1.getRegister(),instructionCPU1.getValue(),instructionCPU1.getStringValue(),this);
+                        if (!this.getController().getCpu().isRepeatFlag())
+                            this.getController().executeInstruction(instructionCPU1.getOp(),instructionCPU1.getRegister(),instructionCPU1.getValue(),instructionCPU1.getStringValue(),this);
                         int timeAfter = this.getController().getCpu().getCurrentTime();
                         System.out.println("TA1: "+timeAfter);
                         if (this.getTimeDifference1()==0)
                             this.setTimeDifference1(timeAfter-timeBefore);
+                        if (timeAfter-timeBefore>1)
+                            this.getController().getCpu().setRepeatFlag(true);
                         this.getController().getCpu().setProgramCounter(cpu1CurrentProcess.getProgramCounter()+1);
                     } catch (Exception ex) {
                         Logger.getLogger(MiniPC.class.getName()).log(Level.SEVERE, null, ex);
@@ -2146,11 +2167,14 @@ public class MiniPC extends javax.swing.JFrame {
                     try {
                         int timeBefore = this.getController2().getCpu().getCurrentTime();
                         System.out.println("TB2: "+timeBefore);
-                        this.getController2().executeInstruction(instructionCPU2.getOp(),instructionCPU2.getRegister(),instructionCPU2.getValue(),instructionCPU2.getStringValue(),this);
+                        if (!this.getController2().getCpu().isRepeatFlag())
+                            this.getController2().executeInstruction(instructionCPU2.getOp(),instructionCPU2.getRegister(),instructionCPU2.getValue(),instructionCPU2.getStringValue(),this);
                         int timeAfter = this.getController2().getCpu().getCurrentTime();
                         System.out.println("TA2: "+timeAfter);
                         if (this.getTimeDifference2()==0)
                             this.setTimeDifference2(timeAfter-timeBefore);
+                        if (timeAfter-timeBefore>1)
+                            this.getController2().getCpu().setRepeatFlag(true);
                         this.getController2().getCpu().setProgramCounter(cpu2CurrentProcess.getProgramCounter()+1);
                     } catch (Exception ex) {
                         Logger.getLogger(MiniPC.class.getName()).log(Level.SEVERE, null, ex);
