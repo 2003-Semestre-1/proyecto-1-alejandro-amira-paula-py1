@@ -199,9 +199,9 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="Pnl_Registros1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="Lbl_memoria2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="Lbl_memoria3" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="Lbl_memoria2" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -317,16 +317,18 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblAX" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNumberAX" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblBX" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNumberBX" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblCX" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNumberCX" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="lblStack" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblNumberStack" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblAX" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblNumberAX" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblBX" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblNumberBX" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblCX" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblNumberCX" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
@@ -959,16 +961,18 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblAX1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNumberAX2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblBX1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNumberBX2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblCX1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNumberCX2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="lblStack2" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblNumberStack2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblAX1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblNumberAX2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblBX1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblNumberBX2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblCX1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblNumberCX2" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
@@ -983,14 +987,14 @@
                       <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                              <Component id="lblZeroFlag2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblValueZeroFlag2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="lblAH1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblNumberAH2" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblDX1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblNumberDX2" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" alignment="3" groupAlignment="3" attributes="0">
-                                  <Component id="lblZeroFlag2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblValueZeroFlag2" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
                           </Group>
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="lblAL1" alignment="3" min="-2" max="-2" attributes="0"/>

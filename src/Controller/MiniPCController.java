@@ -412,34 +412,34 @@ public class MiniPCController {
         if (this.getCpu().isZeroFlag()){
             
             BCP process =  miniPC.findCurrentProcess(this.getCpu());
-            int currentAddress = process.getProgramCounter()-1;
-            int newAddress = process.getProgramCounter()+offset;
+        int currentAddress = process.getProgramCounter()-1;
+        int newAddress = process.getProgramCounter()+offset;
         
-            if (offset > 0)
-                newAddress = newAddress;
-            else if (offset < 0)
-                newAddress = newAddress - 2;
+        if (offset > 0)
+            newAddress = newAddress + 1;
+        else if (offset < 0)
+            newAddress = newAddress - 1;
         
-            int maxRange = process.getDireccionFin();
-            int minRange = process.getDireccionInicio();
+        int maxRange = process.getDireccionFin();
+        int minRange = process.getDireccionInicio();
         
-            if (offset > 0 && newAddress <= maxRange){
-                process.setProgramCounter(newAddress);
-                this.getCpu().setJumpFlag(true);
-                this.getCpu().setJumpString(this.getCpu().getMemory().getMemoryRegisters().get(currentAddress+1).get().asmInstructionString);
-            }
-            else if (offset > 0 && newAddress > maxRange){
-                miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Jump positivo fuera de rango.");
-            }
+        if (offset > 0 && newAddress <= maxRange){
+            process.setProgramCounter(newAddress);
+            this.getCpu().setJumpFlag(true);
+            this.getCpu().setJumpString(this.getCpu().getMemory().getMemoryRegisters().get(currentAddress+1).get().asmInstructionString);
+        }
+        else if (offset > 0 && newAddress > maxRange){
+            miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Jump positivo fuera de rango.");
+        }
         
-            if (offset < 0 && newAddress >= minRange){
-                process.setProgramCounter(newAddress);
-                this.getCpu().setJumpFlag(true);
-                this.getCpu().setJumpString(this.getCpu().getMemory().getMemoryRegisters().get(currentAddress+1).get().asmInstructionString);
-            }
-            else if (offset < 0 && newAddress < minRange){
-                miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Jump negativo fuera de rango.");
-            }
+        if (offset < 0 && newAddress >= minRange){
+            process.setProgramCounter(newAddress);
+            this.getCpu().setJumpFlag(true);
+            this.getCpu().setJumpString(this.getCpu().getMemory().getMemoryRegisters().get(currentAddress+1).get().asmInstructionString);
+        }
+        else if (offset < 0 && newAddress < minRange){
+            miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Jump negativo fuera de rango.");
+        }
             
         }
     }
@@ -448,34 +448,34 @@ public class MiniPCController {
         if (!this.getCpu().isZeroFlag()){
             
             BCP process =  miniPC.findCurrentProcess(this.getCpu());
-            int currentAddress = process.getProgramCounter()-1;
-            int newAddress = process.getProgramCounter()+offset;
+        int currentAddress = process.getProgramCounter()-1;
+        int newAddress = process.getProgramCounter()+offset;
         
-            if (offset > 0)
-                newAddress = newAddress;
-            else if (offset < 0)
-                newAddress = newAddress - 2;
+        if (offset > 0)
+            newAddress = newAddress + 1;
+        else if (offset < 0)
+            newAddress = newAddress - 1;
         
-            int maxRange = process.getDireccionFin();
-            int minRange = process.getDireccionInicio();
+        int maxRange = process.getDireccionFin();
+        int minRange = process.getDireccionInicio();
         
-            if (offset > 0 && newAddress <= maxRange){
-                process.setProgramCounter(newAddress);
-                this.getCpu().setJumpFlag(true);
-                this.getCpu().setJumpString(this.getCpu().getMemory().getMemoryRegisters().get(currentAddress+1).get().asmInstructionString);
-            }
-            else if (offset > 0 && newAddress > maxRange){
-                miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Jump positivo fuera de rango.");
-            }
+        if (offset > 0 && newAddress <= maxRange){
+            process.setProgramCounter(newAddress);
+            this.getCpu().setJumpFlag(true);
+            this.getCpu().setJumpString(this.getCpu().getMemory().getMemoryRegisters().get(currentAddress+1).get().asmInstructionString);
+        }
+        else if (offset > 0 && newAddress > maxRange){
+            miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Jump positivo fuera de rango.");
+        }
         
-            if (offset < 0 && newAddress >= minRange){
-                process.setProgramCounter(newAddress);
-                this.getCpu().setJumpFlag(true);
-                this.getCpu().setJumpString(this.getCpu().getMemory().getMemoryRegisters().get(currentAddress+1).get().asmInstructionString);
-            }
-            else if (offset < 0 && newAddress < minRange){
-                miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Jump negativo fuera de rango.");
-            }
+        if (offset < 0 && newAddress >= minRange){
+            process.setProgramCounter(newAddress);
+            this.getCpu().setJumpFlag(true);
+            this.getCpu().setJumpString(this.getCpu().getMemory().getMemoryRegisters().get(currentAddress+1).get().asmInstructionString);
+        }
+        else if (offset < 0 && newAddress < minRange){
+            miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Jump negativo fuera de rango.");
+        }
             
         }
     }

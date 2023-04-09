@@ -321,16 +321,17 @@ public class MiniPC extends javax.swing.JFrame {
             Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Pnl_RegistrosLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblAX)
-                    .addComponent(lblNumberAX)
-                    .addComponent(lblBX)
-                    .addComponent(lblNumberBX)
-                    .addComponent(lblCX)
-                    .addComponent(lblNumberCX)
+                .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblStack)
-                        .addComponent(lblNumberStack)))
+                        .addComponent(lblNumberStack))
+                    .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblAX)
+                        .addComponent(lblNumberAX)
+                        .addComponent(lblBX)
+                        .addComponent(lblNumberBX)
+                        .addComponent(lblCX)
+                        .addComponent(lblNumberCX)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(Pnl_RegistrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPC)
@@ -757,16 +758,17 @@ public class MiniPC extends javax.swing.JFrame {
             Pnl_Registros1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Pnl_Registros1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(Pnl_Registros1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblAX1)
-                    .addComponent(lblNumberAX2)
-                    .addComponent(lblBX1)
-                    .addComponent(lblNumberBX2)
-                    .addComponent(lblCX1)
-                    .addComponent(lblNumberCX2)
+                .addGroup(Pnl_Registros1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Pnl_Registros1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblStack2)
-                        .addComponent(lblNumberStack2)))
+                        .addComponent(lblNumberStack2))
+                    .addGroup(Pnl_Registros1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblAX1)
+                        .addComponent(lblNumberAX2)
+                        .addComponent(lblBX1)
+                        .addComponent(lblNumberBX2)
+                        .addComponent(lblCX1)
+                        .addComponent(lblNumberCX2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(Pnl_Registros1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPC1)
@@ -778,13 +780,13 @@ public class MiniPC extends javax.swing.JFrame {
                 .addGap(7, 7, 7)
                 .addGroup(Pnl_Registros1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Pnl_Registros1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblZeroFlag2)
+                        .addComponent(lblValueZeroFlag2))
+                    .addGroup(Pnl_Registros1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblAH1)
                         .addComponent(lblNumberAH2)
                         .addComponent(lblDX1)
-                        .addComponent(lblNumberDX2)
-                        .addGroup(Pnl_Registros1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblZeroFlag2)
-                            .addComponent(lblValueZeroFlag2)))
+                        .addComponent(lblNumberDX2))
                     .addGroup(Pnl_Registros1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblAL1)
                         .addComponent(lblNumberAL2)))
@@ -1244,9 +1246,9 @@ public class MiniPC extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Pnl_Registros1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Lbl_memoria2)
-                            .addComponent(Lbl_memoria3))))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Lbl_memoria3, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Lbl_memoria2))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Lbl_memoria6)
@@ -1562,6 +1564,11 @@ public class MiniPC extends javax.swing.JFrame {
         MemoryRegister instructionCPU1 = null;
         MemoryRegister instructionCPU2 = null;
         
+        System.out.println("TD1: "+this.getTimeDifference1());
+        System.out.println("TD2: "+this.getTimeDifference2());
+        System.out.println("RF1: "+this.getController().getCpu().isRepeatFlag());      
+        System.out.println("RF2: "+this.getController2().getCpu().isRepeatFlag());  
+        
         BCP cpu1CurrentProcess = this.findCurrentProcess(this.getController().getCpu());
         BCP cpu2CurrentProcess = this.findCurrentProcess(this.getController2().getCpu());
         
@@ -1708,6 +1715,11 @@ public class MiniPC extends javax.swing.JFrame {
         this.getController().getCpu().setNumberExecutedInstructions(this.getController().getCpu().getNumberExecutedInstructions()+1);
         this.getController2().getCpu().setNumberExecutedInstructions(this.getController2().getCpu().getNumberExecutedInstructions()+1);
         
+        System.out.println("TD1: "+this.getTimeDifference1());
+        System.out.println("TD2: "+this.getTimeDifference2());
+        System.out.println("RF1: "+this.getController().getCpu().isRepeatFlag());      
+        System.out.println("RF2: "+this.getController2().getCpu().isRepeatFlag());  
+        
         if (this.getTimeDifference1()>1){
          
             cpu1CurrentProcess.setProgramCounter(cpu1CurrentProcess.getProgramCounter()-1);
@@ -1718,13 +1730,22 @@ public class MiniPC extends javax.swing.JFrame {
             cpu2CurrentProcess.setProgramCounter(cpu2CurrentProcess.getProgramCounter()-1);
         }
         
+        System.out.println("TD1: "+this.getTimeDifference1());
+        System.out.println("TD2: "+this.getTimeDifference2());
+        System.out.println("RF1: "+this.getController().getCpu().isRepeatFlag());      
+        System.out.println("RF2: "+this.getController2().getCpu().isRepeatFlag());  
+        
         this.setTimeDifference1(this.getTimeDifference1()-1);
         this.setTimeDifference2(this.getTimeDifference2()-1);
         if (this.getTimeDifference1()==0)
             this.getController().getCpu().setRepeatFlag(false);
         if (this.getTimeDifference2()==0)
             this.getController2().getCpu().setRepeatFlag(false);
-                            
+        
+        System.out.println("TD1: "+this.getTimeDifference1());
+        System.out.println("TD2: "+this.getTimeDifference2());
+        System.out.println("RF1: "+this.getController().getCpu().isRepeatFlag());      
+        System.out.println("RF2: "+this.getController2().getCpu().isRepeatFlag());    
         
     }
 
@@ -2308,6 +2329,18 @@ public class MiniPC extends javax.swing.JFrame {
             this.cleanMemory();
             this.getPantalla().setText("");
             this.getConfigurarMemoriaBtn().setEnabled(true);
+            this.setTimeDifference1(0);
+            this.setTimeDifference2(0);
+            this.getController().getCpu().setRepeatFlag(false);
+            this.getController().getCpu().setJumpFlag(false);
+            this.getController().getCpu().setZeroFlag(false);
+            this.getController().getCpu().setJumpString("");
+            this.getController().getCpu().setProgramCounter(0);
+            this.getController2().getCpu().setRepeatFlag(false);
+            this.getController2().getCpu().setJumpFlag(false);
+            this.getController2().getCpu().setZeroFlag(false);
+            this.getController2().getCpu().setJumpString("");
+            this.getController2().getCpu().setProgramCounter(0);
         }
         
     }//GEN-LAST:event_cleanTableBtnActionPerformed
