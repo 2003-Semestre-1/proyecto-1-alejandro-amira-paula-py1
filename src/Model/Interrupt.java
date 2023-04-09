@@ -58,8 +58,7 @@ public class Interrupt {
     public void interrupt20H(ArrayList<BCP> bcpList, MiniPC miniPC){
         
 
-        BCP process = miniPC.findCurrentProcess(cpu);
-        process.setEstadoActual("Finalizado");
+        cpu.setProgramaTerminado(true);
         String textPantalla = miniPC.getPantalla().getText();
         textPantalla = textPantalla + "\n" + "Programa terminado.";
         miniPC.getPantalla().setText(textPantalla);
@@ -78,14 +77,15 @@ public class Interrupt {
     public void interrupt09H(MiniPC miniPC) throws InterruptedException{
         miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Escriba un valor entre 0-255.");
         
-        int lastProcessIndex = 0;
-        for(int i = 0 ; i < this.getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size() ; i ++){
-            lastProcessIndex = i;
-        }
-        this.getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(lastProcessIndex).setEstadoActual("En espera");
+        BCP process = miniPC.findCurrentProcess(cpu);
+        process.setEstadoActual("En espera");
+        System.out.println(process.estadoActual);
+        System.out.println(process.idProcess);
+        System.out.println(process.cpuName);
+        System.out.println(process.nameProcess);
         
-        miniPC.getTblProcesses().setValueAt("En espera", lastProcessIndex, 2);
-        
+        miniPC.updateProcesses();
+        miniPC.getTblProcesses().setValueAt("En espera", process.getIdProcess(), 2);
         miniPC.setWaitingForInput(true);
         miniPC.getTecladoTxtField().setEditable(true);
     }

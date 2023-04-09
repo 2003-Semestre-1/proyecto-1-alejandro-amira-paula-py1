@@ -79,15 +79,14 @@ public class SecondaryMemory {
         // Este método asigna las instrucciones recibidas a la memoria
         // Recibe un set de instrucciones de tipo ArrayList<MemoryRegister>
         
-        // Se genera un índice random donde se empezará a asignar la memoria, no puede ser menor a 10 ni menor a 511
-        // Porque los primeros 10 indices son de archivos del sistema y el tamano de la memoria es 512
+        // Se genera un índice random donde se empezará a asignar la memoria
         int minIndex = 10;
         int maxIndex = size-1;
         int allocationStartIndex = (int)Math.floor(Math.random() * ((maxIndex) - minIndex + 1) + minIndex);
         
-        // Si se reciben 90 instrucciones entonces el índice siempre será 10 para que quepan en la memoria
-        if (instructionSet.size() == 90){
-            allocationStartIndex = 10;
+        // Si se reciben la cantidad de instrucciones igual al tamano de la memoria secundaria entonces el índice siempre será 0 para que quepan en la memoria
+        if (instructionSet.size() == this.getSize()){
+            allocationStartIndex = 0;
             this.setAllocationStartIndex(allocationStartIndex);
             int instructionSetIndex = 0;
             for(int i = allocationStartIndex ; i < instructionSet.size()+allocationStartIndex; i ++){

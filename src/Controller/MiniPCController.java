@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.BCP;
 import Model.CPU;
 import Model.DataRegister;
 import Model.Interrupt;
@@ -44,11 +45,8 @@ public class MiniPCController {
         System.out.println("value: "+value);
         System.out.println("valueString: "+valueString);
          
-        int lastProcessIndex = 0;
-            for(int i = 0 ; i < this.getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size() ; i ++){
-                lastProcessIndex = i;
-       }
-        this.getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(lastProcessIndex).setEstadoActual("Ejecución");
+        BCP execProcess = miniPC.findCurrentProcess(cpu);
+        execProcess.setEstadoActual("Ejecución");
         
         switch(op) {
         case 1:

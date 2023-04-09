@@ -1738,7 +1738,6 @@ public class MiniPC extends javax.swing.JFrame {
     
     public void updateProcesses() {
         for(int i = 0 ; i < this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size() ; i ++){
-            System.out.print("AAAAAAAAAAAAAAAAAAAAAAA"+this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getIdProcess()+"\n");
             this.getTblProcesses().setValueAt(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getIdProcess(), i, 0);
             
             String path = this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getNameProcess();
@@ -1746,6 +1745,7 @@ public class MiniPC extends javax.swing.JFrame {
             String fileName = file.getName();
             
             this.getTblProcesses().setValueAt(fileName, i, 1);
+            System.out.print(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getEstadoActual());
             this.getTblProcesses().setValueAt(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getEstadoActual(), i, 2);
             this.getTblProcesses().setValueAt(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getCpuName(), i, 3);
         }
@@ -2000,6 +2000,36 @@ public class MiniPC extends javax.swing.JFrame {
         return size;
     }
     
+    public void loadMemory(String filePath, ArrayList<MemoryRegister> instructionSet, int cpuEscogido){
+        // Cargar a memoria secundaria
+        this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Archivo cargado en la memoria secundaria.");
+                this.getSecondaryMemory().setAllocatedSize(instructionSet.size());
+                this.getSecondaryMemory().allocateMemory(instructionSet);
+                int secondaryStartIndex = this.getSecondaryMemory().getAllocationStartIndex();
+                int secondaryEndIndex = secondaryStartIndex+instructionSet.size()-1;
+                
+                // Se crea el proceso y se le asigna el ID de proceso
+                BCP newBCP = new BCP(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size(),filePath,"Nuevo",secondaryStartIndex+1,this.getController().getCpu().getMemory().getStack(),secondaryStartIndex,secondaryEndIndex,instructionSet.size(),1);
+                // Se agrega el indice del archivo a la memoria secundaria
+                File file = new File(filePath);
+                String fileName = file.getName();
+                IndiceArchivo indiceArchivo = new IndiceArchivo(fileName,secondaryStartIndex,secondaryEndIndex);
+                this.getSecondaryMemory().getIndiceArchivos().add(indiceArchivo);
+                
+                // Se agrega el proceso a la cola de trabajo
+                this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Archivo agregado a cola de trabajo.");
+                this.getController().getCpu().getMemory().getPlanificadorTrabajos().getColaTrabajos().add(newBCP);
+                
+                // Se carga en memoria principal el proceso escogido por el planificador de trabajos
+                this.getController().getCpu().getMemory().getPlanificadorTrabajos().planificarTrabajo(this, instructionSet, cpuEscogido);
+                
+                this.updateProcesses();
+                this.setArchivoAbierto(true);
+                this.getConfigurarMemoriaBtn().setEnabled(false);
+                this.updateMemory(this.getController().getCpu().getMemory().getSize(), this.getSecondaryMemory().getSize(), this.getSecondaryMemory().getVirtualMemorySize(), this.getSecondaryMemory().getIndiceArchivos().size());
+                this.updateMemoryList();
+    }
+    
     public void simulateSecond(){
         if (!this.isWaitingForInput()){
             if (!this.isArchivoAbierto()){
@@ -2010,16 +2040,27 @@ public class MiniPC extends javax.swing.JFrame {
             String estadoUltimoProceso1 = "";
             String estadoUltimoProceso2 = "";
             
-            for(int i = 0 ; i < this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size() ; i ++){
+            for(int i = 0 ; i < this.getProcessListSize(this.getController().getCpu()) ; i ++){
                 estadoUltimoProceso1 = this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getEstadoActual();
             }
                 
-            for(int i = 0 ; i < this.getController2().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size() ; i ++){
+            for(int i = 0 ; i < this.getProcessListSize(this.getController2().getCpu()) ; i ++){
                 estadoUltimoProceso2 = this.getController2().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getEstadoActual();
             }
             
             if (estadoUltimoProceso1.equalsIgnoreCase("Finalizado") && estadoUltimoProceso2.equalsIgnoreCase("Finalizado") && this.isIsAutomatic()){
                 this.setIsAutomatic(false);
+                this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Modo automático desactivado.");
+                return;
+            }
+            if ((estadoUltimoProceso1.equalsIgnoreCase("Finalizado") && this.getProcessListSize(this.getController2().getCpu()) == 0) && this.isIsAutomatic()){
+                this.setIsAutomatic(false);
+                this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Modo automático desactivado.");
+                return;
+            }
+            if ((estadoUltimoProceso2.equalsIgnoreCase("Finalizado") && this.getProcessListSize(this.getController().getCpu()) == 0) && this.isIsAutomatic()){
+                this.setIsAutomatic(false);
+                this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Modo automático desactivado.");
                 return;
             }
 
@@ -2048,8 +2089,6 @@ public class MiniPC extends javax.swing.JFrame {
                         int timeBefore = this.getController().getCpu().getCurrentTime();
                         this.getController().executeInstruction(instructionCPU1.getOp(),instructionCPU1.getRegister(),instructionCPU1.getValue(),instructionCPU1.getStringValue(),this);
                         int timeAfter = this.getController().getCpu().getCurrentTime();
-                        System.out.println("TB: "+timeBefore);
-                        System.out.println("TA: "+timeAfter);
                         if (this.getTimeDifference1()==0)
                             this.setTimeDifference1(timeAfter-timeBefore);
                         this.getController().getCpu().setProgramCounter(cpu1CurrentProcess.getProgramCounter()+1);
@@ -2064,8 +2103,6 @@ public class MiniPC extends javax.swing.JFrame {
                         int timeBefore = this.getController2().getCpu().getCurrentTime();
                         this.getController2().executeInstruction(instructionCPU2.getOp(),instructionCPU2.getRegister(),instructionCPU2.getValue(),instructionCPU2.getStringValue(),this);
                         int timeAfter = this.getController2().getCpu().getCurrentTime();
-                        System.out.println("TB: "+timeBefore);
-                        System.out.println("TA: "+timeAfter);
                         if (this.getTimeDifference2()==0)
                             this.setTimeDifference2(timeAfter-timeBefore);
                         this.getController2().getCpu().setProgramCounter(cpu2CurrentProcess.getProgramCounter()+1);
@@ -2093,37 +2130,49 @@ public class MiniPC extends javax.swing.JFrame {
                 }
                 
                 if (this.getRunningProcessListSize(this.getController().getCpu())>0){
-                        if (this.getController().getCpu().getMemory().getMemoryRegisters().get(cpu1CurrentProcess.getProgramCounter()).isPresent()){
+                        if (this.getController().getCpu().getMemory().getMemoryRegisters().get(cpu1CurrentProcess.getProgramCounter()).isPresent()  && !this.getController().getCpu().isProgramaTerminado()){
                             instructionCPU1 = (MemoryRegister)this.getController().getCpu().getMemory().getMemoryRegisters().get(cpu1CurrentProcess.getProgramCounter()).get();
                         }
                         else{
-                            System.out.println("It's JOEEEEVEEEEEEEEEEEEEEEEEER 1");
                             cpu1CurrentProcess.setEstadoActual("Finalizado");
+                            
+                            cpu1CurrentProcess.getInformacionContable().setEndTime(this.getCountTimeTable()-1);
+                            cpu1CurrentProcess.getInformacionContable().setDurationTime(cpu1CurrentProcess.getInformacionContable().getEndTime()-cpu1CurrentProcess.getInformacionContable().getStartTime());
+                            
+                            this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Liberando proceso #"+cpu1CurrentProcess.getIdProcess()+" de la memoria...");
                             this.getController().getCpu().getMemory().freeFromMemory(cpu1CurrentProcess.getDireccionInicio(), cpu1CurrentProcess.getDireccionFin());
+                            this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Memoria liberada");
+                            this.getController().getCpu().setProgramaTerminado(false);
                         }
                             
-                        //instructionCPU1 = (MemoryRegister)this.getController().getCpu().getMemory().getMemoryRegisters().get(cpu1CurrentProcess.getProgramCounter()-1).get();
-                        if (this.findCurrentProcess(this.getController().getCpu()) != null)
+                        if (this.findCurrentProcess(this.getController().getCpu()) != null){
                             cpu1CurrentProcess = this.findCurrentProcess(this.getController().getCpu());
+                        }
                         
                         this.updateMemory(this.getController().getCpu().getMemory().getSize(), this.getSecondaryMemory().getSize(), this.getSecondaryMemory().getVirtualMemorySize(), this.getSecondaryMemory().getIndiceArchivos().size());
                         this.updateMemoryList();
                 }
                 
                 if (this.getRunningProcessListSize(this.getController2().getCpu())>0){
-                        if (this.getController2().getCpu().getMemory().getMemoryRegisters().get(cpu2CurrentProcess.getProgramCounter()).isPresent()){
+                        if (this.getController2().getCpu().getMemory().getMemoryRegisters().get(cpu2CurrentProcess.getProgramCounter()).isPresent() && !this.getController2().getCpu().isProgramaTerminado()){
                             instructionCPU2 = (MemoryRegister)this.getController2().getCpu().getMemory().getMemoryRegisters().get(cpu2CurrentProcess.getProgramCounter()).get();
                         }
                         else{
-                            System.out.println("It's JOEEEEVEEEEEEEEEEEEEEEEEER 2");
                             cpu2CurrentProcess.setEstadoActual("Finalizado");
+                            
+                            cpu2CurrentProcess.getInformacionContable().setEndTime(this.getCountTimeTable()-1);
+                            cpu2CurrentProcess.getInformacionContable().setDurationTime(cpu2CurrentProcess.getInformacionContable().getEndTime()-cpu2CurrentProcess.getInformacionContable().getStartTime());
+                            
+                            this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Liberando proceso #"+cpu2CurrentProcess.getIdProcess()+" de la memoria...");
                             this.getController().getCpu().getMemory().freeFromMemory(cpu2CurrentProcess.getDireccionInicio(), cpu2CurrentProcess.getDireccionFin());
+                            this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Memoria liberada");
+                            this.getController2().getCpu().setProgramaTerminado(false);
                         }
                             
                         // Conseguir la direccion de inicio del proximo proceso
-                        //instructionCPU2 = (MemoryRegister)this.getController2().getCpu().getMemory().getMemoryRegisters().get(cpu2CurrentProcess.getProgramCounter()-1).get();
-                        if (this.findCurrentProcess(this.getController2().getCpu()) != null)
+                        if (this.findCurrentProcess(this.getController2().getCpu()) != null){
                             cpu2CurrentProcess = this.findCurrentProcess(this.getController2().getCpu());
+                        }
                         
                         this.updateMemory(this.getController().getCpu().getMemory().getSize(), this.getSecondaryMemory().getSize(), this.getSecondaryMemory().getVirtualMemorySize(), this.getSecondaryMemory().getIndiceArchivos().size());
                         this.updateMemoryList();
@@ -2161,36 +2210,24 @@ public class MiniPC extends javax.swing.JFrame {
             ArrayList<MemoryRegister> instructionSet = fileManager.loadFileInstructions(filePath,cpuEscogido);
 
             if (instructionSet.size() > this.getSecondaryMemory().getSize()){
-                this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Error: No hay suficiente memoria para almacenar el archivo");
+                this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Error: El archivo no pudo ser almacenado ya que es más grande que la memoria secundaria.");
                 return;
+            }
+            else if (instructionSet.size() > (this.getSecondaryMemory().getSize() - this.getSecondaryMemory().getAllocatedSize() )){
+                this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Liberando memoria para almacenar el archivo...");
+                
+                int startIndex = this.getSecondaryMemory().getIndiceArchivos().get(0).getDireccionMemoriaSecundaria();
+                int endIndex = this.getSecondaryMemory().getIndiceArchivos().get(0).getDireccionFinMemoriaSecundaria();
+                this.getSecondaryMemory().freeFromMemory(startIndex, endIndex);
+                this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Archivo "+this.getSecondaryMemory().getIndiceArchivos().get(0).getNombreArchivo()+" liberado del almacenamiento");
+                this.getSecondaryMemory().getIndiceArchivos().remove(0);
+                
+                this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Memoria liberada en el almacenamiento");
+                this.loadMemory(filePath, instructionSet, cpuEscogido);
             }
             else if (instructionSet != null){
                 
-                // Cargar a memoria secundaria
-                this.getSecondaryMemory().setAllocatedSize(instructionSet.size());
-                this.getSecondaryMemory().allocateMemory(instructionSet);
-                int secondaryStartIndex = this.getSecondaryMemory().getAllocationStartIndex();
-                int secondaryEndIndex = secondaryStartIndex+instructionSet.size()-1;
-                
-                // Se crea el proceso y se le asigna el ID de proceso
-                BCP newBCP = new BCP(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size(),filePath,"Nuevo",secondaryStartIndex+1,this.getController().getCpu().getMemory().getStack(),secondaryStartIndex,secondaryEndIndex,instructionSet.size(),1);
-                // Se agrega el indice del archivo a la memoria secundaria
-                File file = new File(filePath);
-                String fileName = file.getName();
-                IndiceArchivo indiceArchivo = new IndiceArchivo(fileName,secondaryStartIndex);
-                this.getSecondaryMemory().getIndiceArchivos().add(indiceArchivo);
-                
-                // Se agrega el proceso a la cola de trabajo
-                this.getController().getCpu().getMemory().getPlanificadorTrabajos().getColaTrabajos().add(newBCP);
-                
-                // Se carga en memoria principal el proceso escogido por el planificador de trabajos
-                this.getController().getCpu().getMemory().getPlanificadorTrabajos().planificarTrabajo(this, instructionSet, cpuEscogido);
-                
-                this.updateProcesses();
-                this.setArchivoAbierto(true);
-                this.getConfigurarMemoriaBtn().setEnabled(false);
-                this.updateMemory(this.getController().getCpu().getMemory().getSize(), this.getSecondaryMemory().getSize(), this.getSecondaryMemory().getVirtualMemorySize(), this.getSecondaryMemory().getIndiceArchivos().size());
-                this.updateMemoryList();
+                this.loadMemory(filePath, instructionSet, cpuEscogido);
             }
 
         }

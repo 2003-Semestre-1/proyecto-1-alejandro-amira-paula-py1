@@ -45,9 +45,9 @@ public class Memory {
         int maxIndex = size-1;
         int allocationStartIndex = (int)Math.floor(Math.random() * ((maxIndex) - minIndex + 1) + minIndex);
         
-        // Si se reciben 90 instrucciones entonces el índice siempre será 10 para que quepan en la memoria
+        // Si se reciben la cantidad de instrucciones igual al tamano de la memoria entonces el índice siempre será 0 para que quepan en la memoria
         if (instructionSet.size() == size){
-            allocationStartIndex = 10;
+            allocationStartIndex = 0;
             this.setAllocationStartIndex(allocationStartIndex);
             int instructionSetIndex = 0;
             for(int i = allocationStartIndex ; i < instructionSet.size()+allocationStartIndex; i ++){

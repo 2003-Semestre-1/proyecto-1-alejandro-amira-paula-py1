@@ -14,11 +14,18 @@ public class IndiceArchivo {
     String nombreArchivo = "";
     int direccionMemoriaPrincipal;
     int direccionMemoriaSecundaria;
+    int direccionFinMemoriaSecundaria;
     int direccionMemoriaVirtual;
     
     public IndiceArchivo(String nombreArchivo, int direccionMemoriaSecundaria){
         this.nombreArchivo = nombreArchivo;
         this.direccionMemoriaSecundaria = direccionMemoriaSecundaria;
+    }
+    
+    public IndiceArchivo(String nombreArchivo, int direccionMemoriaSecundaria, int direccionFinMemoriaSecundaria){
+        this.nombreArchivo = nombreArchivo;
+        this.direccionMemoriaSecundaria = direccionMemoriaSecundaria;
+        this.direccionFinMemoriaSecundaria = direccionFinMemoriaSecundaria;
     }
 
     public String getNombreArchivo() {
@@ -52,7 +59,13 @@ public class IndiceArchivo {
     public void setDireccionMemoriaVirtual(int direccionMemoriaVirtual) {
         this.direccionMemoriaVirtual = direccionMemoriaVirtual;
     }
-    
-    
+
+    public int getDireccionFinMemoriaSecundaria() {
+        return direccionFinMemoriaSecundaria;
+    }
+
+    public void setDireccionFinMemoriaSecundaria(int direccionFinMemoriaSecundaria) {
+        this.direccionFinMemoriaSecundaria = direccionFinMemoriaSecundaria;
+    }
     
 }

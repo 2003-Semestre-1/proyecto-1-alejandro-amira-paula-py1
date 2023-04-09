@@ -72,19 +72,24 @@ public class PlanificadorTrabajos {
         job.setIdProcess(this.getProcessList().size());
 
         Memory memory = controller.getCpu().getMemory();
-        memory.setAllocatedSize(memory.getAllocatedSize()+instructionSet.size());
-        memory.allocateMemory(instructionSet);
-        int processStartIndex = memory.getAllocationStartIndex();
-        int processEndIndex = processStartIndex+instructionSet.size()-1;
-        job.setDireccionInicio(processStartIndex);
-        job.setDireccionFin(processEndIndex);
-        job.setProgramCounter(processStartIndex);
-        this.getProcessList().add(job);
-        this.getColaTrabajos().remove();
-                
-        //MemoryRegister currentInstruction = instructions.get(0);
-        //controller.getCpu().setInstructionRegister(currentInstruction.getAsmInstructionString());
-        //controller.getCpu().setProgramCounter(controller.getCpu().getMemory().getAllocationStartIndex()+1);
-        //controller.getCpu().setCurrentAddress(controller.getCpu().getMemory().getAllocationStartIndex());
+        
+        if (instructionSet.size() > memory.getSize()+miniPC.getSecondaryMemory().getVirtualMemorySize()){
+            miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: El archivo es más grande que la memoria principal y virtual por lo que no se puede asignar.");
+            return;
+        }
+        else{
+            memory.setAllocatedSize(memory.getAllocatedSize()+instructionSet.size());
+            memory.allocateMemory(instructionSet);
+            miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Archivo cargado en la memoria principal.");
+        
+            int processStartIndex = memory.getAllocationStartIndex();
+            int processEndIndex = processStartIndex+instructionSet.size()-1;
+            job.setDireccionInicio(processStartIndex);
+            job.setDireccionFin(processEndIndex);
+            job.setProgramCounter(processStartIndex);
+            this.getProcessList().add(job);
+            this.getColaTrabajos().remove();
+        }
+        
     }
 }
