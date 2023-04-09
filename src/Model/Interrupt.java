@@ -35,7 +35,6 @@ public class Interrupt {
     }
     
     public void executeInterrupt(MiniPC miniPC) throws InterruptedException{
-        System.out.println(codigo);
         switch(this.codigo) {
         case 32:
             this.interrupt20H(this.getCpu().getMemory().getPlanificadorTrabajos().getProcessList(), miniPC);
@@ -79,14 +78,13 @@ public class Interrupt {
         
         BCP process = miniPC.findCurrentProcess(cpu);
         process.setEstadoActual("En espera");
-        System.out.println(process.estadoActual);
-        System.out.println(process.idProcess);
-        System.out.println(process.cpuName);
-        System.out.println(process.nameProcess);
         
         miniPC.updateProcesses();
         miniPC.getTblProcesses().setValueAt("En espera", process.getIdProcess(), 2);
-        miniPC.setWaitingForInput(true);
+        if (this.getCpu().getCpuName().equalsIgnoreCase("CPU #0"))
+            miniPC.setWaitingForInputCPU1(true);
+        if (this.getCpu().getCpuName().equalsIgnoreCase("CPU #1"))
+            miniPC.setWaitingForInputCPU2(true);
         miniPC.getTecladoTxtField().setEditable(true);
     }
     
@@ -94,13 +92,10 @@ public class Interrupt {
         
         int ahValue = cpu.getDataRegisters().get(1-1).getHighByteValue();
         String fileName = cpu.getDataRegisters().get(4-1).getStringValue();
-        System.out.println(ahValue);
-        System.out.println(fileName);
         
         switch(ahValue) {
          case 60 :
             String filePath = "src\\Files\\"+fileName;
-            System.out.println(filePath);
             File file = new File(filePath);
             try{
                 file.createNewFile();
@@ -113,7 +108,6 @@ public class Interrupt {
             break;
          case 61 :
             filePath = "src\\Files\\"+fileName;
-            System.out.println(filePath);
             file = new File(filePath);
 
             if (file.exists()) {
@@ -126,14 +120,12 @@ public class Interrupt {
             break;
          case 77 :
             filePath = "src\\Files\\"+fileName;
-            System.out.println(filePath);
             file = new File(filePath);
             Path path = Paths.get(filePath);
             
             if (miniPC.isArchivoAbierto()){
                 try {
                     String contents = new String(Files.readAllBytes(path));
-                    System.out.println(contents);
                     miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Archivo "+fileName+" leído");
                     miniPC.getController().getCpu().getDataRegisters().get(5-1).setStringValue(contents);
                 } catch (IOException e) {
@@ -150,7 +142,6 @@ public class Interrupt {
             if (miniPC.isArchivoAbierto()){
                 try {
                     filePath = "src\\Files\\"+fileName;
-                    System.out.println(filePath);
                     file = new File(filePath);
                 
                     String content = miniPC.getController().getCpu().getDataRegisters().get(5-1).getStringValue();
@@ -159,7 +150,6 @@ public class Interrupt {
                     writer.write(content);
                     writer.close();
                 
-                    System.out.println(content);
                     miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Se escribió al archivo con éxito");
                 } catch (IOException e) {
                     Logger.getLogger(MiniPC.class.getName()).log(Level.SEVERE, null, e);
@@ -174,7 +164,6 @@ public class Interrupt {
          case 65 :
             if (miniPC.isArchivoAbierto()){
                 filePath = "src\\Files\\"+fileName;
-                System.out.println("Filepath: "+filePath);
                 file = new File(filePath);
             
                 if (file.delete()) {

@@ -119,7 +119,7 @@ public class MiniPCController {
             break;
         case 9:
             this.interruptInstruction(value,miniPC);
-            this.getCpu().setCurrentTime(this.getCpu().getCurrentTime()+0);
+            this.getCpu().setCurrentTime(this.getCpu().getCurrentTime()+1);
             break;
         case 10:
             this.jmpInstruction(miniPC,value);

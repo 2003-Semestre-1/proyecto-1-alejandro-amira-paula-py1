@@ -47,7 +47,8 @@ public class MiniPC extends javax.swing.JFrame {
     public MiniPCController controller2 = new MiniPCController();
     public FileManager fileManager = new FileManager();
     public SecondaryMemory secondaryMemory = new SecondaryMemory(512,64);
-    boolean waitingForInput = false;
+    boolean waitingForInputCPU1 = false;
+    boolean waitingForInputCPU2 = false;
     boolean archivoAbierto = false;
     boolean isAutomatic = false;
     int countTimeTable = 0;
@@ -1491,15 +1492,25 @@ public class MiniPC extends javax.swing.JFrame {
 
     public void setCountTimeTable(int countTimeTable) {
         this.countTimeTable = countTimeTable;
-    } 
-    
-    public boolean isWaitingForInput() {
-        return waitingForInput;
     }
 
-    public void setWaitingForInput(boolean waitingForInput) {
-        this.waitingForInput = waitingForInput;
+    public boolean isWaitingForInputCPU1() {
+        return waitingForInputCPU1;
     }
+
+    public void setWaitingForInputCPU1(boolean waitingForInputCPU1) {
+        this.waitingForInputCPU1 = waitingForInputCPU1;
+    }
+
+    public boolean isWaitingForInputCPU2() {
+        return waitingForInputCPU2;
+    }
+
+    public void setWaitingForInputCPU2(boolean waitingForInputCPU2) {
+        this.waitingForInputCPU2 = waitingForInputCPU2;
+    }
+    
+    
 
     public boolean isArchivoAbierto() {
         return archivoAbierto;
@@ -2076,7 +2087,7 @@ public class MiniPC extends javax.swing.JFrame {
     
     
     public void simulateSecond(){
-        if (!this.isWaitingForInput()){
+        if (!this.isWaitingForInputCPU1() && !this.isWaitingForInputCPU2()){
             if (!this.isArchivoAbierto()){
                 JOptionPane.showMessageDialog (null, "Por favor cargue un archivo", "Error: No hay archivos cargados", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -2142,17 +2153,13 @@ public class MiniPC extends javax.swing.JFrame {
                     this.getController().getCpu().setInstructionRegister(instructionCPU1.getAsmInstructionString());
                     try {
                         int timeBefore = this.getController().getCpu().getCurrentTime();
-                        System.out.println("TB1: "+timeBefore);
                         if (!this.getController().getCpu().isRepeatFlag())
                             this.getController().executeInstruction(instructionCPU1.getOp(),instructionCPU1.getRegister(),instructionCPU1.getValue(),instructionCPU1.getStringValue(),this);
                         int timeAfter = this.getController().getCpu().getCurrentTime();
-                        System.out.println("TB1: "+timeAfter);
                         if (this.getTimeDifference1()==0)
                             this.setTimeDifference1(timeAfter-timeBefore);
-                        System.out.println("TD1: "+(timeAfter-timeBefore));
                         if (timeAfter-timeBefore>1)
                             this.getController().getCpu().setRepeatFlag(true);
-                        System.out.print("RP1: "+this.getController().getCpu().isRepeatFlag());
                         this.getController().getCpu().setProgramCounter(cpu1CurrentProcess.getProgramCounter()+1);
                     } catch (Exception ex) {
                         Logger.getLogger(MiniPC.class.getName()).log(Level.SEVERE, null, ex);
@@ -2163,17 +2170,13 @@ public class MiniPC extends javax.swing.JFrame {
                     this.getController2().getCpu().setInstructionRegister(instructionCPU2.getAsmInstructionString());
                     try {
                         int timeBefore = this.getController2().getCpu().getCurrentTime();
-                        System.out.println("TB2: "+timeBefore);
                         if (!this.getController2().getCpu().isRepeatFlag())
                             this.getController2().executeInstruction(instructionCPU2.getOp(),instructionCPU2.getRegister(),instructionCPU2.getValue(),instructionCPU2.getStringValue(),this);
                         int timeAfter = this.getController2().getCpu().getCurrentTime();
-                        System.out.println("TB1: "+timeAfter);
                         if (this.getTimeDifference2()==0)
                             this.setTimeDifference2(timeAfter-timeBefore);
-                        System.out.println("TD2: "+(timeAfter-timeBefore));
                         if (timeAfter-timeBefore>1)
                             this.getController2().getCpu().setRepeatFlag(true);
-                        System.out.print("RP2: "+this.getController2().getCpu().isRepeatFlag());
                         this.getController2().getCpu().setProgramCounter(cpu2CurrentProcess.getProgramCounter()+1);
                     } catch (Exception ex) {
                         Logger.getLogger(MiniPC.class.getName()).log(Level.SEVERE, null, ex);
@@ -2258,7 +2261,7 @@ public class MiniPC extends javax.swing.JFrame {
     }//GEN-LAST:event_nextInstructionBtn1ActionPerformed
 
     private void loadFileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadFileBtnActionPerformed
-        if (evt.getSource() == loadFileBtn && !this.isWaitingForInput()) {
+        if (evt.getSource() == loadFileBtn && !this.isWaitingForInputCPU1() && !this.isWaitingForInputCPU2()) {
             int cpuEscogido = (int)Math.round(Math.random());
             System.out.println("CPU escogido: #"+cpuEscogido);
             String filePath = fileManager.selectFile(this);
@@ -2290,7 +2293,7 @@ public class MiniPC extends javax.swing.JFrame {
             }
 
         }
-        else if (this.isWaitingForInput())
+        else if (this.isWaitingForInputCPU1() || this.isWaitingForInputCPU2())
             JOptionPane.showMessageDialog (null, "Escriba un valor.", "Error: Debe escribir un valor.", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_loadFileBtnActionPerformed
 
@@ -2299,7 +2302,8 @@ public class MiniPC extends javax.swing.JFrame {
             JOptionPane.showMessageDialog (null, "No queda nada por limpiar", "Error: Archivo ya está limpio", JOptionPane.ERROR_MESSAGE);
         }
         else{
-            this.setWaitingForInput(false);
+            this.setWaitingForInputCPU1(false);
+            this.setWaitingForInputCPU2(false);
             this.cleanTable();
             this.cleanMemory();
             this.getPantalla().setText("");
@@ -2309,7 +2313,8 @@ public class MiniPC extends javax.swing.JFrame {
     }//GEN-LAST:event_cleanTableBtnActionPerformed
 
     private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
-        this.setWaitingForInput(false);
+        this.setWaitingForInputCPU1(false);
+        this.setWaitingForInputCPU2(false);
         System.exit(0);
     }//GEN-LAST:event_exitBtnActionPerformed
 
@@ -2330,11 +2335,21 @@ public class MiniPC extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog (null, "Escriba un valor entre 0-255", "Error: Valor fuera del rango 0-255.", JOptionPane.ERROR_MESSAGE);
             }
             else{
-                this.getController().getCpu().getDataRegisters().get(4-1).setValue(valorTeclado);
-                this.getLblNumberDX().setText(valorTeclado+"");
-                this.getTecladoTxtField().setEditable(false);
-                this.setWaitingForInput(false);
-                this.getTecladoTxtField().setText("");
+                if (this.isWaitingForInputCPU1()){
+                    this.getController().getCpu().getDataRegisters().get(4-1).setValue(valorTeclado);
+                    this.getLblNumberDX().setText(valorTeclado+"");
+                    this.getTecladoTxtField().setEditable(false);
+                    this.setWaitingForInputCPU1(false);
+                    this.getTecladoTxtField().setText("");
+                }
+                else if (this.isWaitingForInputCPU2()){
+                    this.getController2().getCpu().getDataRegisters().get(4-1).setValue(valorTeclado);
+                    this.getLblNumberDX2().setText(valorTeclado+"");
+                    this.getTecladoTxtField().setEditable(false);
+                    this.setWaitingForInputCPU2(false);
+                    this.getTecladoTxtField().setText("");
+                }
+                
             }
             
         }
