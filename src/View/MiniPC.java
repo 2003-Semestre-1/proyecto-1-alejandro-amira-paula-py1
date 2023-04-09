@@ -2142,13 +2142,17 @@ public class MiniPC extends javax.swing.JFrame {
                     this.getController().getCpu().setInstructionRegister(instructionCPU1.getAsmInstructionString());
                     try {
                         int timeBefore = this.getController().getCpu().getCurrentTime();
+                        System.out.println("TB1: "+timeBefore);
                         if (!this.getController().getCpu().isRepeatFlag())
                             this.getController().executeInstruction(instructionCPU1.getOp(),instructionCPU1.getRegister(),instructionCPU1.getValue(),instructionCPU1.getStringValue(),this);
                         int timeAfter = this.getController().getCpu().getCurrentTime();
+                        System.out.println("TB1: "+timeAfter);
                         if (this.getTimeDifference1()==0)
                             this.setTimeDifference1(timeAfter-timeBefore);
+                        System.out.println("TD1: "+(timeAfter-timeBefore));
                         if (timeAfter-timeBefore>1)
                             this.getController().getCpu().setRepeatFlag(true);
+                        System.out.print("RP1: "+this.getController().getCpu().isRepeatFlag());
                         this.getController().getCpu().setProgramCounter(cpu1CurrentProcess.getProgramCounter()+1);
                     } catch (Exception ex) {
                         Logger.getLogger(MiniPC.class.getName()).log(Level.SEVERE, null, ex);
@@ -2159,13 +2163,17 @@ public class MiniPC extends javax.swing.JFrame {
                     this.getController2().getCpu().setInstructionRegister(instructionCPU2.getAsmInstructionString());
                     try {
                         int timeBefore = this.getController2().getCpu().getCurrentTime();
+                        System.out.println("TB2: "+timeBefore);
                         if (!this.getController2().getCpu().isRepeatFlag())
                             this.getController2().executeInstruction(instructionCPU2.getOp(),instructionCPU2.getRegister(),instructionCPU2.getValue(),instructionCPU2.getStringValue(),this);
                         int timeAfter = this.getController2().getCpu().getCurrentTime();
+                        System.out.println("TB1: "+timeAfter);
                         if (this.getTimeDifference2()==0)
                             this.setTimeDifference2(timeAfter-timeBefore);
+                        System.out.println("TD2: "+(timeAfter-timeBefore));
                         if (timeAfter-timeBefore>1)
                             this.getController2().getCpu().setRepeatFlag(true);
+                        System.out.print("RP2: "+this.getController2().getCpu().isRepeatFlag());
                         this.getController2().getCpu().setProgramCounter(cpu2CurrentProcess.getProgramCounter()+1);
                     } catch (Exception ex) {
                         Logger.getLogger(MiniPC.class.getName()).log(Level.SEVERE, null, ex);
@@ -2232,13 +2240,6 @@ public class MiniPC extends javax.swing.JFrame {
                         // Conseguir la direccion de inicio del proximo proceso
                         if (this.findCurrentProcess(this.getController2().getCpu()) != null){
                             cpu2CurrentProcess = this.findCurrentProcess(this.getController2().getCpu());
-                            System.out.println(cpu2CurrentProcess.getDireccionInicio());
-                System.out.println(cpu2CurrentProcess.getDireccionFin());
-                System.out.println(cpu2CurrentProcess.getEstadoActual());
-                System.out.println(cpu2CurrentProcess.getProgramCounter());
-                System.out.println(cpu2CurrentProcess.getIdProcess());
-                System.out.println(cpu2CurrentProcess.getNameProcess());
-                System.out.println(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList());
                         }
                         
                         this.updateMemory(this.getController().getCpu().getMemory().getSize(), this.getSecondaryMemory().getSize(), this.getSecondaryMemory().getVirtualMemorySize(), this.getSecondaryMemory().getIndiceArchivos().size());
