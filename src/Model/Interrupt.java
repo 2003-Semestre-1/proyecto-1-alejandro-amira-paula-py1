@@ -57,18 +57,7 @@ public class Interrupt {
     
     public void interrupt20H(ArrayList<BCP> bcpList, MiniPC miniPC){
         
-        /*int lastProcessIndex = 0;
-        for(int i = 0 ; i < this.getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size() ; i ++){
-            if (!this.getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getEstadoActual().equalsIgnoreCase("Finalizado"))
-                lastProcessIndex = i;
-        }
 
-        this.getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(lastProcessIndex).setEstadoActual("Finalizado");
-        
-        miniPC.getTblProcesses().setValueAt("Finalizado", lastProcessIndex, 2);
-        
-        this.getCpu().setProgramaTerminado(true);
-        */
         BCP process = miniPC.findCurrentProcess(cpu);
         process.setEstadoActual("Finalizado");
         String textPantalla = miniPC.getPantalla().getText();
@@ -115,11 +104,11 @@ public class Interrupt {
             File file = new File(filePath);
             try{
                 file.createNewFile();
-                System.out.println("File created");
+                miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Archivo "+fileName+" creado.");
             }
             catch(IOException e){
                 Logger.getLogger(MiniPC.class.getName()).log(Level.SEVERE, null, e);
-                JOptionPane.showMessageDialog (null, "El archivo no pudo ser creado.", "Error: Archivo no pudo ser creado con éxito.", JOptionPane.ERROR_MESSAGE);
+                miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Archivo no pudo ser creado con éxito");
             }
             break;
          case 61 :

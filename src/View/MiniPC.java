@@ -47,8 +47,6 @@ public class MiniPC extends javax.swing.JFrame {
     public MiniPCController controller2 = new MiniPCController();
     public FileManager fileManager = new FileManager();
     public SecondaryMemory secondaryMemory = new SecondaryMemory(512,64);
-    int currentInstructionDisplay1 = 0;
-    int currentInstructionDisplay2 = 0;
     boolean waitingForInput = false;
     boolean archivoAbierto = false;
     boolean jumpFlag = false;
@@ -1268,22 +1266,6 @@ public class MiniPC extends javax.swing.JFrame {
         this.timeDifference2 = timeDifference2;
     }
 
-    public int getCurrentInstructionDisplay1() {
-        return currentInstructionDisplay1;
-    }
-
-    public void setCurrentInstructionDisplay1(int currentInstructionDisplay1) {
-        this.currentInstructionDisplay1 = currentInstructionDisplay1;
-    }
-
-    public int getCurrentInstructionDisplay2() {
-        return currentInstructionDisplay2;
-    }
-
-    public void setCurrentInstructionDisplay2(int currentInstructionDisplay2) {
-        this.currentInstructionDisplay2 = currentInstructionDisplay2;
-    }
-    
     private void cleanMemory(){
         JTable mainMemoryTable = this.getTblMainMemory();
         JTable secondaryMemoryTable = this.getTblSecondaryMemory();
@@ -1626,8 +1608,8 @@ public class MiniPC extends javax.swing.JFrame {
         this.getLblNumberBX().setText(this.getController().getCpu().getDataRegisters().get(1).getValue()+"");
         this.getLblNumberCX().setText(this.getController().getCpu().getDataRegisters().get(2).getValue()+"");
         this.getLblNumberDX().setText(this.getController().getCpu().getDataRegisters().get(3).getValue()+"");
-        this.getLblNumberAL().setText(this.getController().getCpu().getDataRegisters().get(1).getLowByteValue()+"");
-        this.getLblNumberAH().setText(this.getController().getCpu().getDataRegisters().get(1).getHighByteValue()+"");
+        this.getLblNumberAL().setText(this.getController().getCpu().getDataRegisters().get(0).getLowByteValue()+"");
+        this.getLblNumberAH().setText(this.getController().getCpu().getDataRegisters().get(0).getHighByteValue()+"");
         
         String stackValue = "-";
         try {
@@ -1681,8 +1663,8 @@ public class MiniPC extends javax.swing.JFrame {
         this.getLblNumberBX2().setText(this.getController2().getCpu().getDataRegisters().get(1).getValue()+"");
         this.getLblNumberCX2().setText(this.getController2().getCpu().getDataRegisters().get(2).getValue()+"");
         this.getLblNumberDX2().setText(this.getController2().getCpu().getDataRegisters().get(3).getValue()+"");
-        this.getLblNumberAL2().setText(this.getController2().getCpu().getDataRegisters().get(1).getLowByteValue()+"");
-        this.getLblNumberAH2().setText(this.getController2().getCpu().getDataRegisters().get(1).getHighByteValue()+"");
+        this.getLblNumberAL2().setText(this.getController2().getCpu().getDataRegisters().get(0).getLowByteValue()+"");
+        this.getLblNumberAH2().setText(this.getController2().getCpu().getDataRegisters().get(0).getHighByteValue()+"");
         
         stackValue = "-";
         try {

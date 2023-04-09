@@ -191,8 +191,7 @@ public class MiniPCController {
         else{
             this.getCpu().getDataRegisters().get(destinationRegister-1).setValue(value);
         }
-        
-        System.out.println(destinationRegister);
+
     }
     
     public void movInstructionValue(int destinationRegister, String value){
@@ -201,8 +200,17 @@ public class MiniPCController {
         // Se mueve el valor dado al registro solicitado
         this.getCpu().getDataRegisters().get(destinationRegister-1).setStringValue(value);
         
-        System.out.println(destinationRegister);
-        System.out.println("TEST STRING: "+ this.getCpu().getDataRegisters().get(destinationRegister-1).getStringValue());
+        if (destinationRegister==5){
+            try{
+                int lowByteValue = Integer.parseInt(value.substring(0, value.length() - 1), 16);
+                this.getCpu().getDataRegisters().get(0).setLowByteValue(lowByteValue);
+            }
+            catch (Exception e){
+                
+            }
+            
+        }
+
     }
     
     public void movInstructionRegister(int destinationRegister, int sourceRegister){
@@ -210,9 +218,6 @@ public class MiniPCController {
         // Recibe el registro destino donde se desea mover un valor, y el registro fuente
         // Se mueve el valor dado al registro solicitado
         int valueSourceRegister = 0;
-        
-        System.out.println(destinationRegister);
-        System.out.println(sourceRegister);
         
         if (sourceRegister == 5){
             valueSourceRegister = this.getCpu().getDataRegisters().get(0).getLowByteValue();
@@ -233,9 +238,7 @@ public class MiniPCController {
         else{
             this.getCpu().getDataRegisters().get(destinationRegister-1).setValue(valueSourceRegister);
         }
-        System.out.println( valueSourceRegister);
-        System.out.println(this.getCpu().getDataRegisters().get(destinationRegister-1).getValue());
-        System.out.println( "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
     }
     
     public void subInstruction(int destinationRegister){
@@ -327,7 +330,6 @@ public class MiniPCController {
         // Este método ejecuta un interrupt dependinedo del codigo de interrupt dado
         // Recibe el codigo del interrupt
         // Ejecuta el interrupt dependiendo de su codigo
-        System.out.println("BBBBBBBBBBBBBBBBBBBBBBB");
         Interrupt interrupt = new Interrupt(codigo,this.getCpu());
         interrupt.executeInterrupt(miniPC);
         
@@ -580,10 +582,8 @@ public class MiniPCController {
     
     public void pushInstruction(MiniPC miniPC, int register){
         int registerValue = miniPC.getController().getCpu().getDataRegisters().get(register-1).getValue();
-        System.out.println(registerValue);
         try {
             miniPC.getController().getCpu().getMemory().getStack().push(registerValue);
-            System.out.println("Pushed: "+miniPC.getController().getCpu().getMemory().getStack().peek());
         } catch (StackOverflowError e) {
             miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Stack overflow.");
         } catch (EmptyStackException e) {
@@ -596,7 +596,6 @@ public class MiniPCController {
         int registerValue = 0;
         try {
             registerValue = miniPC.getController().getCpu().getMemory().getStack().pop();
-            System.out.println("Popped: "+registerValue);
             miniPC.getController().getCpu().getDataRegisters().get(register-1).setValue(registerValue);
         } catch (StackOverflowError e) {
             miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Stack overflow.");

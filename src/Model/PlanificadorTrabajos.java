@@ -42,10 +42,8 @@ public class PlanificadorTrabajos {
     }
     
     public void planificarTrabajo(MiniPC miniPC, ArrayList<MemoryRegister> instructionSet, int cpuEscogido){
-        //int cpuEscogido = (int)Math.round(Math.random());
         
         MiniPCController controller = null;
-        ArrayList<MemoryRegister> instructions = null;
         BCP job = null;
         
         try{
