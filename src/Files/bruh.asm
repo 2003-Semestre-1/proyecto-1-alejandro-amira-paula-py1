@@ -6,6 +6,7 @@ mov ax,8
 push ax
 mov ax,2
 pop ax
+pop ax
 cmp ax,bx
 cmp ax,5
 cmp 5,ax

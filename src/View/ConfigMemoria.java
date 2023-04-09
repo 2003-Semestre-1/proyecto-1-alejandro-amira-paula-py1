@@ -164,9 +164,6 @@ public class ConfigMemoria extends javax.swing.JFrame {
             int numero1 = Integer.parseInt(strNumero1);
             int numero2 = Integer.parseInt(strNumero2);
             int numero3 = Integer.parseInt(strNumero3);
-            System.out.println(numero1);
-            System.out.println(numero2);
-            System.out.println(numero3);
           
         // Validar que los numeros sean mayor a lo que corresponde    
         if (numero1 >= 256 && numero2 >= 512 && numero3 >= 64) {
@@ -212,7 +209,6 @@ public class ConfigMemoria extends javax.swing.JFrame {
     }
     
     public String getTxt_MemPrincipal() {
-        System.out.println(txt_MemPrincipal.getText());
         return txt_MemPrincipal.getText(); 
     }
 

@@ -57,8 +57,6 @@ public class FileManager {
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             filePath = selectedFile.getAbsolutePath();
-            
-            System.out.println("El archivo seleccionado es: " + filePath);
         }
         
         return filePath;
@@ -94,7 +92,6 @@ public class FileManager {
                     String currentInstruction = "";
                     if (!instructions.get(i).getOp().equals("int")){
                         currentInstruction = instructions.get(i).convertToBinary();
-                        System.out.println("Instruccion #"+i+": "+currentInstruction);
                     }  
                     
                 }
@@ -104,7 +101,6 @@ public class FileManager {
                     String currentInstruction = "";
                     if (!instructions2.get(i).getOp().equals("int")){
                         currentInstruction = instructions2.get(i).convertToBinary();
-                        System.out.println("Instruccion #"+i+": "+currentInstruction);
                     }  
                     
                 }
@@ -149,16 +145,11 @@ public class FileManager {
             String operator = "";
             int opValue = 0;
             int registerValue = 0;
-            System.out.println("Split1: "+split1);
-            System.out.println("Split2: "+split2);
             
             if (instruction.split(" ")[0].equalsIgnoreCase("param")){
                 operator = instruction.split(" ")[0];
-                System.out.println(instruction.split(" ")[0]);
-                System.out.println(instruction.split("\\D+").length);
                 
                 if (instruction.split("\\D+").length==2){
-                    System.out.println(instruction.split("\\D+")[1]);
                     register = instruction.split("\\D+")[1];
                     register = register.trim();
                     registerValue = Integer.parseInt(register);
@@ -186,14 +177,9 @@ public class FileManager {
                     valueString = valueString.trim();
                 }
 
-                System.out.println("Value1: "+registerValue);
-                System.out.println("Value2: "+value);
-                System.out.println("Value3: "+valueString);
-                System.out.println("Value4: "+operator);
             }
             else if (instruction.split(" ")[0].equalsIgnoreCase("inc") || instruction.split(" ")[0].equalsIgnoreCase("dec")){
                 operator = instruction.split(" ")[0];
-                System.out.println(instruction.split(" "));
                 
                 if (instruction.split(" ").length>1){
                     register = instruction.split(" ")[1];
@@ -208,8 +194,6 @@ public class FileManager {
         
                 operator = split2[0].toLowerCase();
                 register = split2[1].toLowerCase();
-                System.out.println(operator);
-                System.out.println(register);
                 
             }
         
@@ -222,7 +206,6 @@ public class FileManager {
             }
             else if (str.endsWith("h")) {
                 value = Integer.parseInt(str.substring(0, str.length() - 1), 16);
-                System.out.println("hexa: " + value);
             }
             else if (!str.matches("-?\\d+(\\.\\d+)?")){
                 valueString = str;
@@ -230,9 +213,7 @@ public class FileManager {
             else if (str.matches("-?\\d+(\\.\\d+)?")) {
                 value = Integer.parseInt(str);
             }
-            
-            System.out.println("value es "+value);
-            
+
         }
         
         // Se utilizan los hashMaps que fueron creados para obtener el valor entero del operador y del registro dependiendo de cuál se escribió en la instrucción
@@ -259,11 +240,6 @@ public class FileManager {
         
         // Se crea la instrucción que será cargada en memoria, se guarda el string de ensamblador para poder desplegarla en la GUI
         memoryRegisterInstruction = new MemoryRegister(opValue, registerValue, value, valueString, registerType);
-        System.out.println("Operador: "+memoryRegisterInstruction.getOp());
-        System.out.println("Registro: "+memoryRegisterInstruction.getRegister());
-        System.out.println("Valor: "+memoryRegisterInstruction.getValue());
-        System.out.println("Valor: "+memoryRegisterInstruction.getStringValue());
-        System.out.println("Tipo de registro: "+memoryRegisterInstruction.getRegisterType());
         memoryRegisterInstruction.setAsmInstructionString(instruction);
         }
         
@@ -331,6 +307,8 @@ public class FileManager {
         this.instructions2 = instructions2;
     }
 
+    
+    
     public int getLineAmount() {
         return lineAmount;
     }

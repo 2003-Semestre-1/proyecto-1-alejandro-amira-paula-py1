@@ -1372,6 +1372,8 @@ public class MiniPC extends javax.swing.JFrame {
         this.getLblNumberDX().setText("0");
         this.getLblNumberAL().setText("0");
         this.getLblNumberAH().setText("0");
+        this.getLblValueZeroFlag().setText("-");
+        this.getLblNumberStack().setText("-");
         
         for (int i = 0; i < this.getTblMemory2().getRowCount(); i++) {
                 this.getTblMemory2().setValueAt("", i, 0);
@@ -1388,6 +1390,8 @@ public class MiniPC extends javax.swing.JFrame {
         this.getLblNumberDX2().setText("0");
         this.getLblNumberAL2().setText("0");
         this.getLblNumberAH2().setText("0");
+        this.getLblValueZeroFlag2().setText("-");
+        this.getLblNumberStack2().setText("-");
         
         DefaultTableModel model = (DefaultTableModel) this.getTblProcesses().getModel();
         for (int row = 0; row < model.getRowCount(); row++) {
@@ -1769,7 +1773,6 @@ public class MiniPC extends javax.swing.JFrame {
             String fileName = file.getName();
             
             this.getTblProcesses().setValueAt(fileName, i, 1);
-            System.out.print(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getEstadoActual());
             this.getTblProcesses().setValueAt(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getEstadoActual(), i, 2);
             this.getTblProcesses().setValueAt(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getCpuName(), i, 3);
         }
@@ -2087,7 +2090,6 @@ public class MiniPC extends javax.swing.JFrame {
                     estadoUltimoProceso1 = this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getEstadoActual();
                 }
                 
-                System.out.println(estadoUltimoProceso1);
             }
                 
             for(int i = 0 ; i < this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size() ; i ++){
@@ -2095,27 +2097,20 @@ public class MiniPC extends javax.swing.JFrame {
                     estadoUltimoProceso2 = this.getController2().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getEstadoActual();
                 }
                 
-                System.out.println(estadoUltimoProceso2);
             }
             
-            System.out.println("#1: "+estadoUltimoProceso1);
-            System.out.println("#2 "+estadoUltimoProceso2);
-            System.out.println("#3 "+this.isAutomatic);
             if ((estadoUltimoProceso1.equalsIgnoreCase("Finalizado") && estadoUltimoProceso2.equalsIgnoreCase("Finalizado")) && this.isIsAutomatic()){
                 this.setIsAutomatic(false);
-                System.out.println("Modo #1 pasó");
                 this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Modo automático desactivado.");
                 return;
             }
             if ((estadoUltimoProceso1.equalsIgnoreCase("Finalizado") && this.getProcessListSize(this.getController2().getCpu()) == 0) && this.isIsAutomatic()){
                 this.setIsAutomatic(false);
-                System.out.println("Modo #2 pasó");
                 this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Modo automático desactivado.");
                 return;
             }
             if ((estadoUltimoProceso2.equalsIgnoreCase("Finalizado") && this.getProcessListSize(this.getController().getCpu()) == 0) && this.isIsAutomatic()){
                 this.setIsAutomatic(false);
-                System.out.println("Modo #3 pasó");
                 this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Modo automático desactivado.");
                 return;
             }
@@ -2147,11 +2142,9 @@ public class MiniPC extends javax.swing.JFrame {
                     this.getController().getCpu().setInstructionRegister(instructionCPU1.getAsmInstructionString());
                     try {
                         int timeBefore = this.getController().getCpu().getCurrentTime();
-                        System.out.println("TB1: "+timeBefore);
                         if (!this.getController().getCpu().isRepeatFlag())
                             this.getController().executeInstruction(instructionCPU1.getOp(),instructionCPU1.getRegister(),instructionCPU1.getValue(),instructionCPU1.getStringValue(),this);
                         int timeAfter = this.getController().getCpu().getCurrentTime();
-                        System.out.println("TA1: "+timeAfter);
                         if (this.getTimeDifference1()==0)
                             this.setTimeDifference1(timeAfter-timeBefore);
                         if (timeAfter-timeBefore>1)
@@ -2166,11 +2159,9 @@ public class MiniPC extends javax.swing.JFrame {
                     this.getController2().getCpu().setInstructionRegister(instructionCPU2.getAsmInstructionString());
                     try {
                         int timeBefore = this.getController2().getCpu().getCurrentTime();
-                        System.out.println("TB2: "+timeBefore);
                         if (!this.getController2().getCpu().isRepeatFlag())
                             this.getController2().executeInstruction(instructionCPU2.getOp(),instructionCPU2.getRegister(),instructionCPU2.getValue(),instructionCPU2.getStringValue(),this);
                         int timeAfter = this.getController2().getCpu().getCurrentTime();
-                        System.out.println("TA2: "+timeAfter);
                         if (this.getTimeDifference2()==0)
                             this.setTimeDifference2(timeAfter-timeBefore);
                         if (timeAfter-timeBefore>1)
@@ -2241,6 +2232,13 @@ public class MiniPC extends javax.swing.JFrame {
                         // Conseguir la direccion de inicio del proximo proceso
                         if (this.findCurrentProcess(this.getController2().getCpu()) != null){
                             cpu2CurrentProcess = this.findCurrentProcess(this.getController2().getCpu());
+                            System.out.println(cpu2CurrentProcess.getDireccionInicio());
+                System.out.println(cpu2CurrentProcess.getDireccionFin());
+                System.out.println(cpu2CurrentProcess.getEstadoActual());
+                System.out.println(cpu2CurrentProcess.getProgramCounter());
+                System.out.println(cpu2CurrentProcess.getIdProcess());
+                System.out.println(cpu2CurrentProcess.getNameProcess());
+                System.out.println(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList());
                         }
                         
                         this.updateMemory(this.getController().getCpu().getMemory().getSize(), this.getSecondaryMemory().getSize(), this.getSecondaryMemory().getVirtualMemorySize(), this.getSecondaryMemory().getIndiceArchivos().size());
@@ -2266,6 +2264,8 @@ public class MiniPC extends javax.swing.JFrame {
             fileManager.loadOperations();
             fileManager.loadDataRegisters();
             ArrayList<MemoryRegister> instructionSet = fileManager.loadFileInstructions(filePath,cpuEscogido);
+            fileManager.setInstructions(new ArrayList<MemoryRegister>());
+            fileManager.setInstructions2(new ArrayList<MemoryRegister>());
 
             if (instructionSet.size() > this.getSecondaryMemory().getSize()){
                 this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Error: El archivo no pudo ser almacenado ya que es más grande que la memoria secundaria.");

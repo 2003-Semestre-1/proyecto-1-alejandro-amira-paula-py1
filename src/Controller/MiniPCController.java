@@ -40,10 +40,6 @@ public class MiniPCController {
         // Este método ejecuta la instrucción dependiendo del operador utilizado en la instrucción
         // Recibe un operador, un registro y un valor
         // Se utiliza un switch para realizar una diferente operación dependiendo del operador dado como parámetro
-        System.out.println("op: "+op);
-        System.out.println("register: "+register);
-        System.out.println("value: "+value);
-        System.out.println("valueString: "+valueString);
         
             BCP execProcess = miniPC.findCurrentProcess(cpu);
             execProcess.setEstadoActual("Ejecución");

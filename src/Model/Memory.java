@@ -52,7 +52,6 @@ public class Memory {
             int instructionSetIndex = 0;
             for(int i = allocationStartIndex ; i < instructionSet.size()+allocationStartIndex; i ++){
                 this.memoryRegisters.set(i, Optional.of(instructionSet.get(instructionSetIndex)));
-                System.out.println("Instruccion agregada a la memoria");
                 instructionSetIndex++;
             }
             return;
@@ -67,7 +66,6 @@ public class Memory {
             int instructionSetIndex = 0;
             for(int i = allocationStartIndex ; i < instructionSet.size()+allocationStartIndex; i ++){
                 this.memoryRegisters.set(i, Optional.of(instructionSet.get(instructionSetIndex)));
-                System.out.println("Instruccion agregada a la memoria");
                 instructionSetIndex++;
             }
         }
