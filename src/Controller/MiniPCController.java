@@ -339,9 +339,9 @@ public class MiniPCController {
         int newAddress = process.getProgramCounter()+offset;
         
         if (offset > 0)
-            newAddress = newAddress;
+            newAddress = newAddress + 1;
         else if (offset < 0)
-            newAddress = newAddress - 2;
+            newAddress = newAddress - 1;
         
         int maxRange = process.getDireccionFin();
         int minRange = process.getDireccionInicio();
@@ -406,9 +406,6 @@ public class MiniPCController {
             valueSecondRegister=secondRegister;
 
         int result = valueFirstRegister-valueSecondRegister;
-        System.out.println("BBBBBBBBBBBBBBBBBBBBBB---------------------FirstRegister: "+valueFirstRegister);
-        System.out.println("BBBBBBBBBBBBBBBBBBBBBB---------------------SecondRegister: "+valueSecondRegister);
-        System.out.println("BBBBBBBBBBBBBBBBBBBBBB---------------------Result: "+result);
         if (result == 0)
             this.getCpu().setZeroFlag(true);
         else
