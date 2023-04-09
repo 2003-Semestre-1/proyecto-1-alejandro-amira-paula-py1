@@ -44,11 +44,11 @@ public class MiniPCController {
         System.out.println("register: "+register);
         System.out.println("value: "+value);
         System.out.println("valueString: "+valueString);
-         
-        BCP execProcess = miniPC.findCurrentProcess(cpu);
-        execProcess.setEstadoActual("Ejecución");
         
-        switch(op) {
+            BCP execProcess = miniPC.findCurrentProcess(cpu);
+            execProcess.setEstadoActual("Ejecución");
+            
+            switch(op) {
         case 1:
             this.loadInstruction(register);
             this.getCpu().setCurrentTime(this.getCpu().getCurrentTime()+2);
@@ -156,7 +156,7 @@ public class MiniPCController {
         default:
             JOptionPane.showMessageDialog (null, "La instrucción dada no se puede ejecutar.", "Error: Instrucción inválida", JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }
     
     
@@ -334,58 +334,34 @@ public class MiniPCController {
     }
     
     public void jmpInstruction(MiniPC miniPC, int offset){
-        int instructionsSize = miniPC.getFileManager().getInstructions().size();
-        System.out.println("Current address: "+this.getCpu().getCurrentAddress());
-        System.out.println("1: "+instructionsSize);
-        instructionsSize = instructionsSize - this.getCpu().getNumberExecutedInstructions();
-        System.out.println("2: "+instructionsSize);
-        System.out.println("3: "+offset);
+        BCP process =  miniPC.findCurrentProcess(this.getCpu());
+        int currentAddress = process.getProgramCounter()-1;
+        int newAddress = process.getProgramCounter()+offset;
         
-        int newAddress = this.getCpu().getCurrentAddress() + offset;
+        if (offset > 0)
+            newAddress = newAddress;
+        else if (offset < 0)
+            newAddress = newAddress - 2;
         
-        if (offset > 0){
-            int maxMemoryLimit = -1; // initialize index to -1
-            for (int i = 0; i < miniPC.getController().getCpu().getMemory().getMemoryRegisters().size(); i++) {
-                if (miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i).isPresent()) {
-                    maxMemoryLimit = i; // update index when a non-null element is found
-                }
-                System.out.println(miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i));
-                System.out.println(miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i).getClass());
-                System.out.println("i: "+i);
-            }
-            System.out.println("Index: "+maxMemoryLimit);
-            System.out.println("Current Address: "+this.getCpu().getCurrentAddress());
-            System.out.println("New Address: "+newAddress);
-            
-            if (newAddress < maxMemoryLimit){
-                miniPC.setJumpFlag(true);
-                miniPC.setJumpToAddress(offset);
-            }
-            else{
-                miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Desbordamiento causado por jump positivo.");
-            }
+        int maxRange = process.getDireccionFin();
+        int minRange = process.getDireccionInicio();
+        
+        if (offset > 0 && newAddress <= maxRange){
+            process.setProgramCounter(newAddress);
+            this.getCpu().setJumpFlag(true);
+            this.getCpu().setJumpString(this.getCpu().getMemory().getMemoryRegisters().get(currentAddress+1).get().asmInstructionString);
         }
-        else if (offset < 0){
-            
-            int firstMemoryIndex = -1; // initialize index to -1
-            for (int i = 0; i < miniPC.getController().getCpu().getMemory().getMemoryRegisters().size(); i++) {
-                if (miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i).isPresent()) {
-                    firstMemoryIndex = i; // update index when a non-null element is found
-                    break; // exit the loop once the first non-null element is found
-                }
-                System.out.println("i: "+i);
-            }
-            System.out.println("Index: "+firstMemoryIndex);
-            System.out.println("Current Address: "+this.getCpu().getCurrentAddress());
-            System.out.println("New Address: "+newAddress);
-            
-            if (newAddress > firstMemoryIndex){
-                miniPC.setJumpFlag(true);
-                miniPC.setJumpToAddress(offset);
-            }
-            else{
-                miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Desbordamiento causado por jump negativo.");
-            }
+        else if (offset > 0 && newAddress > maxRange){
+            miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Jump positivo fuera de rango.");
+        }
+        
+        if (offset < 0 && newAddress >= minRange){
+            process.setProgramCounter(newAddress);
+            this.getCpu().setJumpFlag(true);
+            this.getCpu().setJumpString(this.getCpu().getMemory().getMemoryRegisters().get(currentAddress+1).get().asmInstructionString);
+        }
+        else if (offset < 0 && newAddress < minRange){
+            miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Jump negativo fuera de rango.");
         }
         
     }
@@ -423,152 +399,106 @@ public class MiniPCController {
             
         }
         
-        int valueFirstRegister = miniPC.getController().getCpu().getDataRegisters().get(register-1).getValue();
+        int valueFirstRegister = this.getCpu().getDataRegisters().get(register-1).getValue();
         if (!secondRegisterString.isEmpty())
-            valueSecondRegister = miniPC.getController().getCpu().getDataRegisters().get(secondRegister-1).getValue();
+            valueSecondRegister = this.getCpu().getDataRegisters().get(secondRegister-1).getValue();
         else
             valueSecondRegister=secondRegister;
 
         int result = valueFirstRegister-valueSecondRegister;
-        System.out.println("Result: "+result);
-        
+        System.out.println("BBBBBBBBBBBBBBBBBBBBBB---------------------FirstRegister: "+valueFirstRegister);
+        System.out.println("BBBBBBBBBBBBBBBBBBBBBB---------------------SecondRegister: "+valueSecondRegister);
+        System.out.println("BBBBBBBBBBBBBBBBBBBBBB---------------------Result: "+result);
         if (result == 0)
-            miniPC.getController().getCpu().setZeroFlag(true);
-        
+            this.getCpu().setZeroFlag(true);
+        else
+            this.getCpu().setZeroFlag(false);
     }
     
     public void jeInstruction(MiniPC miniPC, int offset){
-        if (miniPC.getController().getCpu().isZeroFlag()){
+        if (this.getCpu().isZeroFlag()){
             
-            int instructionsSize = miniPC.getFileManager().getInstructions().size();
-            System.out.println("Current address: "+this.getCpu().getCurrentAddress());
-            System.out.println("1: "+instructionsSize);
-            instructionsSize = instructionsSize - this.getCpu().getNumberExecutedInstructions();
-            System.out.println("2: "+instructionsSize);
-            System.out.println("3: "+offset);
+            BCP process =  miniPC.findCurrentProcess(this.getCpu());
+            int currentAddress = process.getProgramCounter()-1;
+            int newAddress = process.getProgramCounter()+offset;
         
-            int newAddress = this.getCpu().getCurrentAddress() + offset;
+            if (offset > 0)
+                newAddress = newAddress;
+            else if (offset < 0)
+                newAddress = newAddress - 2;
         
-            if (offset > 0){
-                int maxMemoryLimit = -1; // initialize index to -1
-                for (int i = 0; i < miniPC.getController().getCpu().getMemory().getMemoryRegisters().size(); i++) {
-                    if (miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i).isPresent()) {
-                        maxMemoryLimit = i; // update index when a non-null element is found
-                    }
-                    System.out.println(miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i));
-                    System.out.println(miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i).getClass());
-                    System.out.println("i: "+i);
-                }
-                System.out.println("Index: "+maxMemoryLimit);
-                System.out.println("Current Address: "+this.getCpu().getCurrentAddress());
-                System.out.println("New Address: "+newAddress);
-            
-                if (newAddress < maxMemoryLimit){
-                    miniPC.setJumpFlag(true);
-                    miniPC.setJumpToAddress(offset);
-                }
-                else{
-                    miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Desbordamiento causado por jump positivo.");
-                }
+            int maxRange = process.getDireccionFin();
+            int minRange = process.getDireccionInicio();
+        
+            if (offset > 0 && newAddress <= maxRange){
+                process.setProgramCounter(newAddress);
+                this.getCpu().setJumpFlag(true);
+                this.getCpu().setJumpString(this.getCpu().getMemory().getMemoryRegisters().get(currentAddress+1).get().asmInstructionString);
             }
-            else if (offset < 0){
-            
-                int firstMemoryIndex = -1; // initialize index to -1
-                for (int i = 0; i < miniPC.getController().getCpu().getMemory().getMemoryRegisters().size(); i++) {
-                    if (miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i).isPresent()) {
-                        firstMemoryIndex = i; // update index when a non-null element is found
-                        break; // exit the loop once the first non-null element is found
-                    }
-                    System.out.println("i: "+i);
-                }
-                System.out.println("Index: "+firstMemoryIndex);
-                System.out.println("Current Address: "+this.getCpu().getCurrentAddress());
-                System.out.println("New Address: "+newAddress);
-            
-                if (newAddress > firstMemoryIndex){
-                    miniPC.setJumpFlag(true);
-                    miniPC.setJumpToAddress(offset);
-                }
-                else{
-                    miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Desbordamiento causado por jump negativo.");
-                }
+            else if (offset > 0 && newAddress > maxRange){
+                miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Jump positivo fuera de rango.");
+            }
+        
+            if (offset < 0 && newAddress >= minRange){
+                process.setProgramCounter(newAddress);
+                this.getCpu().setJumpFlag(true);
+                this.getCpu().setJumpString(this.getCpu().getMemory().getMemoryRegisters().get(currentAddress+1).get().asmInstructionString);
+            }
+            else if (offset < 0 && newAddress < minRange){
+                miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Jump negativo fuera de rango.");
             }
             
         }
     }
     
     public void jneInstruction(MiniPC miniPC, int offset){
-        if (!miniPC.getController().getCpu().isZeroFlag()){
+        if (!this.getCpu().isZeroFlag()){
             
-            int instructionsSize = miniPC.getFileManager().getInstructions().size();
-            System.out.println("Current address: "+this.getCpu().getCurrentAddress());
-            System.out.println("1: "+instructionsSize);
-            instructionsSize = instructionsSize - this.getCpu().getNumberExecutedInstructions();
-            System.out.println("2: "+instructionsSize);
-            System.out.println("3: "+offset);
+            BCP process =  miniPC.findCurrentProcess(this.getCpu());
+            int currentAddress = process.getProgramCounter()-1;
+            int newAddress = process.getProgramCounter()+offset;
         
-            int newAddress = this.getCpu().getCurrentAddress() + offset;
+            if (offset > 0)
+                newAddress = newAddress;
+            else if (offset < 0)
+                newAddress = newAddress - 2;
         
-            if (offset > 0){
-                int maxMemoryLimit = -1; // initialize index to -1
-                for (int i = 0; i < miniPC.getController().getCpu().getMemory().getMemoryRegisters().size(); i++) {
-                    if (miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i).isPresent()) {
-                        maxMemoryLimit = i; // update index when a non-null element is found
-                    }
-                    System.out.println(miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i));
-                    System.out.println(miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i).getClass());
-                    System.out.println("i: "+i);
-                }
-                System.out.println("Index: "+maxMemoryLimit);
-                System.out.println("Current Address: "+this.getCpu().getCurrentAddress());
-                System.out.println("New Address: "+newAddress);
-            
-                if (newAddress < maxMemoryLimit){
-                    miniPC.setJumpFlag(true);
-                    miniPC.setJumpToAddress(offset);
-                }
-                else{
-                    miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Desbordamiento causado por jump positivo.");
-                }
+            int maxRange = process.getDireccionFin();
+            int minRange = process.getDireccionInicio();
+        
+            if (offset > 0 && newAddress <= maxRange){
+                process.setProgramCounter(newAddress);
+                this.getCpu().setJumpFlag(true);
+                this.getCpu().setJumpString(this.getCpu().getMemory().getMemoryRegisters().get(currentAddress+1).get().asmInstructionString);
             }
-            else if (offset < 0){
-            
-                int firstMemoryIndex = -1; // initialize index to -1
-                for (int i = 0; i < miniPC.getController().getCpu().getMemory().getMemoryRegisters().size(); i++) {
-                    if (miniPC.getController().getCpu().getMemory().getMemoryRegisters().get(i).isPresent()) {
-                        firstMemoryIndex = i; // update index when a non-null element is found
-                        break; // exit the loop once the first non-null element is found
-                    }
-                    System.out.println("i: "+i);
-                }
-                System.out.println("Index: "+firstMemoryIndex);
-                System.out.println("Current Address: "+this.getCpu().getCurrentAddress());
-                System.out.println("New Address: "+newAddress);
-            
-                if (newAddress > firstMemoryIndex){
-                    miniPC.setJumpFlag(true);
-                    miniPC.setJumpToAddress(offset);
-                }
-                else{
-                    miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Desbordamiento causado por jump negativo.");
-                }
+            else if (offset > 0 && newAddress > maxRange){
+                miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Jump positivo fuera de rango.");
+            }
+        
+            if (offset < 0 && newAddress >= minRange){
+                process.setProgramCounter(newAddress);
+                this.getCpu().setJumpFlag(true);
+                this.getCpu().setJumpString(this.getCpu().getMemory().getMemoryRegisters().get(currentAddress+1).get().asmInstructionString);
+            }
+            else if (offset < 0 && newAddress < minRange){
+                miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Jump negativo fuera de rango.");
             }
             
         }
     }
     
     public void paramInstruction(MiniPC miniPC, int value1, int value2, String value3){
-        miniPC.getController().getCpu().getMemory().getStack().push(value1);
+        this.getCpu().getMemory().getStack().push(value1);
         miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Parámetro "+value1+" agregado al stack.");
         
         if (value2 > 0){
-            miniPC.getController().getCpu().getMemory().getStack().push(value2);
+            this.getCpu().getMemory().getStack().push(value2);
             miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Parámetro "+value2+" agregado al stack.");
         }
         
         if (!value3.isEmpty()){
             try{
-                miniPC.getController().getCpu().getMemory().getStack().push(Integer.parseInt(value3));
+                this.getCpu().getMemory().getStack().push(Integer.parseInt(value3));
                 miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Parámetro "+value3+" agregado al stack.");
             }
             catch(Exception e){
@@ -579,9 +509,9 @@ public class MiniPCController {
     }
     
     public void pushInstruction(MiniPC miniPC, int register){
-        int registerValue = miniPC.getController().getCpu().getDataRegisters().get(register-1).getValue();
+        int registerValue = this.getCpu().getDataRegisters().get(register-1).getValue();
         try {
-            miniPC.getController().getCpu().getMemory().getStack().push(registerValue);
+            this.getCpu().getMemory().getStack().push(registerValue);
         } catch (StackOverflowError e) {
             miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Stack overflow.");
         } catch (EmptyStackException e) {
@@ -593,14 +523,14 @@ public class MiniPCController {
     public void popInstruction(MiniPC miniPC, int register){
         int registerValue = 0;
         try {
-            registerValue = miniPC.getController().getCpu().getMemory().getStack().pop();
-            miniPC.getController().getCpu().getDataRegisters().get(register-1).setValue(registerValue);
+            registerValue = this.getCpu().getMemory().getStack().pop();
+            this.getCpu().getDataRegisters().get(register-1).setValue(registerValue);
         } catch (StackOverflowError e) {
             miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Stack overflow.");
         } catch (EmptyStackException e) {
            miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: Empty stack.");
         }
-        miniPC.getController().getCpu().getDataRegisters().get(register-1).setValue(registerValue);
+        this.getCpu().getDataRegisters().get(register-1).setValue(registerValue);
     }
     
     public CPU getCpu() {

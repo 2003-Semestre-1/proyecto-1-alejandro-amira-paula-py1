@@ -20,7 +20,6 @@ public class CPU {
     Memory memory;
     SecondaryMemory secondaryMemory;
     String cpuName;
-    int currentAddress = 0;
     int programCounter = 0;
     String instructionRegister = "";
     int accumulator = 0;
@@ -29,6 +28,8 @@ public class CPU {
     boolean programaTerminado = false;
     int currentTime = 0;
     int numberExecutedInstructions = 0;
+    boolean jumpFlag = false;
+    String jumpString = "";
     
     // En el constructor se toma solamente la memoria como parámetro
     // Se crea un ArrayList de registros y se agregan AB,BX,CX y DX a esta arraylist
@@ -74,12 +75,30 @@ public class CPU {
     public void setProgramaTerminado(boolean programaTerminado) {
         this.programaTerminado = programaTerminado;
     }
+
+    public boolean isJumpFlag() {
+        return jumpFlag;
+    }
+
+    public void setJumpFlag(boolean jumpFlag) {
+        this.jumpFlag = jumpFlag;
+    }
     
     
 
     public int getCurrentTime() {
         return currentTime;
     }
+
+    public String getJumpString() {
+        return jumpString;
+    }
+
+    public void setJumpString(String jumpString) {
+        this.jumpString = jumpString;
+    }
+    
+    
 
     public void setCurrentTime(int currentTime) {
         this.currentTime = currentTime;
@@ -112,16 +131,6 @@ public class CPU {
     public int getProgramCounter() {
         return programCounter;
     }
-
-    public int getCurrentAddress() {
-        return currentAddress;
-    }
-
-    public void setCurrentAddress(int currentAddress) {
-        this.currentAddress = currentAddress;
-    }
-
-    
     
     public void setProgramCounter(int programCounter) {
         this.programCounter = programCounter;

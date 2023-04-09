@@ -285,6 +285,10 @@
                                       <Component id="lblDX" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="lblNumberDX" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="lblZeroFlag" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="lblValueZeroFlag" min="-2" pref="42" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
@@ -341,6 +345,8 @@
                               <Component id="lblNumberAH" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblDX" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblNumberDX" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblZeroFlag" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblValueZeroFlag" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="lblAL" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -479,6 +485,19 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblNumberStack">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="-"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblZeroFlag">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="12" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Zero flag"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblValueZeroFlag">
               <Properties>
                 <Property name="text" type="java.lang.String" value="-"/>
               </Properties>
@@ -905,6 +924,10 @@
                                       <Component id="lblDX1" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="lblNumberDX2" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="lblZeroFlag2" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="lblValueZeroFlag2" min="-2" pref="42" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
@@ -964,6 +987,10 @@
                               <Component id="lblNumberAH2" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblDX1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblNumberDX2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                                  <Component id="lblZeroFlag2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblValueZeroFlag2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="lblAL1" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1104,6 +1131,19 @@
             <Component class="javax.swing.JLabel" name="lblNumberStack2">
               <Properties>
                 <Property name="text" type="java.lang.String" value="-"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblValueZeroFlag2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="-"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblZeroFlag2">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="12" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Zero flag"/>
               </Properties>
             </Component>
           </SubComponents>
