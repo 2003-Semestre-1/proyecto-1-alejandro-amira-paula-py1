@@ -2134,16 +2134,143 @@ public class MiniPC extends javax.swing.JFrame {
             if ((estadoUltimoProceso1.equalsIgnoreCase("Finalizado") && estadoUltimoProceso2.equalsIgnoreCase("Finalizado")) && this.isIsAutomatic()){
                 this.setIsAutomatic(false);
                 this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Modo automático desactivado.");
+                
+                this.setWaitingForInputCPU1(false);
+                this.setWaitingForInputCPU2(false);
+                
+                this.setArchivoAbierto(false);
+                
+                this.setTimeDifference1(0);
+                this.setTimeDifference2(0);
+                this.getController().getCpu().setRepeatFlag(false);
+                this.getController().getCpu().setJumpFlag(false);
+                this.getController().getCpu().setZeroFlag(false);
+                this.getController().getCpu().setJumpString("");
+                this.getController().getCpu().setProgramCounter(0);
+                
+                this.getController2().getCpu().setRepeatFlag(false);
+                this.getController2().getCpu().setJumpFlag(false);
+                this.getController2().getCpu().setZeroFlag(false);
+                this.getController2().getCpu().setJumpString("");
+                this.getController2().getCpu().setProgramCounter(0);
+                
                 return;
             }
             if ((estadoUltimoProceso1.equalsIgnoreCase("Finalizado") && this.getProcessListSize(this.getController2().getCpu()) == 0) && this.isIsAutomatic()){
                 this.setIsAutomatic(false);
                 this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Modo automático desactivado.");
+                
+                this.setWaitingForInputCPU1(false);
+                this.setWaitingForInputCPU2(false);
+                
+                this.setArchivoAbierto(false);
+                
+                this.setTimeDifference1(0);
+                this.setTimeDifference2(0);
+                this.getController().getCpu().setRepeatFlag(false);
+                this.getController().getCpu().setJumpFlag(false);
+                this.getController().getCpu().setZeroFlag(false);
+                this.getController().getCpu().setJumpString("");
+                this.getController().getCpu().setProgramCounter(0);
+                
+                this.getController2().getCpu().setRepeatFlag(false);
+                this.getController2().getCpu().setJumpFlag(false);
+                this.getController2().getCpu().setZeroFlag(false);
+                this.getController2().getCpu().setJumpString("");
+                this.getController2().getCpu().setProgramCounter(0);
+                
                 return;
             }
             if ((estadoUltimoProceso2.equalsIgnoreCase("Finalizado") && this.getProcessListSize(this.getController().getCpu()) == 0) && this.isIsAutomatic()){
                 this.setIsAutomatic(false);
                 this.getPantalla().setText(this.getPantalla().getText()+"\n"+"Modo automático desactivado.");
+                
+                this.setWaitingForInputCPU1(false);
+                this.setWaitingForInputCPU2(false);
+                
+                this.setArchivoAbierto(false);
+                
+                this.setTimeDifference1(0);
+                this.setTimeDifference2(0);
+                this.getController().getCpu().setRepeatFlag(false);
+                this.getController().getCpu().setJumpFlag(false);
+                this.getController().getCpu().setZeroFlag(false);
+                this.getController().getCpu().setJumpString("");
+                this.getController().getCpu().setProgramCounter(0);
+                
+                this.getController2().getCpu().setRepeatFlag(false);
+                this.getController2().getCpu().setJumpFlag(false);
+                this.getController2().getCpu().setZeroFlag(false);
+                this.getController2().getCpu().setJumpString("");
+                this.getController2().getCpu().setProgramCounter(0);
+                
+                return;
+            }
+            
+            if ((estadoUltimoProceso1.equalsIgnoreCase("Finalizado") && estadoUltimoProceso2.equalsIgnoreCase("Finalizado"))){
+                this.setWaitingForInputCPU1(false);
+                this.setWaitingForInputCPU2(false);
+                
+                this.setArchivoAbierto(false);
+                
+                this.setTimeDifference1(0);
+                this.setTimeDifference2(0);
+                this.getController().getCpu().setRepeatFlag(false);
+                this.getController().getCpu().setJumpFlag(false);
+                this.getController().getCpu().setZeroFlag(false);
+                this.getController().getCpu().setJumpString("");
+                this.getController().getCpu().setProgramCounter(0);
+                
+                this.getController2().getCpu().setRepeatFlag(false);
+                this.getController2().getCpu().setJumpFlag(false);
+                this.getController2().getCpu().setZeroFlag(false);
+                this.getController2().getCpu().setJumpString("");
+                this.getController2().getCpu().setProgramCounter(0);
+                
+                return;
+            }
+            if ((estadoUltimoProceso1.equalsIgnoreCase("Finalizado") && this.getProcessListSize(this.getController2().getCpu()) == 0)){
+                this.setWaitingForInputCPU1(false);
+                this.setWaitingForInputCPU2(false);
+                
+                this.setArchivoAbierto(false);
+                
+                this.setTimeDifference1(0);
+                this.setTimeDifference2(0);
+                this.getController().getCpu().setRepeatFlag(false);
+                this.getController().getCpu().setJumpFlag(false);
+                this.getController().getCpu().setZeroFlag(false);
+                this.getController().getCpu().setJumpString("");
+                this.getController().getCpu().setProgramCounter(0);
+                
+                this.getController2().getCpu().setRepeatFlag(false);
+                this.getController2().getCpu().setJumpFlag(false);
+                this.getController2().getCpu().setZeroFlag(false);
+                this.getController2().getCpu().setJumpString("");
+                this.getController2().getCpu().setProgramCounter(0);
+                
+                return;
+            }
+            if ((estadoUltimoProceso2.equalsIgnoreCase("Finalizado") && this.getProcessListSize(this.getController().getCpu()) == 0)){
+                this.setWaitingForInputCPU1(false);
+                this.setWaitingForInputCPU2(false);
+                
+                this.setArchivoAbierto(false);
+                
+                this.setTimeDifference1(0);
+                this.setTimeDifference2(0);
+                this.getController().getCpu().setRepeatFlag(false);
+                this.getController().getCpu().setJumpFlag(false);
+                this.getController().getCpu().setZeroFlag(false);
+                this.getController().getCpu().setJumpString("");
+                this.getController().getCpu().setProgramCounter(0);
+                
+                this.getController2().getCpu().setRepeatFlag(false);
+                this.getController2().getCpu().setJumpFlag(false);
+                this.getController2().getCpu().setZeroFlag(false);
+                this.getController2().getCpu().setJumpString("");
+                this.getController2().getCpu().setProgramCounter(0);
+                
                 return;
             }
 
@@ -2393,15 +2520,21 @@ public class MiniPC extends javax.swing.JFrame {
     }//GEN-LAST:event_tecladoTxtFieldActionPerformed
 
     private void automaticBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_automaticBtnActionPerformed
+        if (!this.isArchivoAbierto()){
+                JOptionPane.showMessageDialog (null, "Por favor cargue un archivo", "Error: No hay archivos cargados", JOptionPane.ERROR_MESSAGE);
+                return;
         
-        this.setIsAutomatic(true);
-        Timer timer = new Timer(1000, event -> {
+        }
+        else{
+            this.setIsAutomatic(true);
+            Timer timer = new Timer(1000, event -> {
             this.simulateSecond();
             if (!this.isIsAutomatic())
                 ((Timer) event.getSource()).stop();
-        });
-        timer.setRepeats(true);
-        timer.start();
+            });
+            timer.setRepeats(true);
+            timer.start();
+        }
         
     }//GEN-LAST:event_automaticBtnActionPerformed
 
