@@ -365,106 +365,7 @@ public class MiniPC extends javax.swing.JFrame {
         tblProcesses.setBackground(new java.awt.Color(204, 204, 255));
         tblProcesses.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Número", "Nombre", "Estado", "CPU"
@@ -807,106 +708,7 @@ public class MiniPC extends javax.swing.JFrame {
         tblMemory2.setBackground(new java.awt.Color(204, 204, 255));
         tblMemory2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Código ASM", "ID Proceso", "Proceso", "Tiempo"
@@ -914,10 +716,6 @@ public class MiniPC extends javax.swing.JFrame {
         ));
         tblMemory2.setRowHeight(30);
         Pnl_Memoria1.setViewportView(tblMemory2);
-        if (tblMemory2.getColumnModel().getColumnCount() > 0) {
-            tblMemory2.getColumnModel().getColumn(2).setHeaderValue("Proceso");
-            tblMemory2.getColumnModel().getColumn(3).setHeaderValue("Tiempo");
-        }
 
         Pnl_Memoria2.setBackground(new java.awt.Color(204, 204, 255));
         Pnl_Memoria2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -929,106 +727,7 @@ public class MiniPC extends javax.swing.JFrame {
         tblMemory.setBackground(new java.awt.Color(204, 204, 255));
         tblMemory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Código ASM", "ID Proceso", "Proceso", "Tiempo"
@@ -1366,6 +1065,9 @@ public class MiniPC extends javax.swing.JFrame {
                 this.getTblMemory().setValueAt("", i, 2);
                 this.getTblMemory().setValueAt("", i, 3);
         }
+        DefaultTableModel memoryModel = (DefaultTableModel)this.getTblMemory().getModel();
+        memoryModel.setRowCount(0);
+                
         this.getLblNumberAC().setText("0");
         this.getLblNumberPC().setText("0");
         this.getLblNumberIR().setText(" ");
@@ -1384,6 +1086,9 @@ public class MiniPC extends javax.swing.JFrame {
                 this.getTblMemory2().setValueAt("", i, 2);
                 this.getTblMemory2().setValueAt("", i, 3);
         }
+        DefaultTableModel memory2Model = (DefaultTableModel)this.getTblMemory2().getModel();
+        memory2Model.setRowCount(0);
+        
         this.getLblNumberAC2().setText("0");
         this.getLblNumberPC2().setText("0");
         this.getLblNumberIR2().setText(" ");
@@ -1402,6 +1107,7 @@ public class MiniPC extends javax.swing.JFrame {
                 model.setValueAt("", row, col);
             }
         }
+        model.setRowCount(0);
         
         FileManager newFileManager = new FileManager();
         this.setFileManager(newFileManager);
@@ -1564,11 +1270,6 @@ public class MiniPC extends javax.swing.JFrame {
         MemoryRegister instructionCPU1 = null;
         MemoryRegister instructionCPU2 = null;
         
-        System.out.println("TD1: "+this.getTimeDifference1());
-        System.out.println("TD2: "+this.getTimeDifference2());
-        System.out.println("RF1: "+this.getController().getCpu().isRepeatFlag());      
-        System.out.println("RF2: "+this.getController2().getCpu().isRepeatFlag());  
-        
         BCP cpu1CurrentProcess = this.findCurrentProcess(this.getController().getCpu());
         BCP cpu2CurrentProcess = this.findCurrentProcess(this.getController2().getCpu());
         
@@ -1620,10 +1321,13 @@ public class MiniPC extends javax.swing.JFrame {
             this.getController2().getCpu().setJumpString("");
         }
         
-        this.getTblMemory().setValueAt(asmString1, this.getController().getCpu().getNumberExecutedInstructions(), 0);
-        this.getTblMemory().setValueAt(processID, this.getController().getCpu().getNumberExecutedInstructions(), 1);
-        this.getTblMemory().setValueAt(processName, this.getController().getCpu().getNumberExecutedInstructions(), 2);
-        this.getTblMemory().setValueAt(this.getCountTimeTable(), this.getController().getCpu().getNumberExecutedInstructions(), 3);
+        DefaultTableModel memoryModel = (DefaultTableModel) this.getTblMemory().getModel();
+        Object[] row = new Object[4];
+        row[0] = asmString1;
+        row[1] = processID;
+        row[2] = processName;
+        row[3] = this.getCountTimeTable();
+        memoryModel.addRow(row);
         
         this.getLblNumberAX().setText(this.getController().getCpu().getDataRegisters().get(0).getValue()+"");
         this.getLblNumberBX().setText(this.getController().getCpu().getDataRegisters().get(1).getValue()+"");
@@ -1674,11 +1378,13 @@ public class MiniPC extends javax.swing.JFrame {
             
         }
         
-        this.getTblMemory2().setValueAt(asmString2, this.getController2().getCpu().getNumberExecutedInstructions(), 0);
-        
-        this.getTblMemory2().setValueAt(processID, this.getController2().getCpu().getNumberExecutedInstructions(), 1);
-        this.getTblMemory2().setValueAt(processName, this.getController2().getCpu().getNumberExecutedInstructions(), 2);
-        this.getTblMemory2().setValueAt(this.getCountTimeTable(), this.getController2().getCpu().getNumberExecutedInstructions(), 3);
+        DefaultTableModel memory2Model = (DefaultTableModel) this.getTblMemory2().getModel();
+        Object[] row2 = new Object[4];
+        row2[0] = asmString2;
+        row2[1] = processID;
+        row2[2] = processName;
+        row2[3] = this.getCountTimeTable();
+        memory2Model.addRow(row2);
         
         this.getLblNumberAX2().setText(this.getController2().getCpu().getDataRegisters().get(0).getValue()+"");
         this.getLblNumberBX2().setText(this.getController2().getCpu().getDataRegisters().get(1).getValue()+"");
@@ -1715,11 +1421,6 @@ public class MiniPC extends javax.swing.JFrame {
         this.getController().getCpu().setNumberExecutedInstructions(this.getController().getCpu().getNumberExecutedInstructions()+1);
         this.getController2().getCpu().setNumberExecutedInstructions(this.getController2().getCpu().getNumberExecutedInstructions()+1);
         
-        System.out.println("TD1: "+this.getTimeDifference1());
-        System.out.println("TD2: "+this.getTimeDifference2());
-        System.out.println("RF1: "+this.getController().getCpu().isRepeatFlag());      
-        System.out.println("RF2: "+this.getController2().getCpu().isRepeatFlag());  
-        
         if (this.getTimeDifference1()>1){
          
             cpu1CurrentProcess.setProgramCounter(cpu1CurrentProcess.getProgramCounter()-1);
@@ -1730,22 +1431,12 @@ public class MiniPC extends javax.swing.JFrame {
             cpu2CurrentProcess.setProgramCounter(cpu2CurrentProcess.getProgramCounter()-1);
         }
         
-        System.out.println("TD1: "+this.getTimeDifference1());
-        System.out.println("TD2: "+this.getTimeDifference2());
-        System.out.println("RF1: "+this.getController().getCpu().isRepeatFlag());      
-        System.out.println("RF2: "+this.getController2().getCpu().isRepeatFlag());  
-        
         this.setTimeDifference1(this.getTimeDifference1()-1);
         this.setTimeDifference2(this.getTimeDifference2()-1);
         if (this.getTimeDifference1()==0)
             this.getController().getCpu().setRepeatFlag(false);
         if (this.getTimeDifference2()==0)
-            this.getController2().getCpu().setRepeatFlag(false);
-        
-        System.out.println("TD1: "+this.getTimeDifference1());
-        System.out.println("TD2: "+this.getTimeDifference2());
-        System.out.println("RF1: "+this.getController().getCpu().isRepeatFlag());      
-        System.out.println("RF2: "+this.getController2().getCpu().isRepeatFlag());    
+            this.getController2().getCpu().setRepeatFlag(false); 
         
     }
 
@@ -1798,15 +1489,27 @@ public class MiniPC extends javax.swing.JFrame {
     
     public void updateProcesses() {
         for(int i = 0 ; i < this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().size() ; i ++){
-            this.getTblProcesses().setValueAt(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getIdProcess(), i, 0);
+            try{
+                this.getTblProcesses().setValueAt(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getIdProcess(), i, 0);
             
-            String path = this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getNameProcess();
-            File file = new File(path);
-            String fileName = file.getName();
+                String path = this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getNameProcess();
+                File file = new File(path);
+                String fileName = file.getName();
             
-            this.getTblProcesses().setValueAt(fileName, i, 1);
-            this.getTblProcesses().setValueAt(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getEstadoActual(), i, 2);
-            this.getTblProcesses().setValueAt(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getCpuName(), i, 3);
+                this.getTblProcesses().setValueAt(fileName, i, 1);
+                this.getTblProcesses().setValueAt(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getEstadoActual(), i, 2);
+                this.getTblProcesses().setValueAt(this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i).getCpuName(), i, 3);
+            }
+            catch(ArrayIndexOutOfBoundsException e){
+                DefaultTableModel model = (DefaultTableModel) this.getTblProcesses().getModel();
+                BCP process = this.getController().getCpu().getMemory().getPlanificadorTrabajos().getProcessList().get(i);
+                String path = process.getNameProcess();
+                File file = new File(path);
+                String fileName = file.getName();
+                Object[] rowData = { process.getIdProcess(), fileName, process.getEstadoActual(), process.getCpuName() };
+                model.addRow(rowData);
+            }
+            
         }
     }
     
@@ -2416,6 +2119,12 @@ public class MiniPC extends javax.swing.JFrame {
             fileManager.loadOperations();
             fileManager.loadDataRegisters();
             ArrayList<MemoryRegister> instructionSet = fileManager.loadFileInstructions(filePath,cpuEscogido);
+            if (instructionSet.size()>256){
+                JOptionPane.showMessageDialog (null, "El archivo debe ser de máximo 256 líneas.", "Error: Archivo demasiado grande.", JOptionPane.ERROR_MESSAGE);
+                fileManager.setInstructions(new ArrayList<MemoryRegister>());
+                fileManager.setInstructions2(new ArrayList<MemoryRegister>());
+                return;
+            }
             fileManager.setInstructions(new ArrayList<MemoryRegister>());
             fileManager.setInstructions2(new ArrayList<MemoryRegister>());
 
@@ -2446,10 +2155,8 @@ public class MiniPC extends javax.swing.JFrame {
     }//GEN-LAST:event_loadFileBtnActionPerformed
 
     private void cleanTableBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanTableBtnActionPerformed
-        if (this.getTblMemory().getValueAt(0, 0) == "" && this.getTblMemory().getValueAt(0, 0) == " "){
-            JOptionPane.showMessageDialog (null, "No queda nada por limpiar", "Error: Archivo ya está limpio", JOptionPane.ERROR_MESSAGE);
-        }
-        else{
+
+        
             this.setWaitingForInputCPU1(false);
             this.setWaitingForInputCPU2(false);
             this.cleanTable();
@@ -2468,7 +2175,8 @@ public class MiniPC extends javax.swing.JFrame {
             this.getController2().getCpu().setZeroFlag(false);
             this.getController2().getCpu().setJumpString("");
             this.getController2().getCpu().setProgramCounter(0);
-        }
+            this.setIsAutomatic(false);
+ 
         
     }//GEN-LAST:event_cleanTableBtnActionPerformed
 

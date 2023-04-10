@@ -72,9 +72,16 @@ public class PlanificadorTrabajos {
         job.setIdProcess(this.getProcessList().size());
 
         Memory memory = controller.getCpu().getMemory();
-        
+        System.out.println(memory.getSize());
+        System.out.println(memory.getSize());
+        System.out.println(memory.getAllocatedSize());
         if (instructionSet.size() > memory.getSize()+miniPC.getSecondaryMemory().getVirtualMemorySize()){
             miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Error: El archivo es más grande que la memoria principal y virtual por lo que no se puede asignar.");
+            return;
+        }
+        if (instructionSet.size() > memory.getSize()-memory.getAllocatedSize()){
+            miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"La memoria principal está llena. Se esperará a que se libere espacio en la memoria principal antes de ejecutar el proceso.");
+            miniPC.updateProcesses();
             return;
         }
         else{

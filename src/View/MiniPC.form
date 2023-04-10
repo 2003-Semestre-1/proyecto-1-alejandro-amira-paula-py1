@@ -534,7 +534,7 @@
                   <Color blue="ff" green="cc" red="cc" type="rgb"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="100">
+                  <Table columnCount="4" rowCount="0">
                     <Column editable="true" title="N&#xfa;mero" type="java.lang.Object"/>
                     <Column editable="true" title="Nombre" type="java.lang.Object"/>
                     <Column editable="true" title="Estado" type="java.lang.Object"/>
@@ -1193,7 +1193,7 @@
                   <Color blue="ff" green="cc" red="cc" type="rgb"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="100">
+                  <Table columnCount="4" rowCount="0">
                     <Column editable="true" title="C&#xf3;digo ASM" type="java.lang.Object"/>
                     <Column editable="true" title="ID Proceso" type="java.lang.Object"/>
                     <Column editable="true" title="Proceso" type="java.lang.Object"/>
@@ -1213,12 +1213,12 @@
                       <Renderer/>
                     </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title value="Proceso"/>
+                      <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title value="Tiempo"/>
+                      <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
@@ -1260,7 +1260,7 @@
                   <Color blue="ff" green="cc" red="cc" type="rgb"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="100">
+                  <Table columnCount="4" rowCount="0">
                     <Column editable="true" title="C&#xf3;digo ASM" type="java.lang.Object"/>
                     <Column editable="true" title="ID Proceso" type="java.lang.Object"/>
                     <Column editable="true" title="Proceso" type="java.lang.Object"/>
