@@ -128,6 +128,7 @@ public class Interrupt {
                     String contents = new String(Files.readAllBytes(path));
                     miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Archivo "+fileName+" leído");
                     miniPC.getController().getCpu().getDataRegisters().get(5-1).setStringValue(contents);
+                    miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Texto leído y guardado en AL: "+contents);
                 } catch (IOException e) {
                     Logger.getLogger(MiniPC.class.getName()).log(Level.SEVERE, null, e);
                     miniPC.getPantalla().setText(miniPC.getPantalla().getText()+"\n"+"Archivo no pudo ser leído");
