@@ -3,7 +3,7 @@
 ## Integrantes:
 ### 2020034944 Alejandro Castro Araya
 ### 2019057908 Maria Paula Rubio Hernández
-### Amira Suyen Acevedo Castillo
+### 2019390133 Amira Suyen Acevedo Castillo
 
 ### Estado del proyecto: 5 Excelente
 ### Enlace del video: 
