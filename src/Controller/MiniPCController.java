@@ -334,11 +334,6 @@ public class MiniPCController {
         int currentAddress = process.getProgramCounter()-1;
         int newAddress = process.getProgramCounter()+offset;
         
-        if (offset > 0)
-            newAddress = newAddress + 1;
-        else if (offset < 0)
-            newAddress = newAddress - 1;
-        
         int maxRange = process.getDireccionFin();
         int minRange = process.getDireccionInicio();
         
@@ -411,14 +406,9 @@ public class MiniPCController {
     public void jeInstruction(MiniPC miniPC, int offset){
         if (this.getCpu().isZeroFlag()){
             
-            BCP process =  miniPC.findCurrentProcess(this.getCpu());
+        BCP process =  miniPC.findCurrentProcess(this.getCpu());
         int currentAddress = process.getProgramCounter()-1;
         int newAddress = process.getProgramCounter()+offset;
-        
-        if (offset > 0)
-            newAddress = newAddress + 1;
-        else if (offset < 0)
-            newAddress = newAddress - 1;
         
         int maxRange = process.getDireccionFin();
         int minRange = process.getDireccionInicio();
@@ -447,14 +437,9 @@ public class MiniPCController {
     public void jneInstruction(MiniPC miniPC, int offset){
         if (!this.getCpu().isZeroFlag()){
             
-            BCP process =  miniPC.findCurrentProcess(this.getCpu());
+        BCP process =  miniPC.findCurrentProcess(this.getCpu());
         int currentAddress = process.getProgramCounter()-1;
         int newAddress = process.getProgramCounter()+offset;
-        
-        if (offset > 0)
-            newAddress = newAddress + 1;
-        else if (offset < 0)
-            newAddress = newAddress - 1;
         
         int maxRange = process.getDireccionFin();
         int minRange = process.getDireccionInicio();
